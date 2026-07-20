@@ -1,4 +1,4 @@
-# Calculate Covariance Matrix (Easy) ✔
+# Calculate Covariance Matrix (Easy, Statistics)
 
 ## Table of Contents
 

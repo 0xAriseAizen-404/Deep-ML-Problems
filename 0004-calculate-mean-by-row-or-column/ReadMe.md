@@ -1,4 +1,4 @@
-# Calculate Mean by Row or Column (Easy) ✔
+# Calculate Mean by Row or Column (Easy, Linear Algebra)
 
 ## Table of Contents
 

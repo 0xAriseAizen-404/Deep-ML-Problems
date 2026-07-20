@@ -1,4 +1,4 @@
-# Matrix × Matrix Multiplication (Medium) ✔
+# Matrix × Matrix Multiplication (Medium, Linear Algebra)
 
 ## Table of Contents
 

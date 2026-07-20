@@ -1,4 +1,4 @@
-# Inverse of a 2×2 Matrix (Easy) ✔
+# Inverse of a 2×2 Matrix (Easy, Linear Algebra)
 
 ## Table of Contents
 

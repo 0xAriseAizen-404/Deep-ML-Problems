@@ -1,4 +1,4 @@
-# Solve Linear Equations Using the Jacobi Method (Easy) ✔
+# Solve Linear Equations Using the Jacobi Method (Medium, Linear Algebra)
 
 ## Table of Contents
 

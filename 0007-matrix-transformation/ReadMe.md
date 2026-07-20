@@ -1,4 +1,4 @@
-# Matrix Transformation (Medium) ✔
+# Matrix Transformation (Medium, Linear Algebra)
 
 ## Table of Contents
 

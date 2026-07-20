@@ -1,4 +1,4 @@
-# Reshape Matrix (Easy) ✔
+# Reshape Matrix (Easy, Linear Algebra)
 
 ## Table of Contents
 

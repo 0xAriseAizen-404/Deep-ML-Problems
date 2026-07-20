@@ -1,4 +1,4 @@
-# Transpose of a Matrix (Easy) ✔
+# Transpose of a Matrix (Easy, Linear Algebra)
 
 ## Table of Contents
 
