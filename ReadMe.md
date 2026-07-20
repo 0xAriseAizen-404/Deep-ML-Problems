@@ -11,6 +11,16 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 | 🔴 Hard    |      1 |
 | **Total**  | **16** |
 
+## Category Summary
+
+| Category         | 🟢 Easy | 🟡 Medium | 🔴 Hard | **Total** |
+| ---------------- | ------: | --------: | ------: | --------: |
+| Linear Algebra   |       6 |         3 |       1 |    **10** |
+| Statistics       |       1 |         0 |       0 |     **1** |
+| Machine Learning |       3 |         0 |       0 |     **3** |
+| Deep Learning    |       2 |         0 |       0 |     **2** |
+| **Total**        |  **12** |     **3** |   **1** |    **16** |
+
 ---
 
 ## 🟢 Easy
