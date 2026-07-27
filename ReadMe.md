@@ -6,20 +6,20 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 
 | Difficulty | Solved |
 | ---------- | -----: |
-| 🟢 Easy    |     12 |
-| 🟡 Medium  |      3 |
+| 🟢 Easy    |     20 |
+| 🟡 Medium  |      5 |
 | 🔴 Hard    |      1 |
-| **Total**  | **16** |
+| **Total**  | **26** |
 
 ## Category Summary
 
 | Category         | 🟢 Easy | 🟡 Medium | 🔴 Hard | **Total** |
 | ---------------- | ------: | --------: | ------: | --------: |
-| Linear Algebra   |       6 |         3 |       1 |    **10** |
+| Linear Algebra   |       8 |         3 |       1 |    **12** |
 | Statistics       |       1 |         0 |       0 |     **1** |
-| Machine Learning |       3 |         0 |       0 |     **3** |
-| Deep Learning    |       2 |         0 |       0 |     **2** |
-| **Total**        |  **12** |     **3** |   **1** |    **16** |
+| Machine Learning |       8 |         1 |       0 |     **9** |
+| Deep Learning    |       3 |         1 |       0 |     **4** |
+| **Total**        |  **20** |     **5** |   **1** |    **26** |
 
 ---
 
@@ -39,16 +39,26 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 | [0016 - Feature Scaling Implementation](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0016-feature-scaling-implementation)                         | Machine Learning |
 | [0022 - Sigmoid Activation Function Understanding](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0022-sigmoid-function-activation-understanding)   | Deep Learning    |
 | [0023 - Softmax Activation Function Implementation](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0023-softmax-activation-function-implementation) | Deep Learning    |
+| [0024 - Single Neuron](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0024-single-neuron)                                                           | Deep Learning    |
+| [0027 - Transformation Matrix from Basis B to C](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0027-transformation-matrix-with-basis-b-to-c)       | Linear Algebra   |
+| [0029 - Random Shuffle of Dataset](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0029-random-shuffle-of-dataset)                                   | Machine Learning |
+| [0030 - Batch Iterator for Dataset](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0030-batch-iterator-for-dataset)                                 | Machine Learning |
+| [0034 - One-Hot Encoding of Nominal Values](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0034-one-hot-encoding-of-nominal-values)                 | Machine Learning |
+| [0035 - Convert Vector to Diagonal Matrix](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0035-convert-vector-to-diagonal-matrix)                   | Linear Algebra   |
+| [0036 - Calculate Accuracy Score](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0036-calculate-accuracy-score)                                     | Machine Learning |
+| [1217 - Compute TPR and FPR from Classifications](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/1217-compute-tpr-and-fpr-from-classifications)     | Machine Learning |
 
 ---
 
 ## 🟡 Medium
 
-| Problem                                                                                                                                                             | Category       |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------- |
-| [0007 - Matrix Transformation](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0007-matrix-transformation)                                           | Linear Algebra |
-| [0009 - Matrix Times Matrix](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0009-matrix-times-matrix)                                               | Linear Algebra |
-| [0011 - Solve Linear Equations Using Jacobi Method](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0011-solve-linear-equations-using-jacobi-method) | Linear Algebra |
+| Problem                                                                                                                                                             | Category         |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
+| [0007 - Matrix Transformation](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0007-matrix-transformation)                                           | Linear Algebra   |
+| [0009 - Matrix Times Matrix](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0009-matrix-times-matrix)                                               | Linear Algebra   |
+| [0011 - Solve Linear Equations Using Jacobi Method](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0011-solve-linear-equations-using-jacobi-method) | Linear Algebra   |
+| [0017 - KMeans Clustering](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0017-kmeans-clustering)                                                   | Machine Learning |
+| [0025 - Single Neuron with Backpropogation](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0025-single-neuron-with-backpropogation)                 | Deep Learning    |
 
 ---
 
