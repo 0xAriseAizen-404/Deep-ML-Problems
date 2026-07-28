@@ -6,10 +6,10 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 
 | Difficulty | Solved |
 | ---------- | -----: |
-| 🟢 Easy    |     20 |
-| 🟡 Medium  |      5 |
+| 🟢 Easy    |     21 |
+| 🟡 Medium  |      8 |
 | 🔴 Hard    |      1 |
-| **Total**  | **26** |
+| **Total**  | **30** |
 
 ## Category Summary
 
@@ -17,9 +17,9 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 | ---------------- | ------: | --------: | ------: | --------: |
 | Linear Algebra   |       8 |         3 |       1 |    **12** |
 | Statistics       |       1 |         0 |       0 |     **1** |
-| Machine Learning |       8 |         1 |       0 |     **9** |
-| Deep Learning    |       3 |         1 |       0 |     **4** |
-| **Total**        |  **20** |     **5** |   **1** |    **26** |
+| Machine Learning |       8 |         4 |       0 |    **12** |
+| Deep Learning    |       4 |         1 |       0 |     **5** |
+| **Total**        |  **21** |     **8** |   **1** |    **30** |
 
 ---
 
@@ -47,6 +47,7 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 | [0035 - Convert Vector to Diagonal Matrix](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0035-convert-vector-to-diagonal-matrix)                   | Linear Algebra   |
 | [0036 - Calculate Accuracy Score](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0036-calculate-accuracy-score)                                     | Machine Learning |
 | [1217 - Compute TPR and FPR from Classifications](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/1217-compute-tpr-and-fpr-from-classifications)     | Machine Learning |
+| [0042 - Implement ReLU Activation Function](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0042-implement-relu-activation-function)                 | Deep Learning    |
 
 ---
 
@@ -59,6 +60,9 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 | [0011 - Solve Linear Equations Using Jacobi Method](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0011-solve-linear-equations-using-jacobi-method) | Linear Algebra   |
 | [0017 - KMeans Clustering](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0017-kmeans-clustering)                                                   | Machine Learning |
 | [0025 - Single Neuron with Backpropogation](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0025-single-neuron-with-backpropogation)                 | Deep Learning    |
+| [0031 - Divide Dataset Based on Feature Threshold](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0031-divide-dataset-based-on-feature-threshold)   | Machine Learning |
+| [0032 - Generate Sorted Polynomial Features](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0032-generate-sorted-polynomial-features)               | Machine Learning |
+| [0033 - Generate Random Subsets of a Dataset](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0033-generate-random-subsets-of-a-dataset)             | Machine Learning |
 
 ---
 
