@@ -6,10 +6,10 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 
 | Difficulty | Solved |
 | ---------- | -----: |
-| 🟢 Easy    |     24 |
+| 🟢 Easy    |     25 |
 | 🟡 Medium  |     10 |
 | 🔴 Hard    |      1 |
-| **Total**  | **35** |
+| **Total**  | **36** |
 
 ## Category Summary
 
@@ -17,10 +17,10 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 | ---------------- | ------: | --------: | ------: | --------: |
 | Linear Algebra   |       8 |         4 |       1 |    **13** |
 | Statistics       |       1 |         0 |       0 |     **1** |
-| Machine Learning |       8 |         4 |       0 |    **12** |
+| Machine Learning |       9 |         4 |       0 |    **13** |
 | Deep Learning    |       6 |         2 |       0 |     **8** |
 | Pytorch          |       1 |         0 |       0 |     **1** |
-| **Total**        |  **24** |    **10** |   **1** |    **35** |
+| **Total**        |  **25** |    **10** |   **1** |    **36** |
 
 ---
 
@@ -52,6 +52,7 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 | [1218 - Count Parameters of a Sequential Model](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/1218-count-parameters-of-a-sequential-model)         | Pytorch          |
 | [0039 - Implementation of Log Softmax Function](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0039-implementation-of-log-softmax-function)         | Deep Learninig   |
 | [0044 - Leaky ReLU Activation Function](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0044-leaky-relu-activation-function)                         | Deep Learning    |
+| [0045 - Linear Kernel Function](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0045-linear-kernel-function)                                         | Machine Learning |
 
 ---
 

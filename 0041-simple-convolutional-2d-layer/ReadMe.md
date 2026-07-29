@@ -58,7 +58,7 @@ Each application of the kernel produces one value in the output feature map. By 
 Given an input matrix \(X\) and a kernel \(K\), the output at each position is computed as
 
 \[
-Y(i,j)=\sum_{m}\sum_{n}X(i+m,j+n)\times K(m,n)
+Y(i,j)=\sum*{m}\sum*{n}X(i+m,j+n)\times K(m,n)
 \]
 
 This is simply:
@@ -209,3 +209,12 @@ def simple_conv2d(input_matrix: np.ndarray, kernel: np.ndarray, padding: int, st
 6. Sum all multiplied values to obtain a single output value.
 7. Repeat until the kernel has covered the entire input.
 8. Round the final output matrix to four decimal places before returning it.
+
+---
+
+## Time & Space Complexity
+
+| Complexity | Value                                             |
+| ---------- | ------------------------------------------------- |
+| Time       | **O(H × W × K<sub>h</sub> × K<sub>w</sub> / S²)** |
+| Space      | **O(H × W + H<sub>o</sub> × W<sub>o</sub>)**      |
