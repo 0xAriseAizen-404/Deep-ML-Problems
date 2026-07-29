@@ -6,20 +6,21 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 
 | Difficulty | Solved |
 | ---------- | -----: |
-| 🟢 Easy    |     21 |
-| 🟡 Medium  |      8 |
+| 🟢 Easy    |     24 |
+| 🟡 Medium  |     10 |
 | 🔴 Hard    |      1 |
-| **Total**  | **30** |
+| **Total**  | **35** |
 
 ## Category Summary
 
 | Category         | 🟢 Easy | 🟡 Medium | 🔴 Hard | **Total** |
 | ---------------- | ------: | --------: | ------: | --------: |
-| Linear Algebra   |       8 |         3 |       1 |    **12** |
+| Linear Algebra   |       8 |         4 |       1 |    **13** |
 | Statistics       |       1 |         0 |       0 |     **1** |
 | Machine Learning |       8 |         4 |       0 |    **12** |
-| Deep Learning    |       4 |         1 |       0 |     **5** |
-| **Total**        |  **21** |     **8** |   **1** |    **30** |
+| Deep Learning    |       6 |         2 |       0 |     **8** |
+| Pytorch          |       1 |         0 |       0 |     **1** |
+| **Total**        |  **24** |    **10** |   **1** |    **35** |
 
 ---
 
@@ -48,6 +49,9 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 | [0036 - Calculate Accuracy Score](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0036-calculate-accuracy-score)                                     | Machine Learning |
 | [1217 - Compute TPR and FPR from Classifications](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/1217-compute-tpr-and-fpr-from-classifications)     | Machine Learning |
 | [0042 - Implement ReLU Activation Function](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0042-implement-relu-activation-function)                 | Deep Learning    |
+| [1218 - Count Parameters of a Sequential Model](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/1218-count-parameters-of-a-sequential-model)         | Pytorch          |
+| [0039 - Implementation of Log Softmax Function](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0039-implementation-of-log-softmax-function)         | Deep Learninig   |
+| [0044 - Leaky ReLU Activation Function](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0044-leaky-relu-activation-function)                         | Deep Learning    |
 
 ---
 
@@ -63,6 +67,8 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 | [0031 - Divide Dataset Based on Feature Threshold](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0031-divide-dataset-based-on-feature-threshold)   | Machine Learning |
 | [0032 - Generate Sorted Polynomial Features](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0032-generate-sorted-polynomial-features)               | Machine Learning |
 | [0033 - Generate Random Subsets of a Dataset](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0033-generate-random-subsets-of-a-dataset)             | Machine Learning |
+| [0037 - Calculate Correlation Matrix](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0037-calculate-correlation-matrix)                             | Linear Algebra   |
+| [0041 - Simple Convolutional 2D Layer](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0041-simple-convolutional-2d-layer)                           | Deep Learning    |
 
 ---
 

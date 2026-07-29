@@ -1,4 +1,4 @@
-# Implement ReLU Activation Function (Easy, Deep Learning) ✔
+# Implement ReLU Activation Function (Easy, Deep Learning)
 
 ## Table of Contents
 
