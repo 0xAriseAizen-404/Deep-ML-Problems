@@ -11,3 +11,6 @@ def transform_matrix(A: list[list[int|float]], T: list[list[int|float]], S: list
     return np.round(result, 10).tolist()
 
     # return np.linalg.solve(T, np.asarray(A) @ np.asarray(S)).tolist()
+
+# TC: O(n^3)
+# SC: O(n^2)

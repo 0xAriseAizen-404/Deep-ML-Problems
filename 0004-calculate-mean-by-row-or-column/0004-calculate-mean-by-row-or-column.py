@@ -15,3 +15,6 @@ def calculate_matrix_mean(matrix: list[list[float]], mode: str) -> list[float]:
 	# 	return np.asarray(matrix).mean(axis=0).tolist()
 	# else:
 	# 	return np.asarray(matrix).mean(axis=1).flatten().tolist()
+
+# TC: O(m*n)
+# SC: O(m+n)

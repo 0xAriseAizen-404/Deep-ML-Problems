@@ -155,7 +155,7 @@ Workflow:
   - Add:
     - Concept explanation
     - Mathematical definitions
-    - Formulas in VSCode-compatible LaTeX
+    - Formulas in Github Markdown-compatible LaTeX
     - Important characteristics
     - Applications
     - Interview/practical notes

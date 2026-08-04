@@ -18,3 +18,6 @@ def calculate_covariance_matrix(vectors: list[list[float]]) -> list[list[float]]
     # return res
 
     return np.cov(vectors).tolist()
+
+# TC: O(m^2 * n)
+# SC: O(m^2)

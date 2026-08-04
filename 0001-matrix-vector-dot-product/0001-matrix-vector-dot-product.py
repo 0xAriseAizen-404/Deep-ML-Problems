@@ -13,3 +13,6 @@ def matrix_dot_vector(a: list[list[int | float]], b: list[int | float]):
         res.append(total)
 
     return res
+
+# TC: O(m*n)
+# SC: O(m)

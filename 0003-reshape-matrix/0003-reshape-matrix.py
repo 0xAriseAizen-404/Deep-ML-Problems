@@ -9,3 +9,6 @@ def reshape_matrix(a: list[list[int|float]], new_shape: tuple[int, int]) -> list
         return np.asarray(a).reshape(new_shape).tolist()
     except ValueError:
         return []
+
+# TC: O(n)
+# SC: O(n)

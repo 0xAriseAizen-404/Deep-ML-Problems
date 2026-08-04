@@ -5,184 +5,329 @@
 - [Problem Statement](#problem-statement)
 - [Example](#example)
 - [Learn: Matrix Multiplication](#learn-matrix-multiplication)
+- [Things to Note](#things-to-note)
 - [Solutions](#solutions)
-  - [Custom Implementation](#custom-implementation)
   - [NumPy Implementation](#numpy-implementation)
 - [Code Explanation](#code-explanation)
 - [Time & Space Complexity](#time--space-complexity)
 
 ---
 
-## Problem Statement
+# Problem Statement
 
 [Matrix times Matrix](https://www.deep-ml.com/problems/9)
 
-Write a Python function to multiply two matrices **A** and **B**.
+Write a Python function `matrixmul(a, b)` that multiplies two matrices.
 
-Return **`-1`** if the matrices cannot be multiplied.
+If the matrices are incompatible for multiplication, return `-1`.
+
+---
+
+# Example
+
+```python
+A = [
+    [1, 2],
+    [2, 4]
+]
+
+B = [
+    [2, 1],
+    [3, 4]
+]
+
+print(matrixmul(A, B))
+```
+
+### Output
+
+```text
+[
+    [8, 9],
+    [16, 18]
+]
+```
+
+### Explanation
+
+The first element is
+
+$$
+1\times2+2\times3=8
+$$
+
+The second element is
+
+$$
+1\times1+2\times4=9
+$$
+
+Similarly,
+
+$$
+2\times2+4\times3=16
+$$
+
+and
+
+$$
+2\times1+4\times4=18
+$$
+
+---
+
+# Learn: Matrix Multiplication
+
+## What is Matrix Multiplication?
+
+Matrix multiplication combines two matrices to produce a new matrix.
+
+Unlike element-wise multiplication, each element of the result is obtained by taking the **dot product** of a row from the first matrix with a column from the second matrix.
+
+---
+
+## Condition for Matrix Multiplication
+
+Suppose
+
+$$
+A\in\mathbb{R}^{m\times n}
+$$
+
+and
+
+$$
+B\in\mathbb{R}^{n\times p}
+$$
+
+Then
+
+$$
+AB\in\mathbb{R}^{m\times p}
+$$
+
+Matrix multiplication is possible **only if**
+
+$$
+\text{Columns of }A=\text{Rows of }B
+$$
+
+or equivalently,
+
+$$
+n=n
+$$
+
+If this condition is not satisfied, the multiplication is undefined.
+
+---
+
+## Mathematical Formula
+
+Each element of the resulting matrix is computed as
+
+$$
+C_{ij}
+=
+\sum_{k=1}^{n}
+A_{ik}B_{kj}
+$$
+
+where
+
+- $A_{ik}$ is the element from row $i$ and column $k$ of matrix $A$.
+- $B_{kj}$ is the element from row $k$ and column $j$ of matrix $B$.
+- $C_{ij}$ is the element at row $i$ and column $j$ of the resulting matrix.
 
 ---
 
 ## Example
 
-```python
-Input:
-A = [[1, 2],
-     [2, 4]]
+Let
 
-B = [[2, 1],
-     [3, 4]]
+$$
+A=
+\begin{bmatrix}
+1&2\\
+2&4
+\end{bmatrix}
+$$
 
-Output:
-[[8, 9],
- [16, 18]]
-```
+and
 
-**Reasoning**
+$$
+B=
+\begin{bmatrix}
+2&1\\
+3&4
+\end{bmatrix}
+$$
 
-```
-8  = 1×2 + 2×3
-9  = 1×1 + 2×4
-16 = 2×2 + 4×3
-18 = 2×1 + 4×4
-```
+The product is
 
----
-
-## Learn: Matrix Multiplication
-
-Two matrices can be multiplied **only if**:
-
-```
-Columns of A == Rows of B
-```
-
-If
-
-```
-A = (m × n)
-
-B = (n × p)
-```
-
-then
-
-```
-A × B = (m × p)
-```
-
-Each element of the result is calculated by taking the **dot product** of a row from **A** and a column from **B**.
-
-Formula:
-
-```
-C[i][j] = Σ (A[i][k] × B[k][j])
-```
+$$
+AB=
+\begin{bmatrix}
+1\times2+2\times3 & 1\times1+2\times4\\
+2\times2+4\times3 & 2\times1+4\times4
+\end{bmatrix}
+=
+\begin{bmatrix}
+8&9\\
+16&18
+\end{bmatrix}
+$$
 
 ---
 
-## Solutions
+## Why Matrix Multiplication Matters
 
-### Custom Implementation
+Matrix multiplication is one of the most fundamental operations in Linear Algebra.
 
-```python
-def matrix_multiply(A: list[list[int | float]],
-                    B: list[list[int | float]]) -> list[list[int | float]] | int:
+Applications include:
 
-    if len(A[0]) != len(B):
-        return -1
-
-    rows = len(A)
-    cols = len(B[0])
-    common = len(B)
-
-    result = [[0] * cols for _ in range(rows)]
-
-    for i in range(rows):
-        for j in range(cols):
-            for k in range(common):
-                result[i][j] += A[i][k] * B[k][j]
-
-    return result
-
-
-# Example Usage
-A = [[1, 2],
-     [2, 4]]
-
-B = [[2, 1],
-     [3, 4]]
-
-print(matrix_multiply(A, B))
-```
+- Linear Transformations
+- Neural Networks
+- Computer Graphics
+- Robotics
+- Principal Component Analysis (PCA)
+- Recommendation Systems
+- Scientific Computing
 
 ---
 
-### NumPy Implementation
+# Things to Note
+
+- Matrix multiplication is **not commutative**.
+
+$$
+AB\neq BA
+$$
+
+in general.
+
+- The number of columns of the first matrix must equal the number of rows of the second matrix.
+- The resulting matrix has dimensions
+
+$$
+m\times p
+$$
+
+if
+
+$$
+A\in\mathbb{R}^{m\times n}
+$$
+
+and
+
+$$
+B\in\mathbb{R}^{n\times p}
+$$
+
+- NumPy's `np.dot()` performs matrix multiplication for two-dimensional arrays.
+- If the dimensions are incompatible, NumPy raises a `ValueError`.
+
+---
+
+# Solutions
+
+## NumPy Implementation
 
 ```python
 import numpy as np
 
-
-def matrix_multiply(A: list[list[int | float]],
-                    B: list[list[int | float]]):
-
-    A = np.array(A)
-    B = np.array(B)
-
-    if A.shape[1] != B.shape[0]:
+def matrixmul(a: list[list[int | float]],
+              b: list[list[int | float]]) -> list[list[int | float]]:
+    try:
+        return np.dot(np.asarray(a), np.asarray(b)).tolist()
+    except ValueError:
         return -1
-
-    return np.matmul(A, B)
-
-
-# Example Usage
-print(matrix_multiply(A, B))
 ```
 
 ---
 
-## Code Explanation
+# Code Explanation
 
-- Check if multiplication is possible.
+## Step 1: Convert Inputs into NumPy Arrays
 
 ```python
-if len(A[0]) != len(B):
+np.asarray(a)
+np.asarray(b)
+```
+
+Converts the input Python lists into NumPy arrays.
+
+This allows NumPy to perform optimized matrix operations.
+
+---
+
+## Step 2: Perform Matrix Multiplication
+
+```python
+np.dot(np.asarray(a), np.asarray(b))
+```
+
+Computes
+
+$$
+C=AB
+$$
+
+where every element is calculated using
+
+$$
+C_{ij}
+=
+\sum_{k=1}^{n}
+A_{ik}B_{kj}
+$$
+
+NumPy automatically verifies whether the matrices satisfy the multiplication condition.
+
+---
+
+## Step 3: Convert the Result Back to a Python List
+
+```python
+.tolist()
+```
+
+Converts the NumPy array into a nested Python list so that the function returns the required output format.
+
+---
+
+## Step 4: Handle Invalid Dimensions
+
+```python
+except ValueError:
     return -1
 ```
 
-- Create a result matrix filled with zeros.
+If the matrices cannot be multiplied because
 
-```python
-result = [[0] * cols for _ in range(rows)]
-```
+$$
+\text{Columns of }A
+\neq
+\text{Rows of }B
+$$
 
-- Multiply each row of **A** with each column of **B**.
+NumPy raises a `ValueError`.
 
-```python
-result[i][j] += A[i][k] * B[k][j]
-```
-
-- Return the resulting matrix.
+The function catches this exception and returns `-1`.
 
 ---
 
-## Time & Space Complexity
+# Time & Space Complexity
 
-### Custom Implementation
+Suppose
+
+- $A$ has dimensions $m\times n$.
+- $B$ has dimensions $n\times p$.
 
 | Complexity | Value |
 |------------|-------|
-| Time | **O(m × n × p)** |
-| Space | **O(m × p)** |
+| Time | **O(mnp)** |
+| Space | **O(mp)** |
 
-where
-
-- **m** = rows of A
-- **n** = columns of A (or rows of B)
-- **p** = columns of B
-
-### NumPy Implementation
-
-- **Time:** Optimized (internally uses highly efficient BLAS/LAPACK libraries)
-- **Space:** O(m × p)
+Matrix multiplication computes every element of the output matrix, and each element requires $n$ multiplications and additions.

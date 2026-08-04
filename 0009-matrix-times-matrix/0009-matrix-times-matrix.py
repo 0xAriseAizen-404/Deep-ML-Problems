@@ -16,3 +16,6 @@ def matrixmul(a:list[list[int|float]],
         return np.dot(np.asarray(a), np.asarray(b)).tolist()
     except ValueError:
         return -1
+
+# TC: O(m*n*p)
+# SC: (m*p)

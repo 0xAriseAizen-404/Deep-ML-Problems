@@ -5,159 +5,361 @@
 - [Problem Statement](#problem-statement)
 - [Example](#example)
 - [Learn: Covariance Matrix](#learn-covariance-matrix)
+- [Things to Note](#things-to-note)
 - [Solutions](#solutions)
-  - [Custom Implementation](#custom-implementation)
   - [NumPy Implementation](#numpy-implementation)
 - [Code Explanation](#code-explanation)
 - [Time & Space Complexity](#time--space-complexity)
 
 ---
 
-## Problem Statement
+# Problem Statement
 
 [Calculate Covariance Matrix](https://www.deep-ml.com/problems/10)
 
-Write a Python function to calculate the **covariance matrix** for a given set of feature vectors.
+Write a Python function `calculate_covariance_matrix(vectors)` that computes the **covariance matrix** for a given collection of feature vectors.
 
-Each inner list represents a **feature** and its observations.
+Each inner list represents a **feature**, and each element inside that list represents one observation of that feature.
+
+The function should return the covariance matrix as a nested Python list.
 
 ---
 
-## Example
+# Example
 
 ```python
-Input:
 vectors = [
     [1, 2, 3],
     [4, 5, 6]
 ]
 
-Output:
+print(calculate_covariance_matrix(vectors))
+```
+
+### Output
+
+```text
 [
     [1.0, 1.0],
     [1.0, 1.0]
 ]
 ```
 
-**Reasoning**
+### Explanation
 
-Both features increase together, so their covariance is **1.0**.
+Both features increase together.
+
+Their covariance is positive:
+
+$$
+\operatorname{Cov}(X,Y)=1
+$$
+
+Since each feature is perfectly linearly related to the other,
+
+the covariance matrix becomes
+
+$$
+\begin{bmatrix}
+1 & 1\\
+1 & 1
+\end{bmatrix}
+$$
 
 ---
 
-## Learn: Covariance Matrix
+# Learn: Covariance Matrix
 
-Covariance measures **how two features vary together**.
+## What is Covariance?
 
-- Positive covariance → Both increase together.
+Covariance measures how **two variables change together**.
+
+- Positive covariance → Both variables increase or decrease together.
 - Negative covariance → One increases while the other decreases.
 - Zero covariance → No linear relationship.
 
-Covariance Formula:
+Unlike correlation, covariance does **not** have a fixed range.
 
-```text
-cov(X, Y) = Σ[(Xi - X̄)(Yi - Ȳ)] / (n - 1)
-```
-
-A covariance matrix stores the covariance between **every pair of features**.
-
-```text
-[
- [cov(X₁,X₁), cov(X₁,X₂)],
- [cov(X₂,X₁), cov(X₂,X₂)]
-]
-```
-
-The matrix is always **square** and **symmetric**.
+Its value depends on the scale of the data.
 
 ---
 
-## Solutions
+## Covariance Formula
 
-### Custom Implementation
+Suppose we have two variables
 
-```python
-def calculate_covariance_matrix(vectors: list[list[float]]) -> list[list[float]]:
+$$
+X=(x_1,x_2,\ldots,x_n)
+$$
 
-    def covariance(x, y):
-        mean_x = sum(x) / len(x)
-        mean_y = sum(y) / len(y)
+and
 
-        return sum(
-            (x[i] - mean_x) * (y[i] - mean_y)
-            for i in range(len(x))
-        ) / (len(x) - 1)
+$$
+Y=(y_1,y_2,\ldots,y_n)
+$$
 
-    n = len(vectors)
-    result = [[0.0] * n for _ in range(n)]
+Their sample covariance is
 
-    for i in range(n):
-        for j in range(i, n):
-            value = covariance(vectors[i], vectors[j])
-            result[i][j] = value
-            result[j][i] = value
+$$
+\operatorname{Cov}(X,Y)
+=
+\frac{1}{n-1}
+\sum_{i=1}^{n}
+(x_i-\bar{x})(y_i-\bar{y})
+$$
 
-    return result
+where
 
-
-# Example Usage
-vectors = [
-    [1, 2, 3],
-    [4, 5, 6]
-]
-
-print(calculate_covariance_matrix(vectors))
-```
+- $\bar{x}$ is the mean of $X$.
+- $\bar{y}$ is the mean of $Y$.
+- $n$ is the number of observations.
 
 ---
 
-### NumPy Implementation
+## What is a Covariance Matrix?
+
+When there are multiple features,
+
+we compute the covariance between **every pair of features**.
+
+If there are
+
+$$
+m
+$$
+
+features,
+
+the covariance matrix has size
+
+$$
+m \times m
+$$
+
+For three features,
+
+$$
+\mathbf{C}
+=
+\begin{bmatrix}
+\operatorname{Cov}(X_1,X_1) &
+\operatorname{Cov}(X_1,X_2) &
+\operatorname{Cov}(X_1,X_3)
+\\
+\operatorname{Cov}(X_2,X_1) &
+\operatorname{Cov}(X_2,X_2) &
+\operatorname{Cov}(X_2,X_3)
+\\
+\operatorname{Cov}(X_3,X_1) &
+\operatorname{Cov}(X_3,X_2) &
+\operatorname{Cov}(X_3,X_3)
+\end{bmatrix}
+$$
+
+---
+
+## Properties of a Covariance Matrix
+
+A covariance matrix always has the following properties:
+
+- It is a **square matrix**.
+- It is **symmetric**.
+
+$$
+\operatorname{Cov}(X,Y)
+=
+\operatorname{Cov}(Y,X)
+$$
+
+- Every diagonal element represents the variance of a feature.
+
+$$
+\operatorname{Cov}(X,X)
+=
+\operatorname{Var}(X)
+$$
+
+---
+
+## Example
+
+Consider
+
+$$
+X=[1,2,3]
+$$
+
+and
+
+$$
+Y=[4,5,6]
+$$
+
+Mean values are
+
+$$
+\bar{x}=2
+$$
+
+$$
+\bar{y}=5
+$$
+
+The covariance is
+
+$$
+\frac{
+(-1)(-1)+0(0)+1(1)
+}{2}
+=
+1
+$$
+
+Therefore,
+
+$$
+\mathbf{C}
+=
+\begin{bmatrix}
+1&1\\
+1&1
+\end{bmatrix}
+$$
+
+---
+
+## Applications
+
+Covariance matrices are widely used in Machine Learning and Statistics.
+
+Some common applications include:
+
+- Principal Component Analysis (PCA)
+- Multivariate statistics
+- Feature analysis
+- Portfolio optimization
+- Gaussian distributions
+- Data preprocessing
+
+---
+
+# Things to Note
+
+- The covariance matrix compares **every feature with every other feature**.
+- The diagonal entries are the variances of each feature.
+- The covariance matrix is always symmetric.
+- Positive covariance indicates features move together.
+- Negative covariance indicates features move in opposite directions.
+- NumPy's `np.cov()` computes the **sample covariance**, dividing by $n-1$.
+
+---
+
+# Solutions
+
+## NumPy Implementation
 
 ```python
 import numpy as np
 
-
 def calculate_covariance_matrix(vectors: list[list[float]]) -> list[list[float]]:
     return np.cov(vectors).tolist()
-
-
-# Example Usage
-print(calculate_covariance_matrix(vectors))
 ```
 
 ---
 
-## Code Explanation
+# Code Explanation
 
-- Compute the mean of each feature.
-- Calculate covariance for every pair of features.
-- Since covariance is symmetric:
+## Step 1: Convert the Input
 
 ```python
-cov(X, Y) == cov(Y, X)
+np.cov(vectors)
 ```
 
-only the upper half is computed, and the lower half is filled with the same values.
+The input list is interpreted as a collection of feature vectors.
 
-NumPy's `np.cov()` performs all these calculations internally.
+Each row represents one feature,
+
+and each column represents one observation.
 
 ---
 
-## Time & Space Complexity
+## Step 2: Compute Feature Means
 
-### Custom Implementation
+Internally, NumPy computes the mean of every feature.
+
+For a feature
+
+$$
+X
+$$
+
+the mean is
+
+$$
+\bar{x}
+=
+\frac1n
+\sum_{i=1}^{n}x_i
+$$
+
+---
+
+## Step 3: Compute Covariance
+
+For every pair of features,
+
+NumPy computes
+
+$$
+\operatorname{Cov}(X,Y)
+=
+\frac{1}{n-1}
+\sum_{i=1}^{n}
+(x_i-\bar{x})(y_i-\bar{y})
+$$
+
+This is repeated for every pair of features.
+
+---
+
+## Step 4: Build the Covariance Matrix
+
+The computed covariance values are arranged into a symmetric matrix.
+
+The diagonal entries become
+
+$$
+\operatorname{Var}(X)
+=
+\operatorname{Cov}(X,X)
+$$
+
+while the off-diagonal entries represent the covariance between different features.
+
+---
+
+## Step 5: Convert Back to a Python List
+
+```python
+.tolist()
+```
+
+NumPy returns a NumPy array.
+
+Calling `.tolist()` converts it into a nested Python list.
+
+---
+
+# Time & Space Complexity
+
+Assume there are
+
+- $m$ features.
+- $n$ observations per feature.
 
 | Complexity | Value |
 |------------|-------|
-| Time | **O(f² × n)** |
-| Space | **O(f²)** |
+| Time | **O(m² × n)** |
+| Space | **O(m²)** |
 
-Where:
-
-- **f** = number of features
-- **n** = number of observations per feature
-
-### NumPy Implementation
-
-- **Time:** Optimized (implemented in C)
-- **Space:** **O(f²)**
+The covariance between every pair of features is computed, producing an $m \times m$ covariance matrix.

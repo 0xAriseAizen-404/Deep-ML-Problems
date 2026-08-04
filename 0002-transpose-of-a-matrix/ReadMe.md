@@ -2,121 +2,270 @@
 
 ## Table of Contents
 
-- [Problem Statement](#problem-statement)
-- [Example](#example)
-- [Learn: Transpose of a Matrix](#learn-transpose-of-a-matrix)
-- [Solutions](#solutions)
-  - [Custom Implementation](#custom-implementation)
-  - [Alternative Custom Implementation](#alternative-custom-implementation)
-  - [NumPy Implementation](#numpy-implementation)
-- [Code Explanation](#code-explanation)
+- Problem Statement
+- Example
+- Learn: Transpose of a Matrix
+- Solutions
+  - Custom Implementation
+- Code Explanation
+- Time & Space Complexity
+
+---
 
 ## Problem Statement
 
 [Transpose of a Matrix](https://www.deep-ml.com/problems/2)
 
-Write a Python function that computes the transpose of a given matrix.
+Write a Python function `transpose_matrix(a)` that computes the **transpose** of a given matrix.
+
+The transpose of a matrix is obtained by **interchanging its rows and columns**.
+
+---
 
 ## Example
 
 ```python
-input: a = [[1, 2, 3], [4, 5, 6]]
-output: [[1, 4], [2, 5], [3, 6]]
-reasoning: The transpose of a matrix is obtained by flipping rows and columns.
+a = [
+    [1, 2, 3],
+    [4, 5, 6]
+]
+
+print(transpose_matrix(a))
 ```
 
-## Learn: Transpose of a Matrix
+### Output
 
-Consider a matrix \( M \) and its transpose \( M^T \):
+```text
+[
+    [1, 4],
+    [2, 5],
+    [3, 6]
+]
+```
 
-Original Matrix \( M \):
+### Explanation
+
+Given
 
 $$
-M = \begin{pmatrix} 
-a & b & c \\ 
-d & e & f 
-\end{pmatrix}
+A=
+\begin{bmatrix}
+1&2&3\\
+4&5&6
+\end{bmatrix}
 $$
 
-Transposed Matrix \( M^T \):
+its transpose is
 
 $$
-M^T = \begin{pmatrix} 
-a & d \\ 
-b & e \\ 
-c & f 
-\end{pmatrix}
+A^T=
+\begin{bmatrix}
+1&4\\
+2&5\\
+3&6
+\end{bmatrix}
 $$
 
-Transposing a matrix involves converting its rows into columns and vice versa. This operation is fundamental in linear algebra for various computations and transformations.
+Rows become columns and columns become rows.
 
-## Solutions
+---
 
-### Custom Implementation
+# Learn: Transpose of a Matrix
+
+## What is it?
+
+The **transpose** of a matrix is formed by swapping its rows and columns.
+
+If an element is located at row $i$ and column $j$ in the original matrix, it moves to row $j$ and column $i$ in the transposed matrix.
+
+The transpose is one of the most fundamental operations in Linear Algebra and appears frequently in Machine Learning, Deep Learning, Computer Vision, and Statistics.
+
+---
+
+## Mathematical Definition
+
+Suppose
+
+$$
+A=
+\begin{bmatrix}
+a_{11}&a_{12}&\cdots&a_{1n}\\
+a_{21}&a_{22}&\cdots&a_{2n}\\
+\vdots&\vdots&\ddots&\vdots\\
+a_{m1}&a_{m2}&\cdots&a_{mn}
+\end{bmatrix}
+$$
+
+Its transpose is
+
+$$
+A^T=
+\begin{bmatrix}
+a_{11}&a_{21}&\cdots&a_{m1}\\
+a_{12}&a_{22}&\cdots&a_{m2}\\
+\vdots&\vdots&\ddots&\vdots\\
+a_{1n}&a_{2n}&\cdots&a_{mn}
+\end{bmatrix}
+$$
+
+In general,
+
+$$
+(A^T)_{ij}
+=
+A_{ji}
+$$
+
+---
+
+## Characteristics / Key Points
+
+- Rows become columns.
+- Columns become rows.
+- If $A$ is an $m\times n$ matrix, then $A^T$ is an $n\times m$ matrix.
+- Applying transpose twice returns the original matrix.
+
+$$
+(A^T)^T=A
+$$
+
+- The transpose of a square matrix has the same dimensions.
+
+---
+
+## Why is it used? / Applications
+
+Matrix transpose is widely used in:
+
+- Matrix Multiplication
+- Linear Regression
+- Principal Component Analysis (PCA)
+- Covariance Matrix Computation
+- Singular Value Decomposition (SVD)
+- Neural Networks
+- Computer Graphics
+- Scientific Computing
+
+Many machine learning algorithms rely on transposed matrices during optimization and gradient computation.
+
+> 💡 **Important Note**
+>
+> The provided implementation supports **ragged matrices** (rows with different lengths). Missing elements are skipped instead of causing an error, making it more flexible than the standard transpose operation, which assumes every row has the same number of columns.
+
+---
+
+# Solution
+
+## Custom Implementation
 
 ```python
 def transpose_matrix(a: list[list[int | float]]) -> list[list[int | float]]:
-    l = [[a[j][i] for j in range(len(a))] for i in range(len(a[0]))]
-    return l
-
-a = [[1, 2, 3], [4, 5, 6]]
-print(transpose_matrix(a=a))
+    m = max(len(row) for row in a)
+    return [[row[i] for row in a if i < len(row)] for i in range(m)]
 ```
 
-### Alternative Custom Implementation
+---
+
+# Code Explanation
+
+### Step 1: Find the Maximum Number of Columns
 
 ```python
-def transpose_matrix(a: list[list[int | float]]) -> list[list[int | float]]:
-    matrix_a = list(zip(*a))
-    return [list(row) for row in matrix_a]
-
-a = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
-print(transpose_matrix(a=a))
+m = max(len(row) for row in a)
 ```
 
-### NumPy Implementation
+This computes
+
+$$
+m
+=
+\max_{1\le i\le r}
+\left(
+\text{length}(A_i)
+\right)
+$$
+
+where
+
+- $r$ is the number of rows.
+- $A_i$ is the $i^{th}$ row of the matrix.
+
+The value $m$ determines how many rows the transposed matrix will contain.
+
+---
+
+### Step 2: Iterate Over Every Column Index
 
 ```python
-import numpy as np
-
-def transpose_matrix(a: list[list[int | float]]) -> list[list[int | float]]:
-    return np.transpose(a)
-
-a = [[1, 2, 3], [4, 5, 6]]
-print(transpose_matrix(a=a))
+for i in range(m)
 ```
 
-## Code Explanation
+For each column index,
 
-### Custom Implementation
+$$
+i=0,1,2,\ldots,m-1
+$$
 
-The first custom implementation of the `transpose_matrix` function uses nested list comprehensions to transpose the input matrix:
+a new row of the transposed matrix is constructed.
 
-1. The outer list comprehension iterates over the columns of the input matrix by using the range of the number of columns (`range(len(a[0]))`).
-2. The inner list comprehension iterates over the rows of the input matrix by using the range of the number of rows (`range(len(a))`).
-3. For each column index `i`, a new row is created by extracting the element at index `i` from each row `j` of the input matrix.
-4. The resulting transposed matrix is returned.
+---
 
-This implementation is efficient and directly converts rows to columns using list comprehensions.
+### Step 3: Collect Elements from Each Row
 
-### Alternative Custom Implementation
+```python
+[row[i] for row in a if i < len(row)]
+```
 
-The second custom implementation uses the built-in `zip` function to transpose the matrix:
+For every row,
 
-1. The `zip(*a)` expression unpacks the input matrix `a` and aggregates elements from each row into tuples representing the columns.
-2. The `list(zip(*a))` converts these tuples into a list of tuples.
-3. A list comprehension is used to convert each tuple (representing a row in the transposed matrix) into a list.
-4. The resulting transposed matrix is returned.
+the element
 
-This implementation is concise and leverages Python's built-in functions for readability and simplicity.
+$$
+A_{ji}
+$$
 
-### NumPy Implementation
+is selected only if the column exists.
 
-The NumPy implementation uses the `np.transpose` function to transpose the matrix:
+Mathematically,
 
-1. The `np.transpose(a)` function is called with the input matrix `a`.
-2. The function returns the transposed matrix as a NumPy array.
+$$
+A^T_i
+=
+\{A_{ji}\mid i<\text{length}(A_j)\}
+$$
 
-This implementation is highly efficient, especially for larger matrices, as it utilizes NumPy's optimized array operations. It is recommended when working with large datasets or when NumPy is already being used in the project.
+Rows that do not contain the current column index are ignored.
 
-By implementing these solutions, we can understand different approaches to transposing a matrix, each with its own advantages in terms of readability, simplicity, and performance.
+---
+
+### Step 4: Construct the Transposed Matrix
+
+```python
+return [[row[i] for row in a if i < len(row)] for i in range(m)]
+```
+
+Each generated row becomes one row of the transpose.
+
+The resulting matrix satisfies
+
+$$
+(A^T)_{ij}
+=
+A_{ji}
+$$
+
+for every valid element in the original matrix.
+
+---
+
+## Time & Space Complexity
+
+Let
+
+- $r$ = Number of rows.
+- $c$ = Maximum row length.
+
+| Complexity | Value |
+| ---------- | ----- |
+| Time | **O(r × c)** |
+| Space | **O(r × c)** |

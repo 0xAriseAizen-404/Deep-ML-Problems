@@ -8,3 +8,6 @@ def transpose_matrix(a: list[list[int | float]]) -> list[list[int | float]]:
 
     m = max(len(row) for row in a)
     return [[row[i] for row in a if i < len(row)] for i in range(m)]
+
+# TC: O(r*c)
+# SC: O(r*c)

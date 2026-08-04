@@ -5,3 +5,6 @@ def scalar_multiply(matrix: list[list[int|float]], scalar: int|float) -> list[li
             # matrix[i][j] = matrix[i][j] * scalar
     # return matrix
     return (np.asarray(matrix) * scalar).tolist()
+
+# TC: O(m*n)
+# SC: O(m*n)

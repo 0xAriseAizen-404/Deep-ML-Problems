@@ -20,3 +20,6 @@ def inverse_2x2(matrix: list[list[float]]) -> list[list[float]] | None:
         [-c/det, a/det]
     ]
     pass
+
+# TC: O(1)
+# SC: O(1)
