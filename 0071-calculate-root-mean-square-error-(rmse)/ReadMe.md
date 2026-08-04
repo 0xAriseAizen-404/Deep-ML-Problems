@@ -52,11 +52,11 @@ print(rmse(y_true, y_pred))
 Compute the prediction errors:
 
 | Actual | Predicted | Error | Squared Error |
-| ------- | --------- | ----- | ------------- |
-| 3 | 2.5 | 0.5 | 0.25 |
-| -0.5 | 0.0 | -0.5 | 0.25 |
-| 2 | 2 | 0 | 0 |
-| 7 | 8 | -1 | 1 |
+| ------ | --------- | ----- | ------------- |
+| 3      | 2.5       | 0.5   | 0.25          |
+| -0.5   | 0.0       | -0.5  | 0.25          |
+| 2      | 2         | 0     | 0             |
+| 7      | 8         | -1    | 1             |
 
 Mean Squared Error (MSE):
 
@@ -101,7 +101,7 @@ Suppose we have:
 - Actual values
 
 \[
-y_{\text{true}}
+y\_{\text{true}}
 =
 [y_1,y_2,\dots,y_n]
 \]
@@ -109,7 +109,7 @@ y_{\text{true}}
 - Predicted values
 
 \[
-y_{\text{pred}}
+y\_{\text{pred}}
 =
 [\hat{y}_1,\hat{y}_2,\dots,\hat{y}_n]
 \]
@@ -119,7 +119,7 @@ The prediction error for each observation is
 \[
 e_i
 =
-y_i-\hat{y}_i
+y_i-\hat{y}\_i
 \]
 
 The **Mean Squared Error (MSE)** is
@@ -128,8 +128,8 @@ The **Mean Squared Error (MSE)** is
 \text{MSE}
 =
 \frac{1}{n}
-\sum_{i=1}^{n}
-(y_i-\hat{y}_i)^2
+\sum\_{i=1}^{n}
+(y_i-\hat{y}\_i)^2
 \]
 
 The **Root Mean Square Error (RMSE)** is simply the square root of the MSE:
@@ -139,8 +139,8 @@ The **Root Mean Square Error (RMSE)** is simply the square root of the MSE:
 =
 \sqrt{
 \frac{1}{n}
-\sum_{i=1}^{n}
-(y_i-\hat{y}_i)^2
+\sum\_{i=1}^{n}
+(y_i-\hat{y}\_i)^2
 }
 \]
 
@@ -148,7 +148,7 @@ where
 
 - \(n\) = Number of observations.
 - \(y_i\) = Actual value.
-- \(\hat{y}_i\) = Predicted value.
+- \(\hat{y}\_i\) = Predicted value.
 
 ---
 
@@ -162,10 +162,10 @@ where
 
 ### RMSE vs MSE
 
-| Metric | Formula | Units |
-| ------- | ------- | ----- |
-| MSE | Average of squared errors | Squared units |
-| RMSE | Square root of MSE | Original units |
+| Metric | Formula                   | Units          |
+| ------ | ------------------------- | -------------- |
+| MSE    | Average of squared errors | Squared units  |
+| RMSE   | Square root of MSE        | Original units |
 
 Because RMSE returns the error in the **same units as the data**, it is usually easier to interpret than MSE.
 
@@ -173,11 +173,11 @@ Because RMSE returns the error in the **same units as the data**, it is usually 
 
 ## RMSE vs MAE
 
-| RMSE | MAE |
-| ---- | --- |
-| Squares the errors | Uses absolute errors |
-| Penalizes large errors heavily | Treats every error equally |
-| Sensitive to outliers | More robust to outliers |
+| RMSE                                        | MAE                                             |
+| ------------------------------------------- | ----------------------------------------------- |
+| Squares the errors                          | Uses absolute errors                            |
+| Penalizes large errors heavily              | Treats every error equally                      |
+| Sensitive to outliers                       | More robust to outliers                         |
 | Preferred when large errors are undesirable | Preferred when all errors are equally important |
 
 ---
@@ -308,8 +308,8 @@ Computes
 
 \[
 \frac{1}{n}
-\sum_{i=1}^{n}
-(y_i-\hat{y}_i)^2
+\sum\_{i=1}^{n}
+(y_i-\hat{y}\_i)^2
 \]
 
 ---
@@ -338,9 +338,9 @@ Rounds the RMSE to three decimal places before returning it.
 
 Let **n** be the number of observations.
 
-| Complexity | Value |
-| ---------- | ----- |
-| Time | **O(n)** |
-| Space | **O(n)** |
+| Complexity | Value    |
+| ---------- | -------- |
+| Time       | **O(n)** |
+| Space      | **O(n)** |
 
 The algorithm performs a constant number of passes over the input arrays. The intermediate error array created by `(y_true - y_pred) ** 2` requires **O(n)** additional space.
