@@ -207,17 +207,13 @@ if len(a) == len(b):
 The implementation checks whether
 
 $$
-\text{Rows}(A)
-=
-\text{Length}(v)
+\text{Rows}(A) = \text{Length}(v)
 $$
 
 Although this works for square matrices, the correct mathematical condition is
 
 $$
-\text{Columns}(A)
-=
-\text{Length}(v)
+\text{Columns}(A) = \text{Length}(v)
 $$
 
 ---
@@ -250,10 +246,7 @@ sum([j * k for j, k in zip(i, b)])
 For the current row,
 
 $$
-y_i
-=
-\sum_{j=1}^{n}
-a_{ij}v_j
+y_i = \sum_{j=1}^{n} a_{ij}v_j
 $$
 
 This computes the dot product between the current row and the input vector.
@@ -314,7 +307,7 @@ Let
 - $m$ = Number of rows
 - $n$ = Number of columns
 
-| Complexity | Value |
-| ---------- | ----- |
-| Time | **O(m × n)** |
-| Space | **O(m)** |
+| Complexity | Value        |
+| ---------- | ------------ |
+| Time       | **O(m × n)** |
+| Space      | **O(m)**     |
