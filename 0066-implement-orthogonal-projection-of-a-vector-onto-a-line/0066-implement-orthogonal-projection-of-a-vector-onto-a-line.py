@@ -61,3 +61,6 @@ def orthogonal_projection(v, L):
     v = np.asarray(v)
     L = np.asarray(L)
     return np.round((v.dot(L) / L.dot(L)) * L, 3)
+
+# TC: O(n)
+# SC: O(1)

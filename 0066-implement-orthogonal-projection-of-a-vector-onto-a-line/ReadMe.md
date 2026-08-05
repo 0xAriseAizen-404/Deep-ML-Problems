@@ -2,18 +2,18 @@
 
 ## Table of Contents
 
-- Problem Statement
-- Example
-- Learn: Orthogonal Projection
-- Solution
-- Code Explanation
-- Time & Space Complexity
+- [Problem Statement](#problem-statement)
+- [Example](#example)
+- [Learn: Orthogonal Projection](#learn-orthogonal-projection)
+- [Solution](#solution)
+- [Code Explanation](#code-explanation)
+- [Time & Space Complexity](#time--space-complexity)
 
 ---
 
 ## Problem Statement
 
-[Implement Orthogonal Projection of a Vector onto a Line](https://www.deep-ml.com/problems/66)
+### [Implement Orthogonal Projection of a Vector onto a Line](https://www.deep-ml.com/problems/66)
 
 Write a Python function `orthogonal_projection(v, L)` that computes the **orthogonal projection** of a vector **v** onto another vector **L**, which defines a line.
 
@@ -25,6 +25,8 @@ The projection represents the **closest point on the line** defined by **L** to 
 
 ## Example
 
+### Input
+
 ```python
 v = [3, 4]
 L = [1, 0]
@@ -34,7 +36,7 @@ print(orthogonal_projection(v, L))
 
 ### Output
 
-```text
+```python
 [3.0, 0.0]
 ```
 
@@ -42,42 +44,23 @@ print(orthogonal_projection(v, L))
 
 The vector
 
-\[
-v=
-\begin{bmatrix}
-3\\
-4
-\end{bmatrix}
-\]
+$$ v=\begin{bmatrix}3\\4\end{bmatrix} $$
 
 is projected onto the x-axis represented by
 
-\[
-L=
-\begin{bmatrix}
-1\\
-0
-\end{bmatrix}
-\]
+$$ L=\begin{bmatrix}1\\0\end{bmatrix} $$
 
 Since **L** points entirely in the x-direction, only the x-component of **v** remains.
 
 Therefore,
 
-\[
-\operatorname{proj}_L(v)
-=
-\begin{bmatrix}
-3\\
-0
-\end{bmatrix}
-\]
+$$ \operatorname{proj}\_L(v)=\begin{bmatrix}3\\0\end{bmatrix} $$
 
 ---
 
-# Learn: Orthogonal Projection
+## Learn: Orthogonal Projection
 
-## What is it?
+### What is it?
 
 An **orthogonal projection** is the process of finding the component of one vector that lies **along the direction of another vector**.
 
@@ -91,7 +74,7 @@ The projection is called **orthogonal** because the remaining error vector is **
 
 ---
 
-## Geometric Intuition
+### Geometric Intuition
 
 Suppose we have two vectors
 
@@ -115,33 +98,25 @@ The projection is simply the point on **L** that is **closest** to **v**.
 
 The leftover vector
 
-\[
-v-\operatorname{proj}_L(v)
-\]
+$$ v-\operatorname{proj}\_L(v) $$
 
 is always perpendicular to **L**.
 
 ---
 
-## Mathematical Definition / Formula
+### Mathematical Definition / Formula
 
 The orthogonal projection of **v** onto **L** is
 
-\[
-\operatorname{proj}_L(v)
-=
-\frac{v\cdot L}{L\cdot L}L
-\]
+$$ \operatorname{proj}\_L(v)=\frac{v\cdot L}{L\cdot L}L $$
 
 where
 
-- \(v\cdot L\) is the dot product.
-- \(L\cdot L=||L||^2\).
+- $v\cdot L$ is the dot product.
+- $L\cdot L=||L||^2$.
 - The scalar
 
-\[
-\frac{v\cdot L}{L\cdot L}
-\]
+$$ \frac{v\cdot L}{L\cdot L} $$
 
 determines **how far** to travel along **L**.
 
@@ -151,25 +126,17 @@ determines **how far** to travel along **L**.
 
 If
 
-\[
-\hat{L}
-=
-\frac{L}{||L||}
-\]
+$$ \hat{L}=\frac{L}{||L||} $$
 
 is a unit vector, then the projection becomes
 
-\[
-\operatorname{proj}_L(v)
-=
-(v\cdot\hat{L})\hat{L}
-\]
+$$ \operatorname{proj}\_L(v)=(v\cdot\hat{L})\hat{L} $$
 
 Both formulas produce the same result.
 
 ---
 
-## Why Does This Formula Work?
+### Why Does This Formula Work?
 
 The projection vector needs two things:
 
@@ -186,58 +153,35 @@ The remaining task is determining **how much of L** we need.
 
 ---
 
-### Step 1: Find the Projection Length
+#### Step 1: Find the Projection Length
 
 From trigonometry,
 
-\[
-\cos\theta
-=
-\frac{\text{Projection Length}}{||v||}
-\]
+$$ \cos\theta=\frac{\text{Projection Length}}{||v||} $$
 
 Therefore,
 
-\[
-\text{Projection Length}
-=
-||v||\cos\theta
-\]
+$$ \text{Projection Length}=||v||\cos\theta $$
 
 ---
 
-### Step 2: Connect with the Dot Product
+#### Step 2: Connect with the Dot Product
 
 Recall that
 
-\[
-v\cdot L
-=
-||v||
-\,||L||
-\cos\theta
-\]
+$$ v\cdot L=||v||||L||\cos\theta $$
 
 Rearranging,
 
-\[
-||v||
-\cos\theta
-=
-\frac{v\cdot L}{||L||}
-\]
+$$ ||v||\cos\theta=\frac{v\cdot L}{||L||} $$
 
 Thus,
 
-\[
-\text{Projection Length}
-=
-\frac{v\cdot L}{||L||}
-\]
+$$ \text{Projection Length}=\frac{v\cdot L}{||L||} $$
 
 ---
 
-### Step 3: Convert Length into a Vector
+#### Step 3: Convert Length into a Vector
 
 A magnitude alone is not enough.
 
@@ -245,58 +189,32 @@ We need a **vector**.
 
 The unit vector along **L** is
 
-\[
-\hat{L}
-=
-\frac{L}{||L||}
-\]
+$$ \hat{L}=\frac{L}{||L||} $$
 
 Multiplying the projection length by the unit vector gives
 
-\[
-\operatorname{proj}_L(v)
-=
-\frac{v\cdot L}{||L||}
-\times
-\frac{L}{||L||}
-\]
+$$ \operatorname{proj}\_L(v)=\frac{v\cdot L}{||L||}\times\frac{L}{||L||} $$
 
 Combining the denominators,
 
-\[
-\operatorname{proj}_L(v)
-=
-\frac{v\cdot L}{||L||^2}L
-\]
+$$ \operatorname{proj}\_L(v)=\frac{v\cdot L}{||L||^2}L $$
 
 Since
 
-\[
-||L||^2
-=
-L\cdot L
-\]
+$$ ||L||^2=L\cdot L $$
 
 the final formula becomes
 
-\[
-\boxed{
-\operatorname{proj}_L(v)
-=
-\frac{v\cdot L}{L\cdot L}L
-}
-\]
+$$ \boxed{\operatorname{proj}\_L(v)=\frac{v\cdot L}{L\cdot L}L} $$
 
 ---
 
-## Characteristics / Key Points
+### Characteristics / Key Points
 
 - Projection is always parallel to **L**.
 - The residual vector
 
-\[
-v-\operatorname{proj}_L(v)
-\]
+$$ v-\operatorname{proj}\_L(v) $$
 
 is perpendicular to **L**.
 
@@ -306,59 +224,43 @@ is perpendicular to **L**.
 
 ---
 
-## Special Cases
+### Special Cases
 
-### Parallel Vectors
-
-If
-
-\[
-v=kL
-\]
-
-then
-
-\[
-\operatorname{proj}_L(v)=v
-\]
-
----
-
-### Perpendicular Vectors
+#### Parallel Vectors
 
 If
 
-\[
-v\cdot L=0
-\]
+$$ v=kL $$
 
 then
 
-\[
-\operatorname{proj}_L(v)=0
-\]
+$$ \operatorname{proj}\_L(v)=v $$
 
----
-
-### Zero Vector
+#### Perpendicular Vectors
 
 If
 
-\[
-L=0
-\]
+$$ v\cdot L=0 $$
 
 then
 
-\[
-L\cdot L=0
-\]
+$$ \operatorname{proj}\_L(v)=0 $$
+
+#### Zero Vector
+
+If
+
+$$ L=0 $$
+
+then
+
+$$ L\cdot L=0 $$
 
 and the projection is **undefined** because division by zero occurs.
 
 ---
 
-## Why is it used? / Applications
+### Why is it used? / Applications
 
 Orthogonal projection is fundamental in many areas of mathematics and machine learning.
 
@@ -383,9 +285,9 @@ Projection is one of the most frequently used operations in **Linear Algebra**.
 
 ---
 
-# Solution
+## Solution
 
-## Custom Implementation
+### Custom Implementation
 
 ```python
 import numpy as np
@@ -402,7 +304,7 @@ def orthogonal_projection(v, L):
 
 ---
 
-# Code Explanation
+## Code Explanation
 
 ### Step 1: Convert Inputs into NumPy Arrays
 
@@ -423,9 +325,7 @@ v.dot(L)
 
 This computes
 
-\[
-v\cdot L
-\]
+$$ v\cdot L $$
 
 which measures how much of **v** points in the direction of **L**.
 
@@ -439,11 +339,7 @@ L.dot(L)
 
 This computes
 
-\[
-L\cdot L
-=
-||L||^2
-\]
+$$ L\cdot L=||L||^2 $$
 
 which is the squared length of **L**.
 
@@ -479,13 +375,13 @@ rounds each component to three decimal places.
 
 ## Time & Space Complexity
 
-Let
+| Complexity | Value    |
+| ---------- | -------- |
+| Time       | **O(n)** |
+| Space      | **O(1)** |
 
-- \(n\) = Dimension of the vectors.
+where
 
-| Complexity | Value |
-| ---------- | ----- |
-| Time | **O(n)** |
-| Space | **O(n)** |
-
-The algorithm performs two dot products and one scalar-vector multiplication, each requiring **O(n)** time. The returned projection vector also requires **O(n)** space.
+- $n$ is the dimension of the vectors.
+- Computing the two dot products requires one pass over the vectors.
+- Only a constant amount of extra memory is used apart from the output vector.

@@ -2,33 +2,39 @@
 
 ## Table of Contents
 
-- Problem Statement
-- Example
-- Learn: Precision Metric
-- Solution
-- Code Explanation
-- Time & Space Complexity
+- [Problem Statement](#problem-statement)
+- [Example](#example)
+- [Learn: Understanding Precision Metric](#learn-understanding-precision-metric)
+- [Solutions](#solutions)
+  - [Custom Implementation](#custom-implementation)
+- [Code Explanation](#code-explanation)
+- [Time & Space Complexity](#time--space-complexity)
 
 ---
 
 ## Problem Statement
 
-[Implement Precision Metric](https://www.deep-ml.com/problems/46)
+### [Implement Precision Metric](https://www.deep-ml.com/problems/46)
 
-Write a Python function `precision` that calculates the **precision score** for a binary classification problem given the true labels (`y_true`) and predicted labels (`y_pred`).
+Write a Python function that calculates the **Precision** metric for a binary classification model.
 
-Precision measures the proportion of predicted positive samples that are actually positive.
+The function should take:
+
+- `y_true`: A 1D NumPy array containing the actual binary labels.
+- `y_pred`: A 1D NumPy array containing the predicted binary labels.
+
+The function should calculate the ratio of correctly predicted positive samples to all samples predicted as positive.
 
 ---
 
 ## Example
 
+### Input
+
 ```python
 import numpy as np
-
 y_true = np.array([1, 0, 1, 1, 0, 1])
 y_pred = np.array([1, 0, 1, 0, 0, 1])
-
 result = precision(y_true, y_pred)
 print(result)
 ```
@@ -39,109 +45,194 @@ print(result)
 1.0
 ```
 
-### Explanation
+### Reasoning
 
 The confusion matrix values are:
 
-- True Positives (TP) = 3
-- False Positives (FP) = 0
+- True Positives:
 
-Using the precision formula:
+$$
+TP=3
+$$
 
-\[
-\text{Precision}
-=
-\frac{TP}{TP+FP}
-\]
+- False Positives:
 
-# \[
+$$
+FP=0
+$$
 
-# \frac{3}{3+0}
+Precision is calculated as:
 
-1.0
-\]
+$$
+Precision=\frac{TP}{TP+FP}
+$$
 
-The model correctly classified every predicted positive sample.
+Substituting the values:
 
----
+$$
+Precision=\frac{3}{3+0}=1.0
+$$
 
-# Learn: Precision Metric
-
-## What is it?
-
-**Precision** is one of the most important evaluation metrics for classification models, especially in **binary classification**.
-
-It measures **how reliable the model's positive predictions are**. In other words, when the model predicts a sample as positive, precision tells us how often that prediction is correct.
-
-Unlike accuracy, precision focuses **only on predicted positive samples**, making it particularly useful when false positives are costly.
+The model has perfect precision because all predicted positive samples are correct.
 
 ---
 
-## Mathematical Definition / Formula
+## Learn: Understanding Precision Metric
+
+### What is it?
+
+Precision is a classification evaluation metric that measures the quality of positive predictions made by a model.
+
+It answers the question:
+
+> "Out of all samples predicted as positive, how many were actually positive?"
+
+Precision focuses on reducing **False Positives**, where the model incorrectly predicts negative samples as positive.
+
+A high precision score means that the model produces fewer incorrect positive predictions.
+
+---
+
+### Mathematical Definition
 
 Precision is defined as:
 
-\[
-\text{Precision}
-=
-\frac{TP}{TP+FP}
-\]
+$$
+Precision=\frac{TP}{TP+FP}
+$$
 
 where:
 
-- **TP (True Positives):** Positive samples correctly predicted as positive.
-- **FP (False Positives):** Negative samples incorrectly predicted as positive.
+- $TP$ represents True Positives.
+- $FP$ represents False Positives.
+
+True Positive:
+
+- Actual class is positive.
+- Model predicts positive.
+
+False Positive:
+
+- Actual class is negative.
+- Model predicts positive.
 
 ---
 
 ### Confusion Matrix
 
-| Actual \\ Predicted | Positive | Negative |
-| ------------------- | -------- | -------- |
-| **Positive**        | TP       | FN       |
-| **Negative**        | FP       | TN       |
+For binary classification:
 
-Precision only depends on **TP** and **FP**.
+|                 | Predicted Positive  | Predicted Negative  |
+| --------------- | ------------------- | ------------------- |
+| Actual Positive | True Positive (TP)  | False Negative (FN) |
+| Actual Negative | False Positive (FP) | True Negative (TN)  |
 
----
+Precision only considers the samples predicted as positive:
 
-## Characteristics / Key Points
-
-- Precision ranges from **0 to 1**.
-- **1.0** indicates every predicted positive sample is actually positive.
-- High precision means **few false positives**.
-- Does **not** consider false negatives.
-- Useful when positive predictions must be highly trustworthy.
-
-### Interpretation
-
-- **High Precision:** Very few incorrect positive predictions.
-- **Low Precision:** Many negative samples are incorrectly classified as positive.
+$$
+Predicted\ Positive=TP+FP
+$$
 
 ---
 
-## Why is it used? / Applications
+### Example
 
-Precision is commonly used in applications where **false positives are expensive**.
+Suppose an email classifier predicts:
 
-Examples include:
+```text
+50 emails as spam
+```
 
-- Medical diagnosis (incorrectly diagnosing healthy patients)
-- Spam email detection
+Among them:
+
+```text
+45 emails are actually spam
+5 emails are not spam
+```
+
+Then:
+
+$$
+Precision=\frac{45}{45+5}
+$$
+
+$$
+Precision=0.9
+$$
+
+This means 90% of spam predictions were correct.
+
+---
+
+### Precision vs Recall
+
+Precision and Recall measure different aspects of classification performance.
+
+| Metric    | Measures                            | Focus                    |
+| --------- | ----------------------------------- | ------------------------ |
+| Precision | Correctness of positive predictions | Reducing False Positives |
+| Recall    | Ability to find actual positives    | Reducing False Negatives |
+
+Precision is important when false alarms are costly.
+
+Recall is important when missing positive cases is dangerous.
+
+---
+
+### Precision vs Accuracy
+
+Accuracy measures total correct predictions:
+
+$$
+Accuracy=\frac{TP+TN}{TP+TN+FP+FN}
+$$
+
+However, accuracy can be misleading for imbalanced datasets.
+
+For example, in fraud detection, most transactions are legitimate.
+
+A model predicting every transaction as legitimate can achieve high accuracy while failing to detect fraud.
+
+Precision provides a better measurement of positive predictions.
+
+---
+
+### Characteristics / Key Points
+
+- Measures correctness of positive predictions.
+- Range is between 0 and 1.
+- High precision means fewer false positives.
+- Useful when false positives are expensive.
+- Does not directly consider false negatives.
+- Requires careful handling when there are no positive predictions.
+
+---
+
+### Why is it used? / Applications
+
+Precision is commonly used in:
+
+- Medical diagnosis
 - Fraud detection
-- Malware detection
+- Spam filtering
+- Search engines
 - Recommendation systems
-- Search engines (relevance of retrieved results)
+- Object detection
+- Security systems
+
+For example, in fraud detection, falsely marking a normal transaction as fraudulent can create unnecessary investigation costs.
+
+---
 
 > 💡 **Important Note**
 >
-> A model can achieve **100% precision** simply by making very few positive predictions. However, it may miss many actual positive samples. Therefore, precision should usually be considered together with **Recall**, and both are often combined using the **F1 Score**.
+> Precision alone does not measure the complete performance of a classifier. A model predicting only a few highly confident positives can achieve high precision while missing many positive samples. Precision is usually evaluated together with Recall using the F1 Score.
 
 ---
 
-# Solution
+## Solutions
 
-## Custom Implementation
+### Custom Implementation
 
 ```python
 import numpy as np
@@ -150,27 +241,31 @@ def precision(y_true, y_pred):
     TP = np.sum((y_true == 1) & (y_pred == 1))
     FP = np.sum((y_true == 0) & (y_pred == 1))
 
-    return TP / (TP + FP) if (TP + FP) > 0 else 0.0
+    return TP / (TP + FP) if (TP + FP) > 0.0 else 0.0
 ```
 
 ---
 
-# Code Explanation
+## Code Explanation
 
-### Step 1: Count True Positives
+### Step 1
+
+Calculate True Positives.
 
 ```python
 TP = np.sum((y_true == 1) & (y_pred == 1))
 ```
 
-This counts all samples where:
+This counts samples where:
 
-- the actual label is **1**, and
-- the predicted label is also **1**.
+- Actual label is positive.
+- Predicted label is positive.
 
 ---
 
-### Step 2: Count False Positives
+### Step 2
+
+Calculate False Positives.
 
 ```python
 FP = np.sum((y_true == 0) & (y_pred == 1))
@@ -178,38 +273,46 @@ FP = np.sum((y_true == 0) & (y_pred == 1))
 
 This counts samples where:
 
-- the actual label is **0**, but
-- the model incorrectly predicts **1**.
+- Actual label is negative.
+- Predicted label is positive.
 
 ---
 
-### Step 3: Compute Precision
+### Step 3
 
-Using the formula:
+Apply the precision formula.
 
-\[
-\text{Precision}
-=
-\frac{TP}{TP+FP}
-\]
+$$
+Precision=\frac{TP}{TP+FP}
+$$
 
-The implementation safely handles the edge case where the model predicts **no positive samples**.
+The denominator represents all positive predictions made by the model.
 
-```python
-return TP / (TP + FP) if (TP + FP) > 0 else 0.0
-```
+---
 
-Returning `0.0` prevents a division-by-zero error.
+### Step 4
+
+Handle division by zero.
+
+If the model does not predict any positive samples:
+
+$$
+TP+FP=0
+$$
+
+the function returns `0.0` instead of causing a division error.
 
 ---
 
 ## Time & Space Complexity
-
-Let **n** be the number of samples.
 
 | Complexity | Value    |
 | ---------- | -------- |
 | Time       | **O(n)** |
 | Space      | **O(1)** |
 
-The algorithm scans the arrays once to compute the counts of **True Positives** and **False Positives**, while using only constant extra memory.
+where:
+
+- $n$ is the number of samples.
+
+The algorithm checks every prediction once and stores only the TP and FP counters.

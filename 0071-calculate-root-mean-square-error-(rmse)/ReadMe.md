@@ -2,12 +2,16 @@
 
 ## Table of Contents
 
-- Problem Statement
-- Example
-- Learn: Root Mean Square Error (RMSE)
-- Solution
-- Code Explanation
-- Time & Space Complexity
+- [Problem Statement](#problem-statement)
+- [Example](#example)
+- [Learn: Root Mean Square Error (RMSE)](#learn-root-mean-square-error-rmse)
+  - [What is it?](#what-is-it)
+  - [Mathematical Definition / Formula](#mathematical-definition--formula)
+  - [Characteristics / Key Points](#characteristics--key-points)
+  - [Why is it used? / Applications](#why-is-it-used--applications)
+- [Solution](#solution)
+- [Code Explanation](#code-explanation)
+- [Time & Space Complexity](#time--space-complexity)
 
 ---
 
@@ -52,31 +56,35 @@ print(rmse(y_true, y_pred))
 Compute the prediction errors:
 
 | Actual | Predicted | Error | Squared Error |
-| ------ | --------- | ----- | ------------- |
-| 3      | 2.5       | 0.5   | 0.25          |
-| -0.5   | 0.0       | -0.5  | 0.25          |
-| 2      | 2         | 0     | 0             |
-| 7      | 8         | -1    | 1             |
+| :----: | :-------: | :---: | :-----------: |
+|   3    |    2.5    |  0.5  |     0.25      |
+|  -0.5  |    0.0    | -0.5  |     0.25      |
+|   2    |     2     |   0   |       0       |
+|   7    |     8     |  -1   |       1       |
 
 Mean Squared Error (MSE):
 
-\[
+$$
+\begin{aligned}
 \text{MSE}
-=
-\frac{0.25+0.25+0+1}{4}
-=
+&=
+\frac{0.25+0.25+0+1}{4} \\
+&=
 0.375
-\]
+\end{aligned}
+$$
 
 Root Mean Square Error:
 
-\[
+$$
+\begin{aligned}
 \text{RMSE}
-=
-\sqrt{0.375}
-=
+&=
+\sqrt{0.375} \\
+&=
 0.612
-\]
+\end{aligned}
+$$
 
 ---
 
@@ -100,55 +108,59 @@ Suppose we have:
 
 - Actual values
 
-\[
-y\_{\text{true}}
+$$
+y_{\text{true}}
 =
 [y_1,y_2,\dots,y_n]
-\]
+$$
 
 - Predicted values
 
-\[
-y\_{\text{pred}}
+$$
+y_{\text{pred}}
 =
 [\hat{y}_1,\hat{y}_2,\dots,\hat{y}_n]
-\]
+$$
 
 The prediction error for each observation is
 
-\[
+$$
 e_i
 =
-y_i-\hat{y}\_i
-\]
+y_i-\hat{y}_i
+$$
 
 The **Mean Squared Error (MSE)** is
 
-\[
+$$
+\boxed{
 \text{MSE}
 =
 \frac{1}{n}
-\sum\_{i=1}^{n}
-(y_i-\hat{y}\_i)^2
-\]
+\sum_{i=1}^{n}
+(y_i-\hat{y}_i)^2
+}
+$$
 
 The **Root Mean Square Error (RMSE)** is simply the square root of the MSE:
 
-\[
+$$
+\boxed{
 \text{RMSE}
 =
 \sqrt{
 \frac{1}{n}
-\sum\_{i=1}^{n}
-(y_i-\hat{y}\_i)^2
+\sum_{i=1}^{n}
+(y_i-\hat{y}_i)^2
 }
-\]
+}
+$$
 
 where
 
-- \(n\) = Number of observations.
-- \(y_i\) = Actual value.
-- \(\hat{y}\_i\) = Predicted value.
+- $n$ = Number of observations.
+- $y_i$ = Actual value.
+- $\hat{y}_i$ = Predicted value.
 
 ---
 
@@ -162,19 +174,19 @@ where
 
 ### RMSE vs MSE
 
-| Metric | Formula                   | Units          |
-| ------ | ------------------------- | -------------- |
-| MSE    | Average of squared errors | Squared units  |
-| RMSE   | Square root of MSE        | Original units |
+| Metric | Formula                   |     Units      |
+| :----: | :------------------------ | :------------: |
+|  MSE   | Average of squared errors | Squared units  |
+|  RMSE  | Square root of MSE        | Original units |
 
 Because RMSE returns the error in the **same units as the data**, it is usually easier to interpret than MSE.
 
 ---
 
-## RMSE vs MAE
+### RMSE vs MAE
 
 | RMSE                                        | MAE                                             |
-| ------------------------------------------- | ----------------------------------------------- |
+| :------------------------------------------ | :---------------------------------------------- |
 | Squares the errors                          | Uses absolute errors                            |
 | Penalizes large errors heavily              | Treats every error equally                      |
 | Sensitive to outliers                       | More robust to outliers                         |
@@ -239,15 +251,11 @@ if not isinstance(y_true, np.ndarray) or not isinstance(y_pred, np.ndarray):
 
 Ensure both inputs are NumPy arrays.
 
----
-
 ```python
 if y_true.size == 0 or y_pred.size == 0:
 ```
 
 Prevent computations on empty arrays.
-
----
 
 ```python
 if y_true.shape != y_pred.shape:
@@ -306,11 +314,15 @@ np.mean(...)
 
 Computes
 
-\[
+$$
+\boxed{
+\text{MSE}
+=
 \frac{1}{n}
-\sum\_{i=1}^{n}
-(y_i-\hat{y}\_i)^2
-\]
+\sum_{i=1}^{n}
+(y_i-\hat{y}_i)^2
+}
+$$
 
 ---
 
@@ -338,9 +350,9 @@ Rounds the RMSE to three decimal places before returning it.
 
 Let **n** be the number of observations.
 
-| Complexity | Value    |
-| ---------- | -------- |
-| Time       | **O(n)** |
-| Space      | **O(n)** |
+| Complexity |  Value   |
+| :--------: | :------: |
+|    Time    | **O(n)** |
+|   Space    | **O(n)** |
 
 The algorithm performs a constant number of passes over the input arrays. The intermediate error array created by `(y_true - y_pred) ** 2` requires **O(n)** additional space.

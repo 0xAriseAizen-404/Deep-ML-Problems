@@ -22,3 +22,6 @@ def calculate_brightness(img):
     if np.any((img < 0) | (img > 255)):
         return -1
     return np.mean(img)
+
+# TC: O(m * n)
+# SC: O(1)

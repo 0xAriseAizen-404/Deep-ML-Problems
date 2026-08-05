@@ -41,3 +41,6 @@ def compressed_col_sparse_matrix(dense_matrix):
 	# col 1 -> [3, 3)
 	# col 2 -> [3, 3)
 	# col 3 -> [3, 4)
+
+# TC: O(m * n)
+# SC: O(k + n)

@@ -158,13 +158,11 @@ $$
 \begin{bmatrix}
 1 & 0\\
 0 & 2
-\end{bmatrix}
-+
+\end{bmatrix} +
 \begin{bmatrix}
 3 & 0\\
 0 & 4
-\end{bmatrix}
-=
+\end{bmatrix} =
 \begin{bmatrix}
 4 & 0\\
 0 & 6
@@ -185,8 +183,7 @@ $$
 \begin{bmatrix}
 4 & 0\\
 0 & 5
-\end{bmatrix}
-=
+\end{bmatrix} =
 \begin{bmatrix}
 8 & 0\\
 0 & 15

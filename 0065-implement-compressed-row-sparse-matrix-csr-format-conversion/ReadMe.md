@@ -2,32 +2,37 @@
 
 ## Table of Contents
 
-- Problem Statement
-- Example
-- Learn: Compressed Row Sparse (CSR) Format
-- Solution
-- Code Explanation
-- Time & Space Complexity
+- [Problem Statement](#problem-statement)
+- [Example](#example)
+- [Learn: Understanding the Compressed Row Sparse (CSR) Format](#learn-understanding-the-compressed-row-sparse-csr-format)
+- [Solution](#solution)
+- [Code Explanation](#code-explanation)
+- [Time & Space Complexity](#time--space-complexity)
 
 ---
 
 ## Problem Statement
 
-[Implement Compressed Row Sparse Matrix (CSR) Format Conversion](https://www.deep-ml.com/problems/65)
+### [Implement Compressed Row Sparse Matrix (CSR) Format Conversion](https://www.deep-ml.com/problems/65)
 
-Write a Python function `compressed_row_sparse_matrix(dense_matrix)` that converts a dense matrix into the **Compressed Row Sparse (CSR)** format.
+Write a Python function that converts a dense matrix into its **Compressed Row Sparse (CSR)** representation.
 
-The function should return three arrays:
+The function should:
 
-- **Values Array:** Stores all non-zero elements in row-major order.
-- **Column Indices Array:** Stores the column index corresponding to each non-zero value.
-- **Row Pointer Array:** Stores the cumulative count of non-zero elements at the start of each row.
-
-CSR is one of the most widely used sparse matrix storage formats because it significantly reduces memory usage when most matrix elements are zero.
+- Accept a 2D dense matrix.
+- Store only the non-zero elements.
+- Record the column index of every non-zero element.
+- Maintain a row pointer array indicating where each row begins in the values array.
+- Return the CSR representation as a tuple containing:
+  - Values array
+  - Column indices array
+  - Row pointer array
 
 ---
 
 ## Example
+
+### Input
 
 ```python
 dense_matrix = [
@@ -46,284 +51,352 @@ print("Row pointer array:", row_ptr)
 
 ### Output
 
-```text
+```python
 Values array: [1, 2, 3, 4, 1, 5]
 Column indices array: [0, 1, 0, 2, 0, 3]
 Row pointer array: [0, 1, 2, 4, 6]
 ```
 
-### Explanation
+### Reasoning
 
-The non-zero values are stored in row-major order.
+The algorithm scans the matrix row by row.
 
-**Values**
+Whenever a non-zero element is found,
 
-```text
-[1, 2, 3, 4, 1, 5]
-```
+- Store its value.
+- Store its column index.
 
-Their corresponding column indices are
+After processing each row, record the current number of stored values in the row pointer array.
 
-```text
-[0, 1, 0, 2, 0, 3]
-```
-
-The row pointer array indicates where each row begins inside the values array.
-
-| Row | Non-zero Elements | Start Index |
-| --- | ----------------- | ----------: |
-| 0 | [1] | 0 |
-| 1 | [2] | 1 |
-| 2 | [3, 4] | 2 |
-| 3 | [1, 5] | 4 |
-
-Thus,
-
-```text
-Row Pointer = [0, 1, 2, 4, 6]
-```
+This allows every row to be reconstructed without storing the zero elements.
 
 ---
 
-# Learn: Compressed Row Sparse (CSR) Format
+## Learn: Understanding the Compressed Row Sparse (CSR) Format
 
-## What is it?
+### What is it?
 
-A **Sparse Matrix** is a matrix in which most of the elements are zero.
+A **Sparse Matrix** is a matrix in which most elements are zero.
 
-For example,
+For large sparse matrices, storing every element wastes both memory and computation.
 
-```text
-1 0 0 0
-0 2 0 0
-3 0 4 0
-1 0 0 5
-```
+The **Compressed Row Sparse (CSR)** format stores only the useful (non-zero) elements, making it one of the most popular sparse matrix representations used in scientific computing and machine learning.
 
-Although this matrix contains **16 elements**, only **6** are non-zero.
-
-Storing every element wastes memory, especially for very large matrices.
-
-The **Compressed Row Sparse (CSR)** format stores **only the non-zero values** and their positions, making it one of the most memory-efficient representations for sparse matrices.
-
-Instead of storing the complete matrix, CSR stores three one-dimensional arrays.
+Instead of storing every matrix entry, CSR represents a matrix using three one-dimensional arrays.
 
 ---
 
-## CSR Data Structure
+### CSR Representation
 
-Suppose the matrix is
+A CSR matrix consists of
 
-```text
-1 0 0 0
-0 2 0 0
-3 0 4 0
-1 0 0 5
-```
+- **Values array**
+- **Column indices array**
+- **Row pointer array**
 
-CSR stores
+These three arrays contain enough information to reconstruct the original matrix.
+
+---
 
 ### Values Array
 
-Contains every non-zero element.
+The values array stores every non-zero element in **row-major order**.
+
+Example
 
 ```text
-Values = [1, 2, 3, 4, 1, 5]
+1 0 0 0
+0 2 0 0
+3 0 4 0
+1 0 0 5
+```
+
+Values array
+
+```text
+[1, 2, 3, 4, 1, 5]
 ```
 
 ---
 
 ### Column Indices Array
 
-Stores the column position of every value.
+For every value stored, record the column where it appears.
+
+Column indices
 
 ```text
-Column Indices = [0, 1, 0, 2, 0, 3]
+[0, 1, 0, 2, 0, 3]
 ```
 
-For example,
+The first value (`1`) appears in column `0`.
 
-- Value **1** is in column **0**
-- Value **2** is in column **1**
-- Value **4** is in column **2**
+The second value (`2`) appears in column `1`, and so on.
 
 ---
 
 ### Row Pointer Array
 
-The row pointer stores **where each row begins inside the values array**.
+The row pointer stores the starting index of every row inside the values array.
+
+For the example,
+
+```text
+Row 0 -> values[0:1]
+Row 1 -> values[1:2]
+Row 2 -> values[2:4]
+Row 3 -> values[4:6]
+```
+
+Therefore,
 
 ```text
 Row Pointer = [0, 1, 2, 4, 6]
 ```
 
-Interpretation:
+Notice that the row pointer always contains
 
-| Row | Values Array Range |
-| --- | ------------------ |
-| Row 0 | Values[0 : 1] |
-| Row 1 | Values[1 : 2] |
-| Row 2 | Values[2 : 4] |
-| Row 3 | Values[4 : 6] |
-
-Notice that the last value (**6**) equals the total number of non-zero elements.
-
----
-
-## Mathematical Representation
-
-Suppose a sparse matrix
-
-\[
-A
-\in
-\mathbb{R}^{m \times n}
-\]
-
-contains **k** non-zero elements.
-
-CSR stores three arrays:
-
-### Values
-
-\[
-\text{values}
-=
-[a_1,a_2,\dots,a_k]
-\]
-
----
-
-### Column Indices
-
-\[
-\text{col\_indices}
-=
-[c_1,c_2,\dots,c_k]
-\]
-
-where
-
-\[
-0 \le c_i < n
-\]
-
----
-
-### Row Pointer
-
-\[
-\text{row\_ptr}
-=
-[p_0,p_1,\dots,p_m]
-\]
-
-where
-
-- \(p_0=0\)
-- \(p_m=k\)
-
-The non-zero values belonging to row \(i\) are located in
-
-\[
-\text{values}
-[
-p_i
-:
-p_{i+1}
-]
-\]
-
----
-
-## Characteristics / Key Points
-
-- Stores only non-zero values.
-- Memory efficient for sparse matrices.
-- Excellent for row-wise traversal.
-- Matrix-vector multiplication is very fast.
-- Eliminates storage of unnecessary zeros.
-- Widely supported by scientific computing libraries such as **SciPy**.
-
-### Memory Comparison
-
-For an \(m \times n\) dense matrix:
-
-Dense storage requires
-
-\[
-m \times n
-\]
+$$ \text{Number of Rows} + 1 $$
 
 elements.
 
-CSR storage requires approximately
-
-\[
-2k+m+1
-\]
-
-elements,
-
-where
-
-- \(k\) = number of non-zero entries.
-
-When
-
-\[
-k
-\ll
-mn
-\]
-
-CSR uses dramatically less memory.
+The last value equals the total number of stored non-zero elements.
 
 ---
 
-## Why is it used? / Applications
+### Matrix Example
 
-CSR is widely used in scientific computing and machine learning because many real-world matrices are sparse.
+Dense matrix
 
-Common applications include:
+```text
+1 0 0 0
+0 2 0 0
+3 0 4 0
+1 0 0 5
+```
 
-- Sparse Linear Algebra
-- Graph adjacency matrices
-- PageRank algorithm
-- Recommendation systems
-- Natural Language Processing (Bag-of-Words and TF-IDF matrices)
+CSR representation
+
+```text
+Values      = [1, 2, 3, 4, 1, 5]
+Column Index= [0, 1, 0, 2, 0, 3]
+Row Pointer = [0, 1, 2, 4, 6]
+```
+
+---
+
+### Reconstructing a Row
+
+Suppose we want the third row.
+
+Using
+
+```text
+Row Pointer = [0, 1, 2, 4, 6]
+```
+
+The third row begins at
+
+```text
+values[2]
+```
+
+and ends before
+
+```text
+values[4]
+```
+
+Therefore,
+
+```text
+Values      = [3, 4]
+Columns     = [0, 2]
+```
+
+The reconstructed row becomes
+
+```text
+3 0 4 0
+```
+
+---
+
+### Empty Rows
+
+CSR naturally supports empty rows.
+
+Example
+
+```text
+1 0 0 0
+0 0 0 0
+3 0 0 0
+1 0 0 5
+```
+
+Values
+
+```text
+[1, 3, 1, 5]
+```
+
+Column indices
+
+```text
+[0, 0, 0, 3]
+```
+
+Row pointer
+
+```text
+[0, 1, 1, 2, 4]
+```
+
+Notice that
+
+```text
+Row Pointer[1] == Row Pointer[2]
+```
+
+which indicates that the second row contains no non-zero elements.
+
+---
+
+### Why CSR is Efficient
+
+A dense matrix requires memory for every element.
+
+For an
+
+$$ m \times n $$
+
+matrix,
+
+memory usage is proportional to
+
+$$ O(mn) $$
+
+CSR stores only the non-zero elements.
+
+If there are
+
+$$ k $$
+
+non-zero entries,
+
+memory usage becomes
+
+$$ O(k+m) $$
+
+Since
+
+$$ k \ll mn $$
+
+for sparse matrices,
+
+CSR provides significant memory savings.
+
+---
+
+### Characteristics / Key Points
+
+- Stores only non-zero values.
+- Uses three one-dimensional arrays.
+- Efficient row access.
+- Excellent memory efficiency for sparse matrices.
+- Preserves row-major ordering.
+- Widely supported by scientific computing libraries.
+- Ideal when most matrix entries are zero.
+
+---
+
+### Advantages
+
+- Greatly reduces memory usage.
+- Faster sparse matrix operations.
+- Efficient row slicing.
+- Easy matrix-vector multiplication.
+- Standard sparse representation in many numerical libraries.
+
+---
+
+### Limitations
+
+- Slow column access compared to row access.
+- Inserting new non-zero elements is expensive.
+- Less suitable for frequently changing sparse matrices.
+
+---
+
+### Applications
+
+CSR is widely used in
+
+- Sparse linear algebra
+- Scientific computing
 - Finite Element Analysis (FEA)
-- Solving sparse systems of linear equations
-- Sparse feature representations in machine learning
+- Graph algorithms
+- Recommendation systems
+- Machine learning with sparse features
+- Sparse neural network computations
+- PageRank
+- Large-scale numerical simulations
+
+It is the default sparse matrix format in libraries such as **SciPy**.
+
+---
+
+### Practical Example
+
+Suppose a matrix contains
+
+- 1,000 rows
+- 1,000 columns
+- Only 2,000 non-zero elements
+
+A dense representation stores
+
+```text
+1,000,000 values
+```
+
+whereas CSR stores approximately
+
+```text
+2,000 values
+2,000 column indices
+1,001 row pointers
+```
+
+This dramatically reduces memory consumption.
+
+---
+
+### Common Mistakes
+
+- Forgetting to append the final row pointer.
+- Storing zero values.
+- Recording incorrect column indices.
+- Updating the row pointer before processing the row.
+- Assuming every row contains at least one non-zero element.
+
+---
 
 > 💡 **Important Note**
 >
-> CSR is optimized for **row-wise operations** such as matrix-vector multiplication. If your application frequently accesses or modifies **columns**, the **Compressed Sparse Column (CSC)** format is often a better choice.
+> CSR is optimized for row-wise operations. If frequent column access is required, formats such as **Compressed Sparse Column (CSC)** are usually more efficient.
 
 ---
 
-# Solution
+## Solution
 
-## Custom Implementation
+### Custom Implementation
 
 ```python
 import numpy as np
 
 def compressed_row_sparse_matrix(dense_matrix):
-    """
-    Convert a dense matrix to its Compressed Row Sparse (CSR) representation.
-
-    Parameters
-    ----------
-    dense_matrix : list[list]
-        Dense matrix.
-
-    Returns
-    -------
-    tuple
-        (values, column_indices, row_pointer)
-    """
-
     values = []
     col_indices = []
     row_ptr = [0]
@@ -341,9 +414,11 @@ def compressed_row_sparse_matrix(dense_matrix):
 
 ---
 
-# Code Explanation
+## Code Explanation
 
-### Step 1: Initialize the CSR Arrays
+### Step 1
+
+Initialize the three arrays.
 
 ```python
 values = []
@@ -351,106 +426,86 @@ col_indices = []
 row_ptr = [0]
 ```
 
-- `values` stores all non-zero entries.
-- `col_indices` stores their column positions.
-- `row_ptr` starts with **0**, indicating that the first row begins at index 0.
+These arrays will store the complete CSR representation.
 
 ---
 
-### Step 2: Traverse the Matrix
+### Step 2
+
+Traverse the matrix row by row.
 
 ```python
 for row in range(len(dense_matrix)):
 ```
 
-Process each row one at a time.
+Each row is processed independently.
 
-Inside each row,
+---
+
+### Step 3
+
+Visit every column in the current row.
 
 ```python
 for col in range(len(dense_matrix[0])):
 ```
 
-visit every column.
+Every matrix element is inspected exactly once.
 
 ---
 
-### Step 3: Store Non-zero Elements
+### Step 4
 
-Whenever a non-zero element is found,
+Store non-zero elements.
 
 ```python
-values.append(dense_matrix[row][col])
-col_indices.append(col)
+if dense_matrix[row][col] != 0:
 ```
 
-- Save the value.
-- Save its column index.
+For each non-zero value,
 
-Zeros are ignored completely.
+- Append the value.
+- Append its corresponding column index.
+
+Zero elements are ignored.
 
 ---
 
-### Step 4: Update the Row Pointer
+### Step 5
 
-After finishing a row,
+Update the row pointer.
 
 ```python
 row_ptr.append(len(values))
 ```
 
-`len(values)` equals the total number of non-zero elements processed so far.
-
-This becomes the starting position of the next row.
-
-For example,
-
-```text
-After Row 0:
-values = [1]
-
-row_ptr = [0, 1]
-```
-
-After Row 2,
-
-```text
-values = [1, 2, 3, 4]
-
-row_ptr = [0, 1, 2, 4]
-```
+After finishing a row, the current number of stored values indicates where the next row begins.
 
 ---
 
-### Step 5: Return the CSR Representation
+### Step 6
 
-Finally,
+Return the CSR representation.
 
 ```python
 return values, col_indices, row_ptr
 ```
 
-returns the complete CSR representation of the matrix.
+The three arrays together completely describe the original sparse matrix.
 
 ---
 
 ## Time & Space Complexity
 
-Let
+| Complexity | Value        |
+| ---------- | ------------ |
+| Time       | **O(m × n)** |
+| Space      | **O(k + m)** |
 
-- \(m\) = Number of rows.
-- \(n\) = Number of columns.
-- \(k\) = Number of non-zero elements.
+where
 
-| Complexity | Value |
-| ---------- | ----- |
-| Time | **O(m × n)** |
-| Space | **O(k + m)** |
-
-The algorithm scans every element of the dense matrix exactly once. The additional space consists of:
-
-- **Values Array:** `k`
-- **Column Indices Array:** `k`
-- **Row Pointer Array:** `m + 1`
-
-Thus, the total auxiliary space is proportional to the number of non-zero elements and the number of rows.
+- $m$ is the number of rows.
+- $n$ is the number of columns.
+- $k$ is the number of non-zero elements.
+- Every matrix element is visited exactly once.
+- Only the non-zero values, their column indices, and the row pointer array are stored.

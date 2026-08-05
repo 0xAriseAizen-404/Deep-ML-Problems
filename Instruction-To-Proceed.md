@@ -19,19 +19,22 @@ Give me in a Complete Markdown code, not the text, i need in Markdown code
 and remember I am gonna save these files in Github, so give me in github style markdown
 like if there are formulas are there which will be in a new line not inline, then we will use $$ formula $$
 and these should be like 
-$$ Ax = B $$ 
+$$ Ax = B $$
 like this in one line, not like
+
 $$
 Ax
 =
 B
 $$
+
 it may work in vscode or obsidian, but in github its not working, equal to sign should never take a new line alone okay, its breaking the formula interpretation in github, the equal to sign should always follow by something
 
 and if it is inline, then use like
 where
+
 - $x_{i}$ is the sample
-like this
+  like this
 
 And another thing
 Do not use unnecessary extra lines in the markdown file okay
@@ -55,15 +58,18 @@ Template
 
 ## Table of Contents
 
-- Problem Statement
-- Example
-- Learn: <Topic>
-- Solution
-- Code Explanation
+- [Problem Statement](#problem-statement)
+- [Example](#example)
+- [Learn: <Topic Name>](#learn-topic-name)
+- [Solutions](#solutions)
+  - [Custom Implementation](#custom-implementation)
+  - [NumPy / PyTorch Implementation](#numpy--pytorch-implementation) <!-- only if applicable -->
+- [Code Explanation](#code-explanation)
+- [Time & Space Complexity](#time--space-complexity)
 
 ## Problem Statement
 
-### Problem Name {Deep-ML link}
+### [Problem Name](Deep-ML link)
 
 Problem description.
 
@@ -123,7 +129,6 @@ and the example template is -> 0041-simple-convolutional-2d-layer/ReadMe.md
 ---
 
 ---
-
 
 Workflow:
 
@@ -242,3 +247,36 @@ My Solution:
 ```
 
 I will return only the finished `README.md` content.
+
+$$
+\begin{bmatrix}
+2 & 0\\
+0 & 3
+\end{bmatrix}
+\begin{bmatrix}
+4 & 0\\
+0 & 5
+\end{bmatrix}
+=
+\begin{bmatrix}
+8 & 0\\
+0 & 15
+\end{bmatrix}
+$$
+
+i fuckinggggggg told oyuuuuuuuuuu do not fuckingggg give me equal to sign in a fukcing newwwwwww ;iieeeeeeee lineeeeeeeeee
+
+$$
+\begin{bmatrix}
+2 & 0\\
+0 & 3
+\end{bmatrix}
+\begin{bmatrix}
+4 & 0\\
+0 & 5
+\end{bmatrix} =
+\begin{bmatrix}
+8 & 0\\
+0 & 15
+\end{bmatrix}
+$$

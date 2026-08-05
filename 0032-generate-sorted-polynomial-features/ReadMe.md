@@ -61,8 +61,7 @@ For the first sample
 The polynomial terms up to degree 2 are
 
 $$
-[1,\;2,\;3,\;2^2,\;2\times3,\;3^2]
-=
+[1,\;2,\;3,\;2^2,\;2\times3,\;3^2] =
 [1,\;2,\;3,\;4,\;6,\;9]
 $$
 

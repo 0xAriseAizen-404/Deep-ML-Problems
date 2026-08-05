@@ -2,28 +2,35 @@
 
 ## Table of Contents
 
-- Problem Statement
-- Example
-- Learn: Recall Metric
-- Solution
-- Code Explanation
-- Time & Space Complexity
+- [Problem Statement](#problem-statement)
+- [Example](#example)
+- [Learn: Understanding Recall in Classification](#learn-understanding-recall-in-classification)
+- [Solution](#solution)
+- [Code Explanation](#code-explanation)
+- [Time & Space Complexity](#time--space-complexity)
 
 ---
 
 ## Problem Statement
 
-[Implement Recall Metric in Binary Classification](https://www.deep-ml.com/problems/52)
+### [Implement Recall Metric in Binary Classification](https://www.deep-ml.com/problems/52)
 
-Write a Python function `recall` that calculates the **recall score** for a binary classification problem given the true labels (`y_true`) and predicted labels (`y_pred`).
+Write a Python function that computes the **Recall** metric for a binary classification task.
 
-Recall measures the proportion of actual positive samples that are correctly identified by the model.
+The function should:
 
-If there are no actual positive samples (i.e., `TP + FN = 0`), the function should return `0.0` to avoid division by zero.
+- Accept the true binary labels.
+- Accept the predicted binary labels.
+- Count the number of correctly predicted positive samples.
+- Count the number of actual positive samples that were missed.
+- Compute the Recall score.
+- Return `0.0` when there are no actual positive samples to avoid division by zero.
 
 ---
 
 ## Example
+
+### Input
 
 ```python
 import numpy as np
@@ -36,115 +43,222 @@ print(recall(y_true, y_pred))
 
 ### Output
 
-```text
+```python
 0.75
 ```
 
-### Explanation
+### Reasoning
 
-The confusion matrix values are:
+There are **4** actual positive samples.
 
-- True Positives (TP) = 3
-- False Negatives (FN) = 1
+The model correctly predicts **3** of them while missing **1** positive sample.
 
-Using the recall formula:
+Therefore,
 
-\[
-\text{Recall}
-=
-\frac{TP}{TP+FN}
-\]
+$$ \text{Recall} = \frac{3}{3+1} = 0.75 $$
 
-\[
-=
-\frac{3}{3+1}
-=
-0.75
-\]
-
-The model successfully identified **3 out of the 4 actual positive samples**.
+The classifier successfully identifies **75%** of all actual positive instances.
 
 ---
 
-# Learn: Recall Metric
+## Learn: Understanding Recall in Classification
 
-## What is it?
+### What is it?
 
-**Recall** is one of the most important evaluation metrics in machine learning, especially for **binary classification** problems.
+**Recall** is one of the most important evaluation metrics in binary classification. It measures how effectively a model identifies all actual positive samples in a dataset.
 
-It measures **how many of the actual positive samples were correctly identified by the model**.
+It answers the question:
 
-Unlike precision, which focuses on the correctness of positive predictions, recall focuses on **finding as many positive instances as possible**.
+> **Out of every sample that is truly positive, how many did the model correctly predict as positive?**
 
-Recall is also known as **Sensitivity** or **True Positive Rate (TPR)**.
+Recall is also called **Sensitivity** or the **True Positive Rate (TPR)**.
+
+A high Recall means the model misses very few positive samples, making it especially useful when false negatives are expensive.
 
 ---
 
-## Mathematical Definition / Formula
+### Mathematical Definition
 
-Recall is defined as:
+Recall is defined as
 
-\[
-\text{Recall}
-=
-\frac{TP}{TP+FN}
-\]
+$$ \text{Recall} = \frac{TP}{TP+FN} $$
 
-where:
+where
 
-- **TP (True Positives):** Positive samples correctly predicted as positive.
-- **FN (False Negatives):** Positive samples incorrectly predicted as negative.
+- $TP$ is the number of **True Positives**.
+- $FN$ is the number of **False Negatives**.
+
+The denominator represents the total number of actual positive samples.
 
 ---
 
 ### Confusion Matrix
 
-| Actual \\ Predicted | Positive | Negative |
-| ------------------- | -------- | -------- |
-| **Positive** | TP | FN |
-| **Negative** | FP | TN |
+Binary classification predictions can be summarized using a confusion matrix.
 
-Recall only depends on **TP** and **FN**.
+| Actual \ Predicted | Positive | Negative |
+| ------------------ | -------- | -------- |
+| Positive           | TP       | FN       |
+| Negative           | FP       | TN       |
 
----
-
-## Characteristics / Key Points
-
-- Recall ranges from **0 to 1**.
-- **1.0** indicates every actual positive sample was correctly identified.
-- High recall means **very few false negatives**.
-- Does **not** consider false positives.
-- Useful when missing positive samples is costly.
-
-### Interpretation
-
-- **High Recall:** The model captures most positive instances.
-- **Low Recall:** The model misses many actual positive samples.
+For Recall, only **True Positives** and **False Negatives** are used.
 
 ---
 
-## Why is it used? / Applications
+### True Positives
 
-Recall is critical in applications where **false negatives are more expensive than false positives**.
+A True Positive occurs when
 
-Examples include:
+- The actual label is positive.
+- The predicted label is also positive.
 
-- Disease and cancer detection
+Mathematically,
+
+$$ TP = \sum (y*{true}=1 \land y*{pred}=1) $$
+
+Higher TP directly increases Recall.
+
+---
+
+### False Negatives
+
+A False Negative occurs when
+
+- The actual label is positive.
+- The model predicts it as negative.
+
+Mathematically,
+
+$$ FN = \sum (y*{true}=1 \land y*{pred}=0) $$
+
+False Negatives decrease Recall because they represent missed positive samples.
+
+---
+
+### Why Recall Ignores False Positives
+
+Recall measures only how many actual positives were successfully detected.
+
+Predicting additional positive samples affects **Precision**, but does not directly affect Recall.
+
+For this reason, Recall focuses entirely on minimizing missed positive cases.
+
+---
+
+### Relationship with Precision
+
+Precision and Recall are often used together.
+
+Precision measures
+
+> Out of all predicted positives, how many are actually positive?
+
+Recall measures
+
+> Out of all actual positives, how many are detected?
+
+Their formulas are
+
+$$ \text{Precision} = \frac{TP}{TP+FP} $$
+
+$$ \text{Recall} = \frac{TP}{TP+FN} $$
+
+Improving Recall often lowers Precision because predicting more positives may increase False Positives.
+
+---
+
+### Relationship with F1 Score
+
+The **F1 Score** combines Precision and Recall into a single metric.
+
+$$ F_1 = \frac{2 \times \text{Precision} \times \text{Recall}}{\text{Precision}+\text{Recall}} $$
+
+It provides a balanced evaluation when both false positives and false negatives are important.
+
+---
+
+### Edge Case
+
+If there are no actual positive samples,
+
+$$ TP+FN = 0 $$
+
+the Recall formula becomes undefined.
+
+To avoid division by zero, this problem specifies returning
+
+$$ \text{Recall} = 0.0 $$
+
+---
+
+### Characteristics / Key Points
+
+- Measures positive class coverage.
+- Values range from **0** to **1**.
+- Higher Recall indicates fewer missed positive samples.
+- Penalizes False Negatives.
+- Independent of True Negatives.
+- Commonly used alongside Precision.
+- Particularly useful for imbalanced datasets.
+- Easy to compute from the confusion matrix.
+
+---
+
+### Why is it used? / Applications
+
+Recall is preferred whenever missing a positive case has serious consequences.
+
+Common applications include
+
+- Disease diagnosis
+- Cancer detection
 - Fraud detection
-- Intrusion detection systems
-- Manufacturing defect detection
-- Disaster warning systems
+- Credit card fraud monitoring
+- Intrusion detection
+- Spam filtering
+- Defect detection
+- Medical imaging
 - Search and information retrieval
+
+In these problems, identifying as many positive samples as possible is more important than avoiding extra positive predictions.
+
+---
+
+### Practical Example
+
+Suppose a disease screening model evaluates **200** patients.
+
+- 50 patients actually have the disease.
+- The model correctly detects 47.
+- It misses 3 patients.
+
+The Recall becomes
+
+$$ \text{Recall} = \frac{47}{47+3} = 0.94 $$
+
+This means the model identifies **94%** of all infected patients.
+
+---
+
+### Common Mistakes
+
+- Confusing Recall with Precision.
+- Ignoring False Negatives.
+- Assuming high Recall always means high Accuracy.
+- Forgetting to handle division by zero.
+- Evaluating Recall without considering Precision.
+
+---
 
 > 💡 **Important Note**
 >
-> A model can achieve **100% recall** by predicting every sample as positive. However, this usually results in many false positives and low precision. In practice, recall is often evaluated together with **Precision**, and both are balanced using the **F1 Score**.
+> A model can achieve **100% Recall** by predicting every sample as positive. Although no positive samples are missed, this usually produces many False Positives. Therefore, Recall should almost always be evaluated together with Precision or the F1 Score.
 
 ---
 
-# Solution
+## Solution
 
-## Custom Implementation
+### NumPy Implementation
 
 ```python
 import numpy as np
@@ -152,69 +266,70 @@ import numpy as np
 def recall(y_true, y_pred):
     TP = np.sum((y_true == 1) & (y_pred == 1))
     FN = np.sum((y_true == 1) & (y_pred == 0))
-
-    return TP / (TP + FN) if (TP + FN) > 0 else 0.0
+    return TP / (TP + FN) if (TP + FN) > 0.0 else 0.0
 ```
 
 ---
 
-# Code Explanation
+## Code Explanation
 
-### Step 1: Count True Positives
+### Step 1
+
+Identify every sample where both the actual label and predicted label are positive.
 
 ```python
 TP = np.sum((y_true == 1) & (y_pred == 1))
 ```
 
-This counts all samples where:
-
-- the actual label is **1**, and
-- the predicted label is also **1**.
+This computes the total number of **True Positives**.
 
 ---
 
-### Step 2: Count False Negatives
+### Step 2
+
+Identify every sample where the actual label is positive but the prediction is negative.
 
 ```python
 FN = np.sum((y_true == 1) & (y_pred == 0))
 ```
 
-This counts samples where:
-
-- the actual label is **1**, but
-- the model incorrectly predicts **0**.
-
-These are the positive samples that the model failed to identify.
+These are the **False Negatives**, representing positive samples missed by the model.
 
 ---
 
-### Step 3: Compute Recall
+### Step 3
 
-Using the formula:
-
-\[
-\text{Recall}
-=
-\frac{TP}{TP+FN}
-\]
-
-The implementation safely handles the edge case where there are **no actual positive samples**.
+Compute the Recall score.
 
 ```python
-return TP / (TP + FN) if (TP + FN) > 0 else 0.0
+TP / (TP + FN)
 ```
 
-Returning `0.0` prevents a division-by-zero error.
+This gives the fraction of actual positive samples correctly identified.
+
+---
+
+### Step 4
+
+Handle the edge case.
+
+```python
+if (TP + FN) > 0.0:
+```
+
+If there are no actual positive samples, return `0.0` instead of performing an invalid division.
 
 ---
 
 ## Time & Space Complexity
 
-Let **n** be the number of samples.
+| Complexity | Value    |
+| ---------- | -------- |
+| Time       | **O(n)** |
+| Space      | **O(1)** |
 
-| Complexity | Value |
-| ---------- | ----- |
-| Time | **O(n)** |
-| Space | **O(1)** |
+where
 
-The algorithm scans the arrays once to compute the counts of **True Positives** and **False Negatives**, while using only constant extra memory.
+- $n$ is the number of samples.
+- Each sample is inspected exactly once.
+- Only two counters (`TP` and `FN`) are maintained, requiring constant extra memory.

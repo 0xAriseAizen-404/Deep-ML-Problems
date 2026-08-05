@@ -10,3 +10,6 @@ def f_score(y_true, y_pred, beta):
     precision = TP / (TP + FP)
     recall = TP / (TP + FN)
     return np.round((1 + beta**2) * ((precision * recall) / (((beta**2) * precision) + recall)), 3)
+
+# TC: O(n)
+# SC: O(1)

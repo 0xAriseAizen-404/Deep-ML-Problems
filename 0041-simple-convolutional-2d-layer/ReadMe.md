@@ -2,12 +2,12 @@
 
 ## Table of Contents
 
-- Problem Statement
-- Example
-- Learn: Understanding 2D Convolution
-- Solution
-- Code Explanation
-- Time & Space Complexity
+- [Problem Statement](#problem-statement)
+- [Example](#example)
+- [Learn: Understanding 2D Convolution](#learn-understanding-2d-convolution)
+- [Solution](#solution)
+- [Code Explanation](#code-explanation)
+- [Time & Space Complexity](#time--space-complexity)
 
 ---
 

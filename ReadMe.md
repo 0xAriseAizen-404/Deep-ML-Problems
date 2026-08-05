@@ -21,7 +21,8 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 | Deep Learning    |       6 |         2 |       0 |     **8** |
 | Pytorch          |       1 |         0 |       0 |     **1** |
 | Computer Vision  |       1 |         0 |       0 |     **1** |
-| **Total**        |  **34** |    **11** |   **1** |    **46** |
+| NLP              |       0 |         1 |       0 |     **1** |
+| **Total**        |  **34** |    **12** |   **1** |    **47** |
 
 ---
 
@@ -69,19 +70,20 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 
 ## 🟡 Medium
 
-| Problem                                                                                                                                                             | Category         |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
-| [0006 - Calculate Eigenvalues of a Matrix](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0006-calculate-eigenvalues-of-a-matrix)                   | Linear Algebra   |
-| [0007 - Matrix Transformation](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0007-matrix-transformation)                                           | Linear Algebra   |
-| [0009 - Matrix Times Matrix](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0009-matrix-times-matrix)                                               | Linear Algebra   |
-| [0011 - Solve Linear Equations Using Jacobi Method](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0011-solve-linear-equations-using-jacobi-method) | Linear Algebra   |
-| [0017 - KMeans Clustering](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0017-kmeans-clustering)                                                   | Machine Learning |
-| [0025 - Single Neuron with Backpropogation](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0025-single-neuron-with-backpropogation)                 | Deep Learning    |
-| [0031 - Divide Dataset Based on Feature Threshold](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0031-divide-dataset-based-on-feature-threshold)   | Machine Learning |
-| [0032 - Generate Sorted Polynomial Features](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0032-generate-sorted-polynomial-features)               | Machine Learning |
-| [0033 - Generate Random Subsets of a Dataset](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0033-generate-random-subsets-of-a-dataset)             | Machine Learning |
-| [0037 - Calculate Correlation Matrix](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0037-calculate-correlation-matrix)                             | Linear Algebra   |
-| [0041 - Simple Convolutional 2D Layer](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0041-simple-convolutional-2d-layer)                           | Deep Learning    |
+| Problem                                                                                                                                                                                               | Category         |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
+| [0006 - Calculate Eigenvalues of a Matrix](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0006-calculate-eigenvalues-of-a-matrix)                                                     | Linear Algebra   |
+| [0007 - Matrix Transformation](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0007-matrix-transformation)                                                                             | Linear Algebra   |
+| [0009 - Matrix Times Matrix](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0009-matrix-times-matrix)                                                                                 | Linear Algebra   |
+| [0011 - Solve Linear Equations Using Jacobi Method](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0011-solve-linear-equations-using-jacobi-method)                                   | Linear Algebra   |
+| [0017 - KMeans Clustering](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0017-kmeans-clustering)                                                                                     | Machine Learning |
+| [0025 - Single Neuron with Backpropogation](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0025-single-neuron-with-backpropogation)                                                   | Deep Learning    |
+| [0031 - Divide Dataset Based on Feature Threshold](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0031-divide-dataset-based-on-feature-threshold)                                     | Machine Learning |
+| [0032 - Generate Sorted Polynomial Features](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0032-generate-sorted-polynomial-features)                                                 | Machine Learning |
+| [0033 - Generate Random Subsets of a Dataset](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0033-generate-random-subsets-of-a-dataset)                                               | Machine Learning |
+| [0037 - Calculate Correlation Matrix](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0037-calculate-correlation-matrix)                                                               | Linear Algebra   |
+| [0041 - Simple Convolutional 2D Layer](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0041-simple-convolutional-2d-layer)                                                             | Deep Learning    |
+| [0060 - Implement TF-IDF (Term Frequency-Inverse Document Frequency)](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0060-implement-tf-idf-term-frequency-inverse-document-frequency) | NLP              |
 
 ---
 

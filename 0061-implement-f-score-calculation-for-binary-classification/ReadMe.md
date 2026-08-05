@@ -2,34 +2,35 @@
 
 ## Table of Contents
 
-- Problem Statement
-- Example
-- Learn: F-Score
-- Solution
-- Code Explanation
-- Time & Space Complexity
+- [Problem Statement](#problem-statement)
+- [Example](#example)
+- [Learn: Understanding F-Score in Classification](#learn-understanding-f-score-in-classification)
+- [Solution](#solution)
+- [Code Explanation](#code-explanation)
+- [Time & Space Complexity](#time--space-complexity)
 
 ---
 
 ## Problem Statement
 
-[Implement F-Score Calculation for Binary Classification](https://www.deep-ml.com/problems/61)
+### [Implement F-Score Calculation for Binary Classification](https://www.deep-ml.com/problems/61)
 
-Write a Python function `f_score(y_true, y_pred, beta)` that computes the **F-Score** for a binary classification problem.
+Write a Python function that computes the **F-Score** for a binary classification task.
 
-The function takes:
+The function should:
 
-- `y_true` — True binary labels.
-- `y_pred` — Predicted binary labels.
-- `beta` — A parameter that controls the relative importance of **Recall** versus **Precision**.
-
-When `beta = 1`, the function computes the **F1-Score**, which gives equal importance to Precision and Recall.
-
-The final F-Score should be rounded to **three decimal places**.
+- Accept the true binary labels.
+- Accept the predicted binary labels.
+- Accept a configurable **beta** value.
+- Compute the Precision and Recall.
+- Calculate the corresponding **F-Score**.
+- Return the result rounded to **three decimal places**.
 
 ---
 
 ## Example
+
+### Input
 
 ```python
 import numpy as np
@@ -44,206 +45,207 @@ print(f_score(y_true, y_pred, beta))
 
 ### Output
 
-```text
+```python
 0.857
 ```
 
-### Explanation
+### Reasoning
 
-First compute the confusion matrix values:
+From the predictions,
 
-- True Positives (TP) = 3
-- False Positives (FP) = 0
-- False Negatives (FN) = 1
+- True Positives (TP) = **3**
+- False Positives (FP) = **0**
+- False Negatives (FN) = **1**
 
-Calculate Precision:
+Therefore,
 
-\[
-\text{Precision}
-=
-\frac{TP}{TP+FP}
-=
-\frac{3}{3}
-=
-1.0
-\]
+$$ \text{Precision} = \frac{3}{3+0} = 1.0 $$
 
-Calculate Recall:
+$$ \text{Recall} = \frac{3}{3+1} = 0.75 $$
 
-\[
-\text{Recall}
-=
-\frac{TP}{TP+FN}
-=
-\frac{3}{4}
-=
-0.75
-\]
+Since **β = 1**, the metric becomes the **F1-Score**.
 
-Since \( \beta = 1 \),
-
-\[
-F_1
-=
-2
-\times
-\frac{\text{Precision}\times\text{Recall}}
-{\text{Precision}+\text{Recall}}
-\]
-
-\[
-=
-2
-\times
-\frac{1.0\times0.75}
-{1.0+0.75}
-=
-0.857
-\]
+$$ F_1 = \frac{2\times1.0\times0.75}{1.0+0.75} = 0.857 $$
 
 ---
 
-# Learn: F-Score
+## Learn: Understanding F-Score in Classification
 
-## What is it?
+### What is it?
 
-The **F-Score** (or **F-Measure**) is an evaluation metric that combines **Precision** and **Recall** into a single value.
+The **F-Score** (or **F-Measure**) is a performance metric that combines **Precision** and **Recall** into a single value.
 
-A good classification model should:
+Instead of evaluating these metrics independently, the F-Score provides a balanced assessment of a classification model, especially for **imbalanced datasets**.
 
-- Predict positive samples correctly (**High Precision**).
-- Find as many positive samples as possible (**High Recall**).
+The parameter **β (beta)** determines whether Precision or Recall should receive more importance.
 
-However, improving one metric often decreases the other. The F-Score provides a **balanced evaluation** by considering both simultaneously.
-
-The most commonly used version is the **F1-Score**, where Precision and Recall are weighted equally.
+- β = 1 → Equal importance (**F1-Score**)
+- β > 1 → Recall is emphasized.
+- β < 1 → Precision is emphasized.
 
 ---
 
-## Mathematical Definition / Formula
+### Mathematical Definition
 
-The general **Fβ-Score** is defined as
+The general F-Score is defined as
 
-\[
-F_{\beta}
-=
-\frac{(1+\beta^2)\times(\text{Precision}\times\text{Recall})}
-{(\beta^2\times\text{Precision})+\text{Recall}}
-\]
+$$ F\_\beta = \frac{(1+\beta^2)\times\text{Precision}\times\text{Recall}}{(\beta^2\times\text{Precision})+\text{Recall}} $$
 
 where
 
-- **Precision**
-
-\[
-\text{Precision}
-=
-\frac{TP}{TP+FP}
-\]
-
-- **Recall**
-
-\[
-\text{Recall}
-=
-\frac{TP}{TP+FN}
-\]
+- **Precision** measures prediction correctness.
+- **Recall** measures positive class coverage.
+- **β** controls the trade-off between Precision and Recall.
 
 ---
 
-### Effect of β
+### Precision
 
-The value of **β** determines which metric is given more importance.
+Precision measures how many predicted positive samples are actually positive.
 
-- **β = 1**
+$$ \text{Precision} = \frac{TP}{TP+FP} $$
 
-\[
-F_1
-=
-2
-\times
-\frac{PR}{P+R}
-\]
+where
 
-Precision and Recall are equally important.
+- $TP$ is the number of True Positives.
+- $FP$ is the number of False Positives.
+
+Higher Precision means fewer incorrect positive predictions.
 
 ---
 
-- **β > 1**
+### Recall
 
-Recall is weighted **more heavily** than Precision.
+Recall measures how many actual positive samples were correctly identified.
 
-Useful when **missing positive samples is expensive**.
+$$ \text{Recall} = \frac{TP}{TP+FN} $$
 
----
+where
 
-- **β < 1**
+- $FN$ is the number of False Negatives.
 
-Precision is weighted **more heavily** than Recall.
-
-Useful when **false positives are expensive**.
+Higher Recall means fewer missed positive samples.
 
 ---
 
-## Characteristics / Key Points
+### F1-Score
 
-- Combines Precision and Recall into a single metric.
-- Values range from **0 to 1**.
+When
+
+$$ \beta = 1 $$
+
+the formula becomes
+
+$$ F_1 = \frac{2\times\text{Precision}\times\text{Recall}}{\text{Precision}+\text{Recall}} $$
+
+The F1-Score is the harmonic mean of Precision and Recall.
+
+Unlike the arithmetic mean, the harmonic mean penalizes models that perform poorly on either metric.
+
+---
+
+### Confusion Matrix
+
+The required quantities are obtained from the confusion matrix.
+
+| Actual \ Predicted | Positive | Negative |
+| ------------------ | -------- | -------- |
+| Positive           | TP       | FN       |
+| Negative           | FP       | TN       |
+
+Only **TP**, **FP**, and **FN** contribute to the F-Score calculation.
+
+---
+
+### Choosing β
+
+Different values of β prioritize different objectives.
+
+| β Value | Priority  |
+| ------- | --------- |
+| β < 1   | Precision |
+| β = 1   | Balanced  |
+| β > 1   | Recall    |
+
+For example,
+
+- Spam detection often prefers Precision.
+- Disease diagnosis usually prefers Recall.
+- General classification commonly uses the F1-Score.
+
+---
+
+### Characteristics / Key Points
+
+- Combines Precision and Recall into one metric.
+- Values range from **0** to **1**.
 - Higher values indicate better classification performance.
-- Useful for **imbalanced datasets**.
-- Penalizes models that have high Precision but low Recall (or vice versa).
-- Uses the **harmonic mean**, making it more sensitive to low values than the arithmetic mean.
+- Useful for imbalanced datasets.
+- Penalizes poor Precision or poor Recall.
+- Independent of True Negatives.
+- Common evaluation metric in machine learning competitions.
 
 ---
 
-## Why Harmonic Mean?
+### Why is it used? / Applications
 
-Instead of averaging Precision and Recall directly, the F-Score uses the **harmonic mean**:
-
-\[
-\text{Harmonic Mean}
-=
-\frac{2ab}{a+b}
-\]
-
-The harmonic mean ensures that both Precision and Recall must be high to achieve a high F-Score.
-
-For example:
-
-| Precision | Recall | Arithmetic Mean | F1-Score |
-| ---------- | ------ | --------------- | -------- |
-| 1.0 | 0.0 | 0.5 | 0.0 |
-| 0.8 | 0.8 | 0.8 | 0.8 |
-| 0.9 | 0.3 | 0.6 | 0.45 |
-
-Notice how the harmonic mean heavily penalizes imbalance between the two metrics.
-
----
-
-## Why is it used? / Applications
-
-The F-Score is widely used when both false positives and false negatives matter.
-
-Common applications include:
+The F-Score is widely used in
 
 - Medical diagnosis
-- Spam email detection
 - Fraud detection
+- Spam filtering
 - Search engines
-- Recommendation systems
 - Information retrieval
 - Sentiment analysis
-- Credit risk prediction
+- Document classification
+- Object detection
+- NLP classification tasks
+
+It provides a better measure than Accuracy when the classes are imbalanced.
+
+---
+
+### Practical Example
+
+Suppose a classifier predicts
+
+- TP = 90
+- FP = 10
+- FN = 20
+
+Then,
+
+$$ \text{Precision} = \frac{90}{90+10} = 0.90 $$
+
+$$ \text{Recall} = \frac{90}{90+20} \approx 0.818 $$
+
+The F1-Score becomes
+
+$$ F_1 = \frac{2\times0.90\times0.818}{0.90+0.818} \approx 0.857 $$
+
+The classifier achieves a balanced performance between Precision and Recall.
+
+---
+
+### Common Mistakes
+
+- Confusing the F1-Score with Accuracy.
+- Ignoring the effect of β.
+- Forgetting to compute Precision before Recall.
+- Not handling zero denominators.
+- Using the F-Score alone without considering class distribution.
+
+---
 
 > 💡 **Important Note**
 >
-> Accuracy can be misleading for imbalanced datasets. For example, if only 1% of patients have a disease, a model predicting everyone as healthy achieves **99% accuracy**, but its Recall and F1-Score are **0**. This is why Precision, Recall, and F-Score are preferred for evaluating imbalanced classification problems.
+> The F1-Score is the most commonly reported version of the F-Score because it gives equal importance to Precision and Recall. However, in applications where missing positives or false alarms have different costs, choosing an appropriate β value provides a more meaningful evaluation.
 
 ---
 
-# Solution
+## Solution
 
-## Custom Implementation
+### NumPy Implementation
 
 ```python
 import numpy as np
@@ -258,8 +260,7 @@ def f_score(y_true, y_pred, beta):
     recall = TP / (TP + FN)
 
     return np.round(
-        (1 + beta**2) *
-        (
+        (1 + beta**2) * (
             (precision * recall) /
             (((beta**2) * precision) + recall)
         ),
@@ -269,9 +270,11 @@ def f_score(y_true, y_pred, beta):
 
 ---
 
-# Code Explanation
+## Code Explanation
 
-### Step 1: Compute the Confusion Matrix
+### Step 1
+
+Count the values in the confusion matrix.
 
 ```python
 TP = np.sum((y_true == 1) & (y_pred == 1))
@@ -280,76 +283,70 @@ FP = np.sum((y_true == 0) & (y_pred == 1))
 TN = np.sum((y_true == 0) & (y_pred == 0))
 ```
 
-These values summarize the classification results.
+These values summarize the classifier's predictions.
 
 ---
 
-### Step 2: Compute Precision
+### Step 2
+
+Compute Precision.
 
 ```python
 precision = TP / (TP + FP)
 ```
 
-Precision measures:
-
-> Out of all predicted positive samples, how many were actually positive?
+This measures how many predicted positive samples are actually correct.
 
 ---
 
-### Step 3: Compute Recall
+### Step 3
+
+Compute Recall.
 
 ```python
 recall = TP / (TP + FN)
 ```
 
-Recall measures:
-
-> Out of all actual positive samples, how many were correctly identified?
+This measures how many actual positive samples are correctly identified.
 
 ---
 
-### Step 4: Compute the F-Score
+### Step 4
 
-Using
+Compute the F-Score.
 
-\[
-F_{\beta}
-=
-\frac{(1+\beta^2)\times PR}
-{(\beta^2P)+R}
-\]
+```python
+(1 + beta**2) * (
+    (precision * recall) /
+    (((beta**2) * precision) + recall)
+)
+```
 
-the implementation calculates the weighted harmonic mean of Precision and Recall.
+The β parameter determines the relative importance of Precision and Recall.
 
-Finally,
+---
+
+### Step 5
+
+Round the result.
 
 ```python
 np.round(..., 3)
 ```
 
-rounds the result to **three decimal places**.
+The final score is rounded to **three decimal places** as required.
 
 ---
 
 ## Time & Space Complexity
 
-Let **n** be the number of samples.
+| Complexity | Value    |
+| ---------- | -------- |
+| Time       | **O(n)** |
+| Space      | **O(1)** |
 
-| Complexity | Value |
-| ---------- | ----- |
-| Time | **O(n)** |
-| Space | **O(1)** |
+where
 
-The algorithm performs a single pass over the arrays to compute the confusion matrix values and then evaluates the F-Score using constant extra memory.
-
----
-## Note
-
-The provided implementation assumes that the denominators for **Precision**, **Recall**, and the **F-Score** formula are non-zero. In a production implementation, you should handle these edge cases to avoid division-by-zero errors:
-
-```python
-if TP + FP == 0 or TP + FN == 0:
-    return 0.0
-```
-
-This ensures the function behaves correctly even when there are no predicted positives or no actual positives.
+- $n$ is the number of samples.
+- The arrays are scanned once to compute the confusion matrix.
+- Only a constant number of variables are used, resulting in constant auxiliary space.

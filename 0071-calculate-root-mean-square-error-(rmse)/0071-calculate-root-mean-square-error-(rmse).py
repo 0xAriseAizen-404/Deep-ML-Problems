@@ -9,3 +9,6 @@ def rmse(y_true, y_pred):
             f"Shape mismatch: y_true shape {y_true.shape} != y_pred shape {y_pred.shape}"
         )
     return np.round(np.sqrt(np.mean((y_true - y_pred) ** 2)), 3)
+
+# TC: O(n)
+# SC: O(n)
