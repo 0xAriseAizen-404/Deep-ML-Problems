@@ -5,26 +5,25 @@
 - [Problem Statement](#problem-statement)
 - [Example](#example)
 - [Learn: Scalar Multiplication of a Matrix](#learn-scalar-multiplication-of-a-matrix)
-- [Things to Note](#things-to-note)
 - [Solutions](#solutions)
   - [Custom Implementation](#custom-implementation)
   - [NumPy Implementation](#numpy-implementation)
 - [Code Explanation](#code-explanation)
 - [Time & Space Complexity](#time--space-complexity)
 
----
+## Problem Statement
 
-# Problem Statement
+### [Scalar Multiplication of a Matrix](https://www.deep-ml.com/problems/5)
 
-[Scalar Multiplication of a Matrix](https://www.deep-ml.com/problems/5)
+Write a Python function that multiplies every element of a matrix by a given scalar and returns the resulting matrix.
 
-Write a Python function `scalar_multiply(matrix, scalar)` that performs scalar multiplication on a matrix.
-
-The function should multiply every element of the matrix by the given scalar and return the resulting matrix.
+The dimensions of the matrix remain unchanged; only the values are scaled.
 
 ---
 
-# Example
+## Example
+
+### Input
 
 ```python
 matrix = [
@@ -33,99 +32,99 @@ matrix = [
 ]
 
 scalar = 2
-
-print(scalar_multiply(matrix, scalar))
 ```
 
 ### Output
 
-```text
+```python
 [
     [2, 4],
     [6, 8]
 ]
 ```
 
-### Explanation
+### Reasoning
 
-Each element of the matrix is multiplied by the scalar value.
+Each element is multiplied by the scalar value.
 
 $$
-2
+2 \times
 \begin{bmatrix}
-1&2\\
-3&4
+1 & 2\\
+3 & 4
 \end{bmatrix}
 =
 \begin{bmatrix}
-2&4\\
-6&8
+2 & 4\\
+6 & 8
 \end{bmatrix}
 $$
 
 ---
 
-# Learn: Scalar Multiplication of a Matrix
+## Learn: Scalar Multiplication of a Matrix
 
-## What is Scalar Multiplication?
+### What is it?
 
-A **scalar** is a single numerical value.
+Scalar multiplication is one of the simplest matrix operations. It multiplies **every element** of a matrix by a single numerical value called a **scalar**.
 
-Examples include
+The operation changes the magnitude of every matrix element while preserving:
 
-$$
-2,\;-3,\;0.5,\;\pi
-$$
+- The matrix dimensions
+- The arrangement of elements
+- The relative proportions between elements
 
-When a matrix is multiplied by a scalar, **every element** of the matrix is multiplied by that scalar.
-
-The dimensions of the matrix never change.
-
-Only the values of its elements change.
+If the scalar is greater than 1, the matrix is enlarged. If it is between 0 and 1, the matrix is compressed. A negative scalar additionally reverses the sign of every element.
 
 ---
 
-## Mathematical Definition
-
-Suppose
-
-$$
-A=
-\begin{bmatrix}
-a_{11}&a_{12}&\cdots&a_{1n}\\
-a_{21}&a_{22}&\cdots&a_{2n}\\
-\vdots&\vdots&\ddots&\vdots\\
-a_{m1}&a_{m2}&\cdots&a_{mn}
-\end{bmatrix}
-$$
-
-and let the scalar be $k$.
-
-Then
-
-$$
-kA=
-\begin{bmatrix}
-ka_{11}&ka_{12}&\cdots&ka_{1n}\\
-ka_{21}&ka_{22}&\cdots&ka_{2n}\\
-\vdots&\vdots&\ddots&\vdots\\
-ka_{m1}&ka_{m2}&\cdots&ka_{mn}
-\end{bmatrix}
-$$
-
-Every element is multiplied independently by the scalar.
-
----
-
-## Example
+### Mathematical Definition
 
 Let
 
 $$
+A \in \mathbb{R}^{m \times n}
+$$
+
+be a matrix and
+
+$$
+k \in \mathbb{R}
+$$
+
+be a scalar.
+
+The scalar multiplication is defined as
+
+$$
+kA=
+\begin{bmatrix}
+ka_{11} & ka_{12} & \cdots & ka_{1n}\\
+ka_{21} & ka_{22} & \cdots & ka_{2n}\\
+\vdots & \vdots & \ddots & \vdots\\
+ka_{m1} & ka_{m2} & \cdots & ka_{mn}
+\end{bmatrix}
+$$
+
+Equivalently,
+
+$$
+(kA)_{ij}=k \cdot a_{ij}
+$$
+
+Every element is multiplied independently by the same scalar.
+
+---
+
+### Example
+
+Original matrix
+
+$$
 A=
 \begin{bmatrix}
-1&2\\
-3&4
+1 & 2\\
+3 & 4
 \end{bmatrix}
 $$
 
@@ -135,33 +134,39 @@ $$
 k=3
 $$
 
-Then
+Result
 
 $$
 3A=
 \begin{bmatrix}
-3&6\\
-9&12
+3 & 6\\
+9 & 12
 \end{bmatrix}
 $$
 
-Notice that the matrix shape remains
-
-$$
-2\times2
-$$
-
-Only the numerical values change.
+Only the values change; the matrix remains **2 × 2**.
 
 ---
 
-## Properties of Scalar Multiplication
+### Geometric Interpretation
 
-For scalars $a$ and $b$, and matrices $A$ and $B$,
+A matrix can be viewed as a collection of vectors.
 
-### Identity Property
+Multiplying by a scalar scales every vector uniformly.
 
-Multiplying by $1$ leaves the matrix unchanged.
+- $k>1$ stretches the vectors.
+- $0<k<1$ shrinks the vectors.
+- $k=1$ leaves the matrix unchanged.
+- $k=0$ converts every element into zero.
+- $k<0$ scales the matrix and reverses the direction of every vector.
+
+---
+
+### Properties of Scalar Multiplication
+
+#### Identity
+
+Multiplying by 1 leaves the matrix unchanged.
 
 $$
 1A=A
@@ -169,9 +174,9 @@ $$
 
 ---
 
-### Zero Property
+#### Zero Scalar
 
-Multiplying by $0$ produces the zero matrix.
+Multiplying by zero produces the zero matrix.
 
 $$
 0A=0
@@ -179,7 +184,15 @@ $$
 
 ---
 
-### Distributive Property over Matrix Addition
+#### Associativity
+
+$$
+(ab)A=a(bA)
+$$
+
+---
+
+#### Distributive over Matrix Addition
 
 $$
 k(A+B)=kA+kB
@@ -187,7 +200,7 @@ $$
 
 ---
 
-### Distributive Property over Scalar Addition
+#### Distributive over Scalar Addition
 
 $$
 (a+b)A=aA+bA
@@ -195,162 +208,130 @@ $$
 
 ---
 
-### Associative Property
+### Characteristics / Key Points
 
-$$
-a(bA)=(ab)A
-$$
+- Every element is multiplied independently.
+- Matrix dimensions never change.
+- The relative arrangement of elements remains unchanged.
+- Negative scalars change the sign of every element.
+- Zero produces the zero matrix.
+- Computationally simple and highly parallelizable.
 
 ---
 
-## Applications
+### Why is it Used?
 
-Scalar multiplication is widely used in:
+Scalar multiplication is frequently used in Linear Algebra and Machine Learning.
+
+Some applications include:
 
 - Feature scaling
+- Gradient updates during optimization
+- Weight initialization
 - Image brightness adjustment
-- Linear transformations
-- Neural network weight updates
-- Physics (scaling vectors and matrices)
-- Computer graphics
+- Data normalization
+- Physics simulations
+- Computer graphics transformations
+- Scientific computing
+
+For example, in Gradient Descent, model parameters are updated using
+
+$$
+W_{new}=W-\eta\nabla J(W)
+$$
+
+where
+
+- $W$ is the weight matrix.
+- $\eta$ is the learning rate (a scalar).
+- $\nabla J(W)$ is the gradient matrix.
+
+The learning rate scales the entire gradient matrix before the update.
 
 ---
 
-# Things to Note
-
-- Every matrix element is multiplied independently.
-- The dimensions of the matrix never change.
-- Multiplying by $1$ leaves the matrix unchanged.
-- Multiplying by $0$ produces a zero matrix.
-- Negative scalars reverse the sign of every element.
+> 💡 **Important Note**
+>
+> Scalar multiplication affects only the **values** of a matrix—not its shape. Unlike matrix multiplication, there are no dimension compatibility rules because every element is processed independently.
 
 ---
 
-# Solutions
+## Solutions
 
-## Custom Implementation
+### Custom Implementation
 
 ```python
 def scalar_multiply(matrix: list[list[int | float]], scalar: int | float) -> list[list[int | float]]:
-    l = []
+    for i in range(len(matrix)):
+        for j in range(len(matrix[i])):
+            matrix[i][j] *= scalar
 
-    for row in matrix:
-        l.append([value * scalar for value in row])
-
-    return l
+    return matrix
 ```
 
----
-
-## NumPy Implementation
+### NumPy Implementation
 
 ```python
 import numpy as np
 
-def scalar_multiply(matrix: list[list[int | float]], scalar: int | float):
-    return np.multiply(matrix, scalar)
+def scalar_multiply(matrix: list[list[int | float]], scalar: int | float) -> list[list[int | float]]:
+    return (np.asarray(matrix) * scalar).tolist()
 ```
 
 ---
 
-# Code Explanation
+## Code Explanation
 
-## Custom Implementation
-
-### Step 1: Create the Result Matrix
+### 1. Convert the Matrix to a NumPy Array
 
 ```python
-l = []
+np.asarray(matrix)
 ```
 
-A new matrix is created to store the scaled values.
+The input list is converted into a NumPy array to enable efficient element-wise operations.
 
 ---
 
-### Step 2: Iterate Through Every Row
+### 2. Multiply by the Scalar
 
 ```python
-for row in matrix:
+np.asarray(matrix) * scalar
 ```
 
-The loop visits each row of the matrix one at a time.
-
----
-
-### Step 3: Multiply Every Element
-
-```python
-[value * scalar for value in row]
-```
-
-The list comprehension multiplies every element of the current row by the scalar.
+NumPy automatically multiplies every element by the given scalar.
 
 Mathematically,
 
 $$
-ka_{ij}
+(kA)_{ij}=k \times a_{ij}
 $$
 
-is computed for every matrix element $a_{ij}$.
+No explicit loops are required because NumPy performs vectorized computation internally.
 
 ---
 
-### Step 4: Store the New Row
+### 3. Convert Back to a Python List
 
 ```python
-l.append(...)
+.tolist()
 ```
 
-The scaled row is appended to the result matrix.
+The resulting NumPy array is converted back into a standard Python list before returning.
 
 ---
 
-### Step 5: Return the Result
+## Time & Space Complexity
 
-```python
-return l
-```
+Let
 
-The function returns the scalar-multiplied matrix.
+- $m$ = number of rows
+- $n$ = number of columns
 
----
-
-## NumPy Implementation
-
-### Convert and Multiply
-
-```python
-np.multiply(matrix, scalar)
-```
-
-NumPy performs **element-wise multiplication**.
-
-Each element
-
-$$
-a_{ij}
-$$
-
-is transformed into
-
-$$
-ka_{ij}
-$$
-
-using optimized vectorized operations.
-
----
-
-# Time & Space Complexity
-
-Assume the matrix contains
-
-- $m$ rows.
-- $n$ columns.
+Every element is multiplied exactly once.
 
 | Complexity | Value |
-|------------|-------|
-| Time | **O(mn)** |
-| Space | **O(mn)** |
+| ---------- | ----- |
+| Time | **O(m × n)** |
+| Space | **O(m × n)** |
 
-Every element is visited exactly once, and a new matrix of the same size is returned.
+The returned matrix contains the same number of elements as the original matrix.

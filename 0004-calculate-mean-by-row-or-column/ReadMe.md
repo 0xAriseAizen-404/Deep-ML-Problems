@@ -5,31 +5,28 @@
 - [Problem Statement](#problem-statement)
 - [Example](#example)
 - [Learn: Calculate Mean by Row or Column](#learn-calculate-mean-by-row-or-column)
-- [Things to Note](#things-to-note)
 - [Solutions](#solutions)
   - [Custom Implementation](#custom-implementation)
   - [NumPy Implementation](#numpy-implementation)
 - [Code Explanation](#code-explanation)
 - [Time & Space Complexity](#time--space-complexity)
 
----
+## Problem Statement
 
-# Problem Statement
+### [Calculate Mean by Row or Column](https://www.deep-ml.com/problems/4)
 
-[Calculate Mean by Row or Column](https://www.deep-ml.com/problems/4)
+Write a Python function that computes the **mean** of a matrix either **row-wise** or **column-wise**, depending on the given mode.
 
-Write a Python function `calculate_matrix_mean(matrix, mode)` that computes the mean of a matrix either **row-wise** or **column-wise**.
+- If the mode is `"row"`, return the mean of every row.
+- If the mode is `"column"`, return the mean of every column.
 
-The parameter `mode` determines whether the function calculates:
-
-- `"row"` → Mean of every row.
-- `"column"` → Mean of every column.
-
-The function should return a list containing the computed means.
+The function should return the resulting means as a list of floating-point numbers.
 
 ---
 
-# Example
+## Example
+
+### Input
 
 ```python
 matrix = [
@@ -38,70 +35,52 @@ matrix = [
     [7, 8, 9]
 ]
 
-print(calculate_matrix_mean(matrix, "column"))
+mode = "column"
 ```
 
 ### Output
 
-```text
+```python
 [4.0, 5.0, 6.0]
 ```
 
-### Explanation
+### Reasoning
 
-Column means are
+The mean of each column is calculated independently.
+
+First column:
 
 $$
 \frac{1+4+7}{3}=4
 $$
 
+Second column:
+
 $$
 \frac{2+5+8}{3}=5
 $$
+
+Third column:
 
 $$
 \frac{3+6+9}{3}=6
 $$
 
----
+Therefore,
 
 ```python
-print(calculate_matrix_mean(matrix, "row"))
+[4.0, 5.0, 6.0]
 ```
-
-### Output
-
-```text
-[2.0, 5.0, 8.0]
-```
-
-### Explanation
-
-Row means are
-
-$$
-\frac{1+2+3}{3}=2
-$$
-
-$$
-\frac{4+5+6}{3}=5
-$$
-
-$$
-\frac{7+8+9}{3}=8
-$$
 
 ---
 
-# Learn: Calculate Mean by Row or Column
+## Learn: Calculate Mean by Row or Column
 
-## What is the Mean?
+### What is Mean?
 
-The **mean (average)** is the central value of a collection of numbers.
+The **mean** (or arithmetic average) is one of the most fundamental statistical measures. It represents the central value of a collection of numbers.
 
-For a set containing $n$ numbers,
-
-the mean is
+For a dataset containing $n$ values,
 
 $$
 \mu=\frac{1}{n}\sum_{i=1}^{n}x_i
@@ -109,133 +88,170 @@ $$
 
 where
 
+- $\mu$ is the mean.
 - $x_i$ is the $i^{th}$ value.
 - $n$ is the total number of values.
 
+The mean provides a simple summary of the data and is widely used in statistics and machine learning.
+
 ---
 
-## Row Mean
+### Row Mean
 
-Suppose a matrix
+A row mean computes the average of all elements within a single row.
 
-$$
-A=
-\begin{bmatrix}
-a_{11}&a_{12}&\cdots&a_{1n}\\
-a_{21}&a_{22}&\cdots&a_{2n}\\
-\vdots&\vdots&\ddots&\vdots\\
-a_{m1}&a_{m2}&\cdots&a_{mn}
-\end{bmatrix}
-$$
-
-The mean of row $i$ is
+For the $i^{th}$ row,
 
 $$
-\mu_{\text{row }i}
-=
-\frac{1}{n}
-\sum_{j=1}^{n}
-a_{ij}
+\mu_{row,i}=\frac{1}{n}\sum_{j=1}^{n}a_{ij}
 $$
 
 where
 
+- $a_{ij}$ is the element in row $i$ and column $j$.
 - $n$ is the number of columns.
-- $a_{ij}$ is the element at row $i$ and column $j$.
+
+Each row produces one average value.
+
+For example,
+
+```text
+[1, 2, 3]
+```
+
+has mean
+
+$$
+\frac{1+2+3}{3}=2
+$$
 
 ---
 
-## Column Mean
+### Column Mean
 
-Similarly, the mean of column $j$ is
+A column mean computes the average of all elements within a single column.
+
+For the $j^{th}$ column,
 
 $$
-\mu_{\text{column }j}
-=
-\frac{1}{m}
-\sum_{i=1}^{m}
-a_{ij}
+\mu_{column,j}=\frac{1}{m}\sum_{i=1}^{m}a_{ij}
 $$
 
 where
 
 - $m$ is the number of rows.
-- $a_{ij}$ is the element at row $i$ and column $j$.
+- $a_{ij}$ is the element in row $i$ and column $j$.
 
----
+Each column contributes one value to the output.
 
-## Visualization
+For example,
 
-Consider
+```text
+1
+4
+7
+```
 
-$$
-A=
-\begin{bmatrix}
-1&2&3\\
-4&5&6\\
-7&8&9
-\end{bmatrix}
-$$
-
-### Row Means
+has mean
 
 $$
-\left[
-\frac{1+2+3}{3},
-\frac{4+5+6}{3},
-\frac{7+8+9}{3}
-\right]
-=
-[2,5,8]
-$$
-
-### Column Means
-
-$$
-\left[
-\frac{1+4+7}{3},
-\frac{2+5+8}{3},
-\frac{3+6+9}{3}
-\right]
-=
-[4,5,6]
+\frac{1+4+7}{3}=4
 $$
 
 ---
 
-## Applications
+### Mean Along an Axis
 
-Computing row and column means is one of the most common preprocessing operations in Machine Learning.
+When computing means in a matrix, one dimension is **collapsed** while the other is preserved.
 
-Applications include:
+For a matrix of shape
+
+$$
+m \times n
+$$
+
+- **Row mean** collapses the columns, producing **m** values.
+- **Column mean** collapses the rows, producing **n** values.
+
+For example,
+
+```text
+1 2 3
+4 5 6
+7 8 9
+```
+
+Row means:
+
+```text
+2
+5
+8
+```
+
+Column means:
+
+```text
+4
+5
+6
+```
+
+Although both operations use the same elements, they summarize the data along different dimensions.
+
+---
+
+### Characteristics / Key Points
+
+- Computes the arithmetic average.
+- Row mode returns one value for each row.
+- Column mode returns one value for each column.
+- Preserves one dimension while reducing the other.
+- Produces floating-point results even when inputs are integers.
+- Assumes all rows have the same number of columns.
+
+---
+
+### Why is it Used?
+
+Mean computation is one of the most common preprocessing operations in Machine Learning.
+
+Some applications include:
 
 - Feature normalization
 - Data standardization
-- Mean-centering datasets
-- Principal Component Analysis (PCA)
+- Exploratory Data Analysis (EDA)
+- Missing value imputation
+- Computing dataset statistics
 - Image processing
-- Statistical analysis
+- Signal processing
+- Batch statistics in Deep Learning
+
+For example, feature scaling often subtracts the column mean before dividing by the standard deviation:
+
+$$
+x'=\frac{x-\mu}{\sigma}
+$$
+
+where
+
+- $x$ is the original value.
+- $\mu$ is the feature mean.
+- $\sigma$ is the standard deviation.
 
 ---
 
-# Things to Note
-
-- Row mean computes one average **per row**.
-- Column mean computes one average **per column**.
-- The output length depends on the selected mode.
-- A matrix with $m$ rows and $n$ columns produces:
-  - $m$ row means.
-  - $n$ column means.
+> 💡 **Important Note**
+>
+> The row mean and column mean summarize the same matrix from different perspectives. A common mistake is confusing the axis of computation. In NumPy, `axis=0` computes **column means**, while `axis=1` computes **row means** because `axis` specifies the dimension being reduced.
 
 ---
 
-# Solutions
+## Solutions
 
-## Custom Implementation
+### Custom Implementation
 
 ```python
-import numpy as np
-
 def calculate_matrix_mean(matrix: list[list[float]], mode: str) -> list[float]:
     res = []
 
@@ -250,9 +266,7 @@ def calculate_matrix_mean(matrix: list[list[float]], mode: str) -> list[float]:
     return res
 ```
 
----
-
-## NumPy Implementation
+### NumPy Implementation
 
 ```python
 import numpy as np
@@ -266,208 +280,90 @@ def calculate_matrix_mean(matrix: list[list[float]], mode: str) -> list[float]:
 
 ---
 
-# Code Explanation
+## Code Explanation
 
-## Custom Implementation
+### 1. Check the Mode
 
-### Step 1: Create the Result List
-
-```python
-res = []
-```
-
-This list stores the computed means.
-
----
-
-### Step 2: Check the Mode
+The function first determines whether the mean should be computed across rows or columns.
 
 ```python
 if mode == "row":
 ```
 
-If the mode is `"row"`, the function computes one mean for every row.
-
-Otherwise, it computes one mean for every column.
-
 ---
 
-### Step 3: Compute Row Means
+### 2. Compute Row Means
 
 ```python
 for vec in matrix:
     res.append(sum(vec) / len(vec))
 ```
 
-For every row,
+Each row is processed independently.
 
-```python
-sum(vec)
-```
-
-computes
+The average is calculated using
 
 $$
-\sum_{j=1}^{n}a_{ij}
+\text{Mean}=\frac{\text{Sum of Row}}{\text{Number of Columns}}
 $$
 
-and
-
-```python
-len(vec)
-```
-
-returns the number of elements in that row.
-
-The computed mean is therefore
-
-$$
-\mu_{\text{row }i}
-=
-\frac{1}{n}
-\sum_{j=1}^{n}
-a_{ij}
-$$
-
-The result is appended to `res`.
+One mean value is produced for every row.
 
 ---
 
-### Step 4: Iterate Through Every Column
+### 3. Compute Column Means
 
 ```python
 for ind in range(len(matrix[0])):
 ```
 
-The loop visits every column index from left to right.
+Each iteration selects one column index.
 
-Here, `ind` represents the current column index.
-
----
-
-### Step 5: Compute the Sum of a Column
+For that column,
 
 ```python
 summ = sum(vec[ind] for vec in matrix)
 ```
 
-This adds together all elements belonging to column `ind`.
+adds together the corresponding element from every row.
 
-Mathematically,
-
-$$
-\sum_{i=1}^{m}
-a_{ij}
-$$
-
-where $j$ is the current column.
-
----
-
-### Step 6: Compute the Column Mean
+The column average is then
 
 ```python
-res.append(summ / len(matrix))
+summ / len(matrix)
 ```
 
-Since `len(matrix)` equals the number of rows, the computed value is
+which is equivalent to
 
 $$
-\mu_{\text{column }j}
-=
-\frac{1}{m}
-\sum_{i=1}^{m}
-a_{ij}
-$$
-
-The result is appended to `res`.
-
----
-
-### Step 7: Return the Result
-
-```python
-return res
-```
-
-The function returns the list containing either the row means or the column means.
-
----
-
-## NumPy Implementation
-
-### Compute Column Means
-
-```python
-np.asarray(matrix).mean(axis=0)
-```
-
-First,
-
-```python
-np.asarray(matrix)
-```
-
-converts the Python list into a NumPy array.
-
-Then,
-
-```python
-.mean(axis=0)
-```
-
-computes the mean along axis $0$, meaning values are averaged **down each column**.
-
-This directly computes
-
-$$
-\mu_{\text{column }j}
-=
-\frac{1}{m}
-\sum_{i=1}^{m}
-a_{ij}
+\frac{\text{Sum of Column}}{\text{Number of Rows}}
 $$
 
 ---
 
-### Compute Row Means
+### 4. Return the Result
 
-```python
-np.asarray(matrix).mean(axis=1)
-```
+After computing all averages, the resulting list is returned.
 
-Using `axis=1` computes the mean **across each row**.
+The output length depends on the chosen mode:
 
-This corresponds to
-
-$$
-\mu_{\text{row }i}
-=
-\frac{1}{n}
-\sum_{j=1}^{n}
-a_{ij}
-$$
-
-Finally,
-
-```python
-.tolist()
-```
-
-converts the NumPy array back into a standard Python list.
+- `"row"` → number of rows.
+- `"column"` → number of columns.
 
 ---
 
-# Time & Space Complexity
+## Time & Space Complexity
 
-Assume the matrix contains
+Let
 
-- $m$ rows.
-- $n$ columns.
+- $m$ = number of rows
+- $n$ = number of columns
+
+Every element of the matrix is visited exactly once.
 
 | Complexity | Value |
-|------------|-------|
-| Time | **O(mn)** |
-| Space | **O(m+n)** |
+| ---------- | ----- |
+| Time | **O(m × n)** |
+| Space | **O(m + n)** |
 
-Every element of the matrix is visited exactly once while computing the means. The output stores either $m$ row means or $n$ column means.
+The output stores either **m** row means or **n** column means, depending on the selected mode.
