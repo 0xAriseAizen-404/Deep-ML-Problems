@@ -155,7 +155,7 @@ $$
 Row Indices:
 
 $$
-\text{row\_indices} =
+\text{row_indices} =
 [r_{1},r_{2},\ldots,r_{k}]
 $$
 
@@ -168,7 +168,7 @@ $$
 Column Pointer:
 
 $$
-\text{col\_ptr} =
+\text{col_ptr} =
 [p_0,p_1,\ldots,p_n]
 $$
 
