@@ -9,3 +9,6 @@ def make_diagonal(x):
 	return np.array(mat)
 
 	# return np.diag(x)
+
+# TC: O(n^2)
+# SC: O(n^2)

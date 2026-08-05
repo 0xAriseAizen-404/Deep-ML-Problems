@@ -14,3 +14,6 @@ def accuracy_score(y_true, y_pred):
 	# total = len(y_true)
 	# accuracy = correct / total
 	# return accuracy
+
+# TC: O(n)
+# SC: O(1)

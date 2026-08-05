@@ -4,3 +4,6 @@ def ridge_loss(X: np.ndarray, w: np.ndarray, y_true: np.ndarray, alpha: float) -
     # Ridge -> L2 Regularization, Loss = SumOfResidualSquares + alpha*(SumOfSquaresOfCoefficients)
     y_pred = X @ w
     return np.mean((y_true - y_pred) ** 2) +alpha * np.sum(w ** 2)
+
+# TC: O(n*p)
+# SC: O(n)

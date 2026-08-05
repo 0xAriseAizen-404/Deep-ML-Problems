@@ -49,3 +49,6 @@ def calculate_correlation_matrix(X, Y=None):
     #             row.append(cov / (f1.std(ddof=1) * f2.std(ddof=1)))
     #         corr_matrix.append(row)
     # return np.asarray(corr_matrix)
+
+# TC: O(nd^2)
+# SC: O(nd + d^2)

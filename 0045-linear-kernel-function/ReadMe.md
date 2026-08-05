@@ -4,7 +4,7 @@
 
 - Problem Statement
 - Example
-- Learn: Linear Kernel Function
+- Learn: Understanding the Linear Kernel
 - Solution
 - Code Explanation
 - Time & Space Complexity
@@ -13,15 +13,23 @@
 
 ## Problem Statement
 
-[Linear Kernel Function](https://www.deep-ml.com/problems/45)
+### [Linear Kernel Function](https://www.deep-ml.com/problems/45)
 
-Write a Python function `kernel_function` that computes the linear kernel between two input vectors `x1` and `x2`.
+Write a Python function that computes the **Linear Kernel** between two vectors.
 
-The linear kernel is defined as the dot product (inner product) of two vectors.
+The function should:
+
+- Accept two input vectors `x1` and `x2`.
+- Compute their dot (inner) product.
+- Return the resulting scalar value.
+
+The Linear Kernel is one of the simplest kernel functions and is widely used in **Support Vector Machines (SVMs)** and other linear machine learning models.
 
 ---
 
 ## Example
+
+### Input
 
 ```python
 import numpy as np
@@ -36,118 +44,199 @@ print(result)
 
 ### Output
 
-```text
+```python
 32
 ```
 
-### Explanation
+### Reasoning
 
-The linear kernel is calculated using the dot product:
+The Linear Kernel is simply the dot product of the two vectors.
 
-\[
-K(x_1,x_2)=x_1 \cdot x_2
-\]
+$$
+(1\times4)+(2\times5)+(3\times6)=4+10+18=32
+$$
 
-\[
-=(1 \times 4)+(2 \times 5)+(3 \times 6)
-\]
+---
 
-\[
-=4+10+18
-\]
+## Learn: Understanding the Linear Kernel
 
-\[
+### What is it?
+
+A **Kernel Function** measures the similarity between two data points.
+
+Instead of explicitly transforming data into a higher-dimensional feature space, kernel functions allow machine learning algorithms to compute similarities directly in the original space. This idea is known as the **Kernel Trick**.
+
+The **Linear Kernel** is the simplest kernel function. It does not perform any nonlinear transformation—it simply computes the dot product between two vectors.
+
+When the data is approximately linearly separable, the Linear Kernel is often the fastest and most effective choice.
+
+---
+
+### Mathematical Definition
+
+Given two vectors
+
+$$
+x_1=
+[x_{11},x_{12},...,x_{1n}]
+$$
+
+and
+
+$$
+x_2=
+[x_{21},x_{22},...,x_{2n}]
+$$
+
+the Linear Kernel is
+
+$$
+K(x_1,x_2)=x_1^Tx_2
+$$
+
+or equivalently,
+
+$$
+K(x_1,x_2)=
+\sum_{i=1}^{n}
+x_{1i}x_{2i}
+$$
+
+where
+
+- $n$ is the number of features.
+- $x_{1i}$ is the $i^{th}$ component of the first vector.
+- $x_{2i}$ is the $i^{th}$ component of the second vector.
+
+---
+
+### Dot Product Example
+
+Suppose
+
+$$
+x_1=
+\begin{bmatrix}
+1\\
+2\\
+3
+\end{bmatrix}
+$$
+
+and
+
+$$
+x_2=
+\begin{bmatrix}
+4\\
+5\\
+6
+\end{bmatrix}
+$$
+
+The Linear Kernel is
+
+$$
+\begin{bmatrix}
+1 & 2 & 3
+\end{bmatrix}
+\begin{bmatrix}
+4\\
+5\\
+6
+\end{bmatrix}
 =32
-\]
+$$
+
+or,
+
+$$
+(1\times4)+(2\times5)+(3\times6)=32
+$$
+
+A larger value indicates greater similarity when the vectors point in similar directions.
 
 ---
 
-# Learn: Linear Kernel Function
+### Geometric Interpretation
 
-## What is it?
+The dot product can also be written as
 
-A kernel function is a mathematical function used in machine learning to measure the similarity between two data points.
+$$
+x_1^Tx_2=
+||x_1||
+||x_2||
+\cos\theta
+$$
 
-The **linear kernel** is the simplest kernel function and computes similarity using the dot product between two feature vectors.
+where
 
-Instead of explicitly transforming data into a higher-dimensional feature space, the kernel computes the relationship directly using the original vectors.
+- $||x_1||$ is the magnitude of the first vector.
+- $||x_2||$ is the magnitude of the second vector.
+- $\theta$ is the angle between them.
 
-Linear kernels are commonly used in Support Vector Machines (SVM) when the data is approximately linearly separable.
+This means the Linear Kernel measures both
 
----
+- Magnitude
+- Direction
 
-## Mathematical Definition / Formula
-
-Given two vectors:
-
-\[
-x_1=[x_{1,1},x_{1,2},...,x_{1,n}]
-\]
-
-\[
-x_2=[x_{2,1},x_{2,2},...,x_{2,n}]
-\]
-
-The linear kernel is defined as:
-
-\[
-K(x_1,x_2)=x_1 \cdot x_2
-\]
-
-The dot product can be expanded as:
-
-\[
-K(x_1,x_2)=\sum_{i=1}^{n}x_{1,i}x_{2,i}
-\]
-
-where:
-
-- \(n\) is the number of features.
-- \(x_{1,i}\) represents the ith feature of vector \(x_1\).
-- \(x_{2,i}\) represents the ith feature of vector \(x_2\).
+Vectors pointing in similar directions produce larger kernel values.
 
 ---
 
-## Characteristics / Key Points
+### Linear Kernel vs Other Kernels
 
-- Simple implementation using vector multiplication and summation.
-- Computationally efficient compared to complex kernels.
-- Works well for high-dimensional feature spaces.
-- Provides an interpretable similarity measure.
-- Does not require explicit feature transformation.
+| Kernel         | Formula                    | Suitable For                   |
+| -------------- | -------------------------- | ------------------------------ | ------- | --- | ---- | ------------------------------- |
+| Linear         | $x_1^Tx_2$                 | Linearly separable data        |
+| Polynomial     | $(x_1^Tx_2+c)^d$           | Polynomial decision boundaries |
+| RBF (Gaussian) | $e^{-\gamma                |                                | x_1-x_2 |     | ^2}$ | Complex nonlinear relationships |
+| Sigmoid        | $\tanh(\alpha x_1^Tx_2+c)$ | Neural-network-inspired models |
 
-### Advantages
-
-- Low computational cost.
-- Easy to understand.
-- Effective for linearly separable datasets.
-
-### Limitations
-
-- Cannot capture complex non-linear relationships.
-- Performance depends on the original feature representation.
+The Linear Kernel is computationally the simplest among all common kernels.
 
 ---
 
-## Why is it used? / Applications
+### Characteristics / Key Points
 
-Linear kernels are used in:
+- Computes the dot product between two vectors.
+- Measures similarity in the original feature space.
+- Does not create nonlinear decision boundaries.
+- Very computationally efficient.
+- Requires no additional hyperparameters.
+- Works well for high-dimensional sparse data.
+- Frequently used in linear SVMs.
 
-- Support Vector Machines (SVM).
-- Text classification using TF-IDF features.
-- High-dimensional sparse datasets.
-- Similarity calculations between embeddings.
-- Linear classification problems.
+---
+
+### Why is it used? / Applications
+
+The Linear Kernel is widely used in machine learning.
+
+Applications include
+
+- Support Vector Machines (SVMs)
+- Linear Classification
+- Linear Regression
+- Text Classification
+- Spam Detection
+- Sentiment Analysis
+- Information Retrieval
+- High-dimensional Sparse Data
+
+Because text data often contains thousands of features, the Linear Kernel is commonly preferred over more expensive nonlinear kernels.
+
+---
 
 > 💡 **Important Note**
 >
-> In many NLP tasks, linear kernels perform surprisingly well because text representations such as TF-IDF already create very high-dimensional feature spaces.
+> The Linear Kernel is mathematically identical to the **dot product**, so using a Linear Kernel SVM is equivalent to training a linear classifier in the original feature space. Unlike Polynomial or RBF kernels, it does **not** use the Kernel Trick to create nonlinear decision boundaries.
 
 ---
 
-# Solution
+## Solution
 
-## Custom Implementation
+### Custom Implementation
 
 ```python
 import numpy as np
@@ -156,53 +245,91 @@ def kernel_function(x1, x2):
     return np.sum(x1 * x2)
 ```
 
+### NumPy Equivalent
+
+```python
+import numpy as np
+
+def kernel_function(x1, x2):
+    return np.dot(x1, x2)
+```
+
+or
+
+```python
+np.inner(x1, x2)
+```
+
 ---
 
-# Code Explanation
+## Code Explanation
 
-1. Perform element-wise multiplication between the two vectors.
+### Step 1
 
-Example:
-
-\[
-[1,2,3] \times [4,5,6]
-\]
-
-produces:
-
-\[
-[4,10,18]
-\]
-
-2. Add all multiplied values:
-
-\[
-4+10+18=32
-\]
-
-3. The final sum represents the dot product between the two vectors.
-
-The function:
+Receive the two input vectors.
 
 ```python
-np.sum(x1 * x2)
+x1
+x2
 ```
 
-is equivalent to:
+Both vectors must have the same number of features.
+
+---
+
+### Step 2
+
+Multiply corresponding elements.
 
 ```python
-np.dot(x1, x2)
+x1 * x2
 ```
+
+This performs element-wise multiplication.
+
+For example,
+
+```python
+[1, 2, 3] * [4, 5, 6]
+```
+
+produces
+
+```python
+[4, 10, 18]
+```
+
+---
+
+### Step 3
+
+Sum all products.
+
+```python
+np.sum(...)
+```
+
+Adding the element-wise products computes the dot product, which is the Linear Kernel value.
+
+---
+
+### Step 4
+
+Return the similarity score.
+
+A larger value generally indicates that the two vectors point in a similar direction.
 
 ---
 
 ## Time & Space Complexity
 
-Let \(n\) be the number of features.
+| Complexity | Value    |
+| ---------- | -------- |
+| Time       | **O(n)** |
+| Space      | **O(1)** |
 
-| Complexity | Value |
-| ---------- | ----- |
-| Time | **O(n)** |
-| Space | **O(1)** |
+where
 
-The algorithm only stores the final accumulated value and does not require additional memory.
+- $n$ is the number of features in each input vector.
+
+The algorithm performs one multiplication and one addition for every feature while using only constant extra memory.

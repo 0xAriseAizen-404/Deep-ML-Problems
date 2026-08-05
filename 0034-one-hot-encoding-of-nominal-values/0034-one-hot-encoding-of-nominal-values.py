@@ -9,3 +9,6 @@ def to_categorical(x, n_col=None):
         row[val] = 1
         one_hot.append(row)
     return np.array(one_hot)
+
+# TC: O(n * k)
+# SC: O(n * k)

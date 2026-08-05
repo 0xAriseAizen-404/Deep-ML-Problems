@@ -13,3 +13,6 @@ def polynomial_features(X, degree):
     # Sort each row from lowest â highest
     X_sorted = np.sort(X_poly, axis=1)
     return X_sorted
+
+# TC: O(nC + nC log C)
+# SC: O(nC)

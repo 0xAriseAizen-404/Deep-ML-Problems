@@ -27,3 +27,6 @@ def simple_conv2d(input_matrix: np.ndarray, kernel: np.ndarray, padding: int, st
             row.append(np.sum(window * kernel))
         output_matrix.append(row)
     return np.round(output_matrix, 4)
+
+# TC: O(Hₒ × Wₒ × Kₕ × K𝓌)
+# SC: O((H + 2P)(W + 2P) + HₒWₒ)

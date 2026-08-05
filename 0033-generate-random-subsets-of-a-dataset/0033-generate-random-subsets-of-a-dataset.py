@@ -20,3 +20,6 @@ def get_random_subsets(X, y, n_subsets, replacements=True):
     idx = np.array([np.random.choice(n, subset_size, replace=replacements) for _ in range(n_subsets)])
     # convert all ndarrays to lists
     return [(X[idx[i]].tolist(), y[idx[i]].tolist()) for i in range(n_subsets)]
+
+# TC: O(s * m)
+# SC: O(s * m)

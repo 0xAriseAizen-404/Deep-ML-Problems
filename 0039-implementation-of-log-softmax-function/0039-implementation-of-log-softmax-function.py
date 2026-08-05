@@ -10,3 +10,6 @@ def log_softmax(scores: list) -> np.ndarray:
     # mx = np.max(scores)
     # exp_scores = np.exp(scores - mx)
     # return np.log(exp_scores/exp_scores.sum())
+
+# TC: O(n)
+# SC: O(n)

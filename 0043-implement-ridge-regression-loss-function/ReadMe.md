@@ -4,7 +4,7 @@
 
 - Problem Statement
 - Example
-- Learn: Ridge Regression Loss
+- Learn: Understanding Ridge Regression Loss
 - Solution
 - Code Explanation
 - Time & Space Complexity
@@ -13,22 +13,25 @@
 
 ## Problem Statement
 
-[Implement Ridge Regression Loss Function](https://www.deep-ml.com/problems/43)
+### [Implement Ridge Regression Loss Function](https://www.deep-ml.com/problems/43)
 
-Write a Python function `ridge_loss(X, w, y_true, alpha)` that computes the **Ridge Regression loss**.
+Write a Python function that computes the **Ridge Regression Loss**.
 
-The function takes:
+The function should:
 
-- `X` — Feature matrix of shape `(n_samples, n_features)`.
-- `w` — Weight (coefficient) vector.
-- `y_true` — Actual target values.
-- `alpha` — Regularization parameter.
-
-The Ridge loss combines the **Mean Squared Error (MSE)** with an **L2 regularization** term that penalizes large model coefficients, helping reduce overfitting.
+- Accept a feature matrix `X`.
+- Accept a coefficient (weight) vector `w`.
+- Accept the true target values `y_true`.
+- Accept a regularization parameter `alpha`.
+- Compute the Mean Squared Error (MSE).
+- Add the L2 regularization penalty.
+- Return the total Ridge loss.
 
 ---
 
 ## Example
+
+### Input
 
 ```python
 import numpy as np
@@ -53,156 +56,73 @@ print(loss)
 
 ### Output
 
-```text
+```python
 2.204
 ```
 
-### Explanation
+### Reasoning
 
-First compute the predicted values:
+First, the model predicts the outputs using
 
-\[
-\hat{y}
-=
-Xw
-\]
+$$
+\hat{y}=Xw
+$$
 
-\[
-=
-\begin{bmatrix}
-1 & 1\\
-2 & 1\\
-3 & 1\\
-4 & 1
-\end{bmatrix}
-\begin{bmatrix}
-0.2\\
-2
-\end{bmatrix}
-=
-\begin{bmatrix}
-2.2\\
-2.4\\
-2.6\\
-2.8
-\end{bmatrix}
-\]
+The prediction error is measured using the **Mean Squared Error (MSE)**.
 
-Compute the Mean Squared Error:
-
-\[
-\text{MSE}
-=
-\frac{1}{4}
-\left[
-(2-2.2)^2+
-(3-2.4)^2+
-(4-2.6)^2+
-(5-2.8)^2
-\right]
-=
-1.8
-\]
-
-Compute the L2 penalty:
-
-\[
-\alpha
-\sum_{j=1}^{p}
-w_j^2
-=
-0.1
-(0.2^2+2^2)
-=
-0.404
-\]
-
-Therefore,
-
-\[
-\text{Ridge Loss}
-=
-1.8+0.404
-=
-2.204
-\]
+Finally, a penalty proportional to the squared magnitude of the coefficients is added to discourage overly large weights.
 
 ---
 
-# Learn: Ridge Regression Loss
+## Learn: Understanding Ridge Regression Loss
 
-## What is it?
+### What is it?
 
-**Ridge Regression** is a regularized version of **Linear Regression** that reduces overfitting by discouraging the model from learning excessively large coefficients.
+**Ridge Regression** is an extension of Linear Regression that adds an **L2 regularization** term to the loss function.
 
-Instead of minimizing only the prediction error, Ridge Regression also penalizes the magnitude of the model weights.
+Instead of minimizing only the prediction error, Ridge Regression also penalizes large model coefficients.
 
-This penalty is known as **L2 Regularization**.
+This helps reduce **overfitting**, improves generalization, and produces more stable models, especially when features are highly correlated.
 
-The optimization objective becomes:
-
-- Fit the training data well.
-- Keep the model coefficients as small as possible.
-
-This improves the model's ability to generalize to unseen data.
+Unlike ordinary linear regression, Ridge Regression prefers smaller weights even if doing so slightly increases the training error.
 
 ---
 
-## Mathematical Definition / Formula
+### Mathematical Definition
 
 The prediction of a linear regression model is
 
-\[
-\hat{y}
-=
-Xw
-\]
+$$
+\hat{y}=Xw
+$$
 
 where
 
-- \(X\) is the feature matrix.
-- \(w\) is the coefficient vector.
+- $X$ is the feature matrix.
+- $w$ is the weight vector.
+- $\hat{y}$ is the predicted output.
 
----
+The Mean Squared Error is
 
-### Mean Squared Error (MSE)
-
-The prediction loss is
-
-\[
-\text{MSE}
-=
+$$
+\mathrm{MSE}=
 \frac{1}{n}
 \sum_{i=1}^{n}
 (y_i-\hat{y}_i)^2
-\]
+$$
 
----
+The L2 regularization term is
 
-### L2 Regularization
-
-The penalty term is
-
-\[
+$$
 \lambda
 \sum_{j=1}^{p}
 w_j^2
-\]
+$$
 
-where
+The Ridge Regression loss combines both terms.
 
-- \(\lambda\) (or `alpha`) controls the regularization strength.
-- \(p\) is the number of features.
-
----
-
-### Ridge Loss
-
-The complete Ridge objective is
-
-\[
-L(w)
-=
+$$
+L(w)=
 \frac{1}{n}
 \sum_{i=1}^{n}
 (y_i-\hat{y}_i)^2
@@ -210,75 +130,157 @@ L(w)
 \lambda
 \sum_{j=1}^{p}
 w_j^2
-\]
+$$
+
+where
+
+- $n$ is the number of samples.
+- $p$ is the number of features.
+- $\lambda$ (called `alpha` in many libraries) controls the regularization strength.
 
 ---
 
-## Characteristics / Key Points
+### How Ridge Loss is Computed
 
-- Uses **L2 Regularization**.
-- Penalizes large model coefficients.
-- Helps reduce overfitting.
-- Keeps all features in the model by shrinking coefficients instead of removing them.
-- Produces a smoother and more stable model.
-- Differentiable everywhere, making optimization straightforward using Gradient Descent.
+The algorithm follows these steps.
+
+1. Compute the predictions.
+
+$$
+\hat{y}=Xw
+$$
+
+2. Compute the Mean Squared Error.
+
+$$
+\mathrm{MSE}=
+\frac{1}{n}
+\sum
+(y-\hat{y})^2
+$$
+
+3. Compute the L2 penalty.
+
+$$
+\lambda
+\sum
+w^2
+$$
+
+4. Add both quantities.
+
+$$
+\mathrm{Loss}=
+\mathrm{MSE}
++
+\mathrm{L2\ Penalty}
+$$
 
 ---
 
 ### Effect of the Regularization Parameter
 
-| Alpha (λ) | Effect |
-| ---------- | ------ |
-| λ = 0 | Ordinary Linear Regression |
-| Small λ | Slight coefficient shrinkage |
-| Large λ | Strong regularization and smaller coefficients |
-| Very Large λ | Model may underfit |
+The value of
+
+$$
+\lambda
+$$
+
+controls how strongly large coefficients are penalized.
+
+- Small $\lambda$ behaves similarly to ordinary linear regression.
+- Large $\lambda$ forces coefficients toward zero.
+- Extremely large values may cause underfitting.
+
+For example,
+
+```text
+λ = 0
+```
+
+No regularization.
+
+```text
+λ = 0.1
+```
+
+Weak regularization.
+
+```text
+λ = 100
+```
+
+Very strong regularization.
 
 ---
 
 ### Ridge vs Linear Regression
 
-| Linear Regression | Ridge Regression |
-| ----------------- | ---------------- |
-| Minimizes only MSE | Minimizes MSE + L2 penalty |
-| Can overfit | Reduces overfitting |
-| Large coefficients possible | Coefficients are shrunk |
-| Sensitive to multicollinearity | Handles multicollinearity better |
+| Linear Regression              | Ridge Regression                     |
+| ------------------------------ | ------------------------------------ |
+| Minimizes only MSE             | Minimizes MSE + L2 penalty           |
+| Can overfit easily             | Reduces overfitting                  |
+| Large coefficients allowed     | Penalizes large coefficients         |
+| Sensitive to multicollinearity | More stable with correlated features |
 
 ---
 
-## Why is it used? / Applications
+### Ridge vs Lasso
 
-Ridge Regression is commonly used when:
+| Ridge (L2)                     | Lasso (L1)                              |
+| ------------------------------ | --------------------------------------- |
+| Penalizes squared coefficients | Penalizes absolute coefficients         |
+| Shrinks coefficients           | Can shrink coefficients exactly to zero |
+| Keeps all features             | Performs feature selection              |
+| Smooth optimization            | Produces sparse models                  |
 
-- The dataset contains many correlated features.
-- Overfitting is observed.
-- The number of features is large.
-- Stable coefficient estimates are required.
-- Building regression models for finance, healthcare, economics, and forecasting.
+---
 
-It is one of the standard regularization techniques available in **Scikit-Learn**.
+### Characteristics / Key Points
+
+- Uses **L2 Regularization**.
+- Penalizes large coefficient values.
+- Helps reduce overfitting.
+- Improves model generalization.
+- Works well with correlated features.
+- Keeps every feature in the model.
+- Produces a convex optimization problem with a unique solution.
+
+---
+
+### Why is it used? / Applications
+
+Ridge Regression is commonly used when a dataset contains many correlated features.
+
+Applications include
+
+- House Price Prediction
+- Stock Price Forecasting
+- Medical Data Analysis
+- Financial Modeling
+- Engineering Regression Problems
+- Time Series Forecasting
+- Scientific Data Modeling
+- High-dimensional Machine Learning
+
+It is also frequently used as a baseline regression model before trying more complex algorithms.
+
+---
 
 > 💡 **Important Note**
 >
-> Unlike **Lasso Regression (L1 Regularization)**, Ridge Regression **does not make coefficients exactly zero**. It only shrinks them toward zero. Therefore, Ridge is useful when you believe **most features contain useful information**, while Lasso is preferred when automatic feature selection is desired.
+> In practice, the **bias/intercept term is usually not regularized**. Libraries such as **scikit-learn** apply the L2 penalty only to the feature weights, not the intercept. This prevents unnecessary bias in the learned predictions.
 
 ---
 
-# Solution
+## Solution
 
-## Custom Implementation
+### Custom Implementation
 
 ```python
 import numpy as np
 
-def ridge_loss(
-    X: np.ndarray,
-    w: np.ndarray,
-    y_true: np.ndarray,
-    alpha: float
-) -> float:
-
+def ridge_loss(X, w, y_true, alpha):
     y_pred = X @ w
 
     return (
@@ -289,95 +291,68 @@ def ridge_loss(
 
 ---
 
-# Code Explanation
+## Code Explanation
 
-### Step 1: Compute Predictions
+### Step 1
+
+Compute the predicted values.
 
 ```python
 y_pred = X @ w
 ```
 
-Matrix multiplication computes the predicted values using the linear regression equation
-
-\[
-\hat{y}=Xw
-\]
+Matrix multiplication calculates the prediction for every sample simultaneously.
 
 ---
 
-### Step 2: Compute the Mean Squared Error
+### Step 2
+
+Compute the Mean Squared Error.
 
 ```python
 np.mean((y_true - y_pred) ** 2)
 ```
 
-This calculates
-
-\[
-\frac{1}{n}
-\sum_{i=1}^{n}
-(y_i-\hat{y}_i)^2
-\]
-
-which measures how far the predictions are from the true values.
+This measures the average squared prediction error.
 
 ---
 
-### Step 3: Compute the L2 Regularization Term
+### Step 3
+
+Compute the L2 regularization penalty.
 
 ```python
 alpha * np.sum(w ** 2)
 ```
 
-This computes
+Each coefficient is squared and summed.
 
-\[
-\lambda
-\sum_{j=1}^{p}
-w_j^2
-\]
-
-Large coefficients contribute a larger penalty.
+Multiplying by `alpha` controls the penalty strength.
 
 ---
 
-### Step 4: Compute the Ridge Loss
+### Step 4
 
-Finally,
+Return the total Ridge loss.
 
 ```python
-MSE + Regularization
+MSE + L2 Penalty
 ```
 
-returns
-
-\[
-\text{Ridge Loss}
-=
-\text{MSE}
-+
-\lambda
-\sum_{j=1}^{p}
-w_j^2
-\]
-
-This value is minimized during model training to obtain the optimal regression coefficients.
+The optimization algorithm attempts to minimize this combined objective.
 
 ---
 
 ## Time & Space Complexity
 
-Let
+| Complexity | Value     |
+| ---------- | --------- |
+| Time       | **O(np)** |
+| Space      | **O(n)**  |
 
-- \(n\) = Number of samples.
-- \(p\) = Number of features.
+where
 
-| Complexity | Value |
-| ---------- | ----- |
-| Time | **O(np)** |
-| Space | **O(n)** |
+- $n$ is the number of samples.
+- $p$ is the number of features.
 
-- Computing `X @ w` requires **O(np)** time.
-- Computing the MSE requires **O(n)** time.
-- Computing the L2 penalty requires **O(p)** time.
-- The prediction vector `y_pred` stores **n** values, requiring **O(n)** additional space.
+Computing the predictions requires matrix-vector multiplication, while the regularization term depends only on the weight vector.
