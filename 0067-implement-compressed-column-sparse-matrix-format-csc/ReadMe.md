@@ -148,16 +148,14 @@ CSC stores three arrays.
 Values:
 
 $$
-\text{values}
-=
+\text{values} =
 [a_1,a_2,\ldots,a_k]
 $$
 
 Row Indices:
 
 $$
-\text{row\_indices}
-=
+\text{row\_indices} =
 [r_1,r_2,\ldots,r_k]
 $$
 
@@ -170,8 +168,7 @@ $$
 Column Pointer:
 
 $$
-\text{col\_ptr}
-=
+\text{col\_ptr} =
 [p_0,p_1,\ldots,p_n]
 $$
 

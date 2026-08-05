@@ -109,24 +109,21 @@ Suppose we have:
 - Actual values
 
 $$
-y_{\text{true}}
-=
+y_{\text{true}} =
 [y_1,y_2,\dots,y_n]
 $$
 
 - Predicted values
 
 $$
-y_{\text{pred}}
-=
+y_{\text{pred}} =
 [\hat{y}_1,\hat{y}_2,\dots,\hat{y}_n]
 $$
 
 The prediction error for each observation is
 
 $$
-e_i
-=
+e_i =
 y_i-\hat{y}_i
 $$
 
@@ -134,8 +131,7 @@ The **Mean Squared Error (MSE)** is
 
 $$
 \boxed{
-\text{MSE}
-=
+\text{MSE} =
 \frac{1}{n}
 \sum_{i=1}^{n}
 (y_i-\hat{y}_i)^2
@@ -146,8 +142,7 @@ The **Root Mean Square Error (RMSE)** is simply the square root of the MSE:
 
 $$
 \boxed{
-\text{RMSE}
-=
+\text{RMSE} =
 \sqrt{
 \frac{1}{n}
 \sum_{i=1}^{n}

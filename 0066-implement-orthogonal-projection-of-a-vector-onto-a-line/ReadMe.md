@@ -54,7 +54,7 @@ Since **L** points entirely in the x-direction, only the x-component of **v** re
 
 Therefore,
 
-$$ \operatorname{proj}\_L(v)=\begin{bmatrix}3\\0\end{bmatrix} $$
+$$ proj\_L(v)=\begin{bmatrix}3\\0\end{bmatrix} $$
 
 ---
 
@@ -98,7 +98,7 @@ The projection is simply the point on **L** that is **closest** to **v**.
 
 The leftover vector
 
-$$ v-\operatorname{proj}\_L(v) $$
+$$ v-proj\_L(v) $$
 
 is always perpendicular to **L**.
 
@@ -108,7 +108,7 @@ is always perpendicular to **L**.
 
 The orthogonal projection of **v** onto **L** is
 
-$$ \operatorname{proj}\_L(v)=\frac{v\cdot L}{L\cdot L}L $$
+$$ proj\_L(v)=\frac{v\cdot L}{L\cdot L}L $$
 
 where
 
@@ -130,7 +130,7 @@ $$ \hat{L}=\frac{L}{||L||} $$
 
 is a unit vector, then the projection becomes
 
-$$ \operatorname{proj}\_L(v)=(v\cdot\hat{L})\hat{L} $$
+$$ proj\_L(v)=(v\cdot\hat{L})\hat{L} $$
 
 Both formulas produce the same result.
 
@@ -193,11 +193,11 @@ $$ \hat{L}=\frac{L}{||L||} $$
 
 Multiplying the projection length by the unit vector gives
 
-$$ \operatorname{proj}\_L(v)=\frac{v\cdot L}{||L||}\times\frac{L}{||L||} $$
+$$ proj\_L(v)=\frac{v\cdot L}{||L||}\times\frac{L}{||L||} $$
 
 Combining the denominators,
 
-$$ \operatorname{proj}\_L(v)=\frac{v\cdot L}{||L||^2}L $$
+$$ proj\_L(v)=\frac{v\cdot L}{||L||^2}L $$
 
 Since
 
@@ -205,7 +205,7 @@ $$ ||L||^2=L\cdot L $$
 
 the final formula becomes
 
-$$ \boxed{\operatorname{proj}\_L(v)=\frac{v\cdot L}{L\cdot L}L} $$
+$$ \boxed{proj\_L(v)=\frac{v\cdot L}{L\cdot L}L} $$
 
 ---
 
@@ -214,7 +214,7 @@ $$ \boxed{\operatorname{proj}\_L(v)=\frac{v\cdot L}{L\cdot L}L} $$
 - Projection is always parallel to **L**.
 - The residual vector
 
-$$ v-\operatorname{proj}\_L(v) $$
+$$ v-proj\_L(v) $$
 
 is perpendicular to **L**.
 
@@ -234,7 +234,7 @@ $$ v=kL $$
 
 then
 
-$$ \operatorname{proj}\_L(v)=v $$
+$$ proj\_L(v)=v $$
 
 #### Perpendicular Vectors
 
@@ -244,7 +244,7 @@ $$ v\cdot L=0 $$
 
 then
 
-$$ \operatorname{proj}\_L(v)=0 $$
+$$ proj\_L(v)=0 $$
 
 #### Zero Vector
 
