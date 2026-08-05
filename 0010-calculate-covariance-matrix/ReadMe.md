@@ -5,59 +5,61 @@
 - [Problem Statement](#problem-statement)
 - [Example](#example)
 - [Learn: Covariance Matrix](#learn-covariance-matrix)
-- [Things to Note](#things-to-note)
 - [Solutions](#solutions)
+  - [Custom Implementation](#custom-implementation)
   - [NumPy Implementation](#numpy-implementation)
 - [Code Explanation](#code-explanation)
 - [Time & Space Complexity](#time--space-complexity)
 
----
+## Problem Statement
 
-# Problem Statement
+### [Calculate Covariance Matrix](https://www.deep-ml.com/problems/10)
 
-[Calculate Covariance Matrix](https://www.deep-ml.com/problems/10)
+Write a Python function that computes the **covariance matrix** for a given set of feature vectors.
 
-Write a Python function `calculate_covariance_matrix(vectors)` that computes the **covariance matrix** for a given collection of feature vectors.
-
-Each inner list represents a **feature**, and each element inside that list represents one observation of that feature.
-
-The function should return the covariance matrix as a nested Python list.
+Each inner list represents one feature and contains all of its observations. The function should return an **n × n covariance matrix**, where each element represents the covariance between a pair of features.
 
 ---
 
-# Example
+## Example
+
+### Input
 
 ```python
 vectors = [
     [1, 2, 3],
     [4, 5, 6]
 ]
-
-print(calculate_covariance_matrix(vectors))
 ```
 
 ### Output
 
-```text
+```python
 [
     [1.0, 1.0],
     [1.0, 1.0]
 ]
 ```
 
-### Explanation
+### Reasoning
 
-Both features increase together.
-
-Their covariance is positive:
+Feature means are
 
 $$
-\operatorname{Cov}(X,Y)=1
+\bar{X}_1 = \frac{1+2+3}{3} = 2
 $$
 
-Since each feature is perfectly linearly related to the other,
+$$
+\bar{X}_2 = \frac{4+5+6}{3} = 5
+$$
 
-the covariance matrix becomes
+The covariance between the two features is
+
+$$
+\operatorname{cov}(X_1,X_2)=\frac{(-1)(-1)+0+1}{2}=1
+$$
+
+Since both features vary together perfectly, the covariance matrix becomes
 
 $$
 \begin{bmatrix}
@@ -68,195 +70,232 @@ $$
 
 ---
 
-# Learn: Covariance Matrix
+## Learn: Covariance Matrix
 
-## What is Covariance?
+### What is Covariance?
 
-Covariance measures how **two variables change together**.
+Covariance measures how two variables change together.
 
-- Positive covariance → Both variables increase or decrease together.
-- Negative covariance → One increases while the other decreases.
-- Zero covariance → No linear relationship.
+- **Positive covariance** means both variables tend to increase or decrease together.
+- **Negative covariance** means one variable tends to increase while the other decreases.
+- **Zero covariance** indicates no linear relationship between the variables.
 
-Unlike correlation, covariance does **not** have a fixed range.
-
-Its value depends on the scale of the data.
+Unlike correlation, covariance depends on the units of measurement and is therefore not bounded between -1 and 1.
 
 ---
 
-## Covariance Formula
+### Covariance Formula
 
-Suppose we have two variables
+Given two variables
 
 $$
-X=(x_1,x_2,\ldots,x_n)
+X=(X_1,X_2,\dots,X_m)
 $$
 
 and
 
 $$
-Y=(y_1,y_2,\ldots,y_n)
+Y=(Y_1,Y_2,\dots,Y_m)
 $$
 
-Their sample covariance is
+their sample covariance is
 
 $$
-\operatorname{Cov}(X,Y)
-=
-\frac{1}{n-1}
-\sum_{i=1}^{n}
-(x_i-\bar{x})(y_i-\bar{y})
+\operatorname{cov}(X,Y)=\frac{\sum_{k=1}^{m}(X_k-\bar{X})(Y_k-\bar{Y})}{m-1}
 $$
 
 where
 
-- $\bar{x}$ is the mean of $X$.
-- $\bar{y}$ is the mean of $Y$.
-- $n$ is the number of observations.
+- $X_k$ and $Y_k$ are observations.
+- $\bar{X}$ and $\bar{Y}$ are the sample means.
+- $m$ is the number of observations.
+
+Using $m-1$ in the denominator gives the **sample covariance**, which is the standard estimator used in statistics and by NumPy's `cov()`.
 
 ---
 
-## What is a Covariance Matrix?
+### What is a Covariance Matrix?
 
-When there are multiple features,
-
-we compute the covariance between **every pair of features**.
-
-If there are
+For a dataset containing $n$ features, the covariance matrix is
 
 $$
-m
-$$
-
-features,
-
-the covariance matrix has size
-
-$$
-m \times m
-$$
-
-For three features,
-
-$$
-\mathbf{C}
-=
+\Sigma=
 \begin{bmatrix}
-\operatorname{Cov}(X_1,X_1) &
-\operatorname{Cov}(X_1,X_2) &
-\operatorname{Cov}(X_1,X_3)
-\\
-\operatorname{Cov}(X_2,X_1) &
-\operatorname{Cov}(X_2,X_2) &
-\operatorname{Cov}(X_2,X_3)
-\\
-\operatorname{Cov}(X_3,X_1) &
-\operatorname{Cov}(X_3,X_2) &
-\operatorname{Cov}(X_3,X_3)
+\operatorname{cov}(X_1,X_1) & \operatorname{cov}(X_1,X_2) & \cdots & \operatorname{cov}(X_1,X_n)\\
+\operatorname{cov}(X_2,X_1) & \operatorname{cov}(X_2,X_2) & \cdots & \operatorname{cov}(X_2,X_n)\\
+\vdots & \vdots & \ddots & \vdots\\
+\operatorname{cov}(X_n,X_1) & \operatorname{cov}(X_n,X_2) & \cdots & \operatorname{cov}(X_n,X_n)
 \end{bmatrix}
 $$
 
----
+Each element describes the relationship between two features.
 
-## Properties of a Covariance Matrix
-
-A covariance matrix always has the following properties:
-
-- It is a **square matrix**.
-- It is **symmetric**.
+The diagonal entries are simply the **variances** of each feature because
 
 $$
-\operatorname{Cov}(X,Y)
-=
-\operatorname{Cov}(Y,X)
-$$
-
-- Every diagonal element represents the variance of a feature.
-
-$$
-\operatorname{Cov}(X,X)
-=
-\operatorname{Var}(X)
+\operatorname{cov}(X,X)=\operatorname{Var}(X)
 $$
 
 ---
 
-## Example
+### Step-by-Step Algorithm
 
-Consider
+To compute the covariance matrix:
+
+1. Compute the mean of every feature.
+2. Subtract the mean from each observation (mean centering).
+3. Compute the covariance between every pair of features.
+4. Store the computed covariance in the matrix.
+5. Since covariance is symmetric,
+
+$$
+\operatorname{cov}(X,Y)=\operatorname{cov}(Y,X)
+$$
+
+only half the matrix needs to be computed explicitly.
+
+---
+
+### Example
+
+Consider two features
 
 $$
 X=[1,2,3]
 $$
 
-and
-
 $$
 Y=[4,5,6]
 $$
 
-Mean values are
+Their means are
 
 $$
-\bar{x}=2
+\bar{X}=2
 $$
 
 $$
-\bar{y}=5
+\bar{Y}=5
 $$
 
 The covariance is
 
 $$
-\frac{
-(-1)(-1)+0(0)+1(1)
-}{2}
-=
-1
+\operatorname{cov}(X,Y)=\frac{(1-2)(4-5)+(2-2)(5-5)+(3-2)(6-5)}{3-1}=1
+$$
+
+Similarly,
+
+$$
+\operatorname{Var}(X)=1
+$$
+
+and
+
+$$
+\operatorname{Var}(Y)=1
 $$
 
 Therefore,
 
 $$
-\mathbf{C}
-=
+\Sigma=
 \begin{bmatrix}
-1&1\\
-1&1
+1 & 1\\
+1 & 1
 \end{bmatrix}
 $$
 
 ---
 
-## Applications
+### Characteristics / Key Points
 
-Covariance matrices are widely used in Machine Learning and Statistics.
+- Measures linear relationships between variables.
+- Produces a symmetric matrix.
 
-Some common applications include:
+$$
+\Sigma=\Sigma^T
+$$
+
+- Diagonal entries represent variances.
+- Off-diagonal entries represent covariances.
+- Positive covariance indicates variables move together.
+- Negative covariance indicates variables move in opposite directions.
+- Zero covariance implies no linear dependence (though nonlinear relationships may still exist).
+
+---
+
+### Covariance vs Correlation
+
+| Covariance               | Correlation                              |
+| ------------------------ | ---------------------------------------- |
+| Depends on units         | Unitless                                 |
+| Unbounded                | Always between -1 and 1                  |
+| Measures joint variation | Measures strength of linear relationship |
+
+Correlation is simply the normalized version of covariance.
+
+$$
+\rho_{XY}=\frac{\operatorname{cov}(X,Y)}{\sigma_X\sigma_Y}
+$$
+
+---
+
+### Why is it Used?
+
+Covariance matrices are essential in statistics, machine learning, and data analysis.
+
+Common applications include:
 
 - Principal Component Analysis (PCA)
-- Multivariate statistics
-- Feature analysis
-- Portfolio optimization
-- Gaussian distributions
-- Data preprocessing
+- Multivariate Gaussian distributions
+- Feature engineering
+- Portfolio optimization in finance
+- Dimensionality reduction
+- Kalman Filters
+- Signal processing
+- Statistical modeling
+
+In PCA, the covariance matrix identifies directions with the greatest variance, allowing high-dimensional data to be projected into fewer dimensions while preserving most of the information.
 
 ---
 
-# Things to Note
-
-- The covariance matrix compares **every feature with every other feature**.
-- The diagonal entries are the variances of each feature.
-- The covariance matrix is always symmetric.
-- Positive covariance indicates features move together.
-- Negative covariance indicates features move in opposite directions.
-- NumPy's `np.cov()` computes the **sample covariance**, dividing by $n-1$.
+> 💡 **Important Note**
+>
+> A large covariance value does **not** necessarily indicate a strong relationship because covariance depends on the scale of the variables. When comparing relationships between features measured in different units, **correlation** is generally more appropriate since it is normalized to lie between -1 and 1.
 
 ---
 
-# Solutions
+## Solutions
 
-## NumPy Implementation
+### Custom Implementation
+
+```python
+def calculate_covariance_matrix(vectors: list[list[float]]) -> list[list[float]]:
+
+    def cov(x, y):
+        mean_x = sum(x) / len(x)
+        mean_y = sum(y) / len(y)
+
+        return sum(
+            (x[k] - mean_x) * (y[k] - mean_y)
+            for k in range(len(x))
+        ) / (len(x) - 1)
+
+    n = len(vectors)
+
+    result = [[0.0] * n for _ in range(n)]
+
+    for i in range(n):
+        for j in range(i, n):
+            value = cov(vectors[i], vectors[j])
+            result[i][j] = value
+            result[j][i] = value
+
+    return result
+```
+
+### NumPy Implementation
 
 ```python
 import numpy as np
@@ -267,99 +306,81 @@ def calculate_covariance_matrix(vectors: list[list[float]]) -> list[list[float]]
 
 ---
 
-# Code Explanation
+## Code Explanation
 
-## Step 1: Convert the Input
+### 1. Compute the Mean of Each Feature
+
+For every feature, calculate its average value.
+
+$$
+\bar{X}=\frac{1}{m}\sum_{i=1}^{m}X_i
+$$
+
+These means are used to center the data.
+
+---
+
+### 2. Compute Pairwise Covariance
+
+For each pair of features,
+
+```python
+cov(x, y)
+```
+
+computes
+
+$$
+\operatorname{cov}(X,Y)=\frac{\sum (X-\bar{X})(Y-\bar{Y})}{m-1}
+$$
+
+This measures how the two variables vary together.
+
+---
+
+### 3. Fill the Covariance Matrix
+
+```python
+for i in range(n):
+    for j in range(i, n):
+```
+
+Only the upper triangular part is computed because
+
+$$
+\operatorname{cov}(X,Y)=\operatorname{cov}(Y,X)
+$$
+
+The symmetric value is copied to the lower triangular part.
+
+---
+
+### 4. Return the Matrix
+
+The completed covariance matrix is returned as a list of lists.
+
+The NumPy implementation achieves the same result using
 
 ```python
 np.cov(vectors)
 ```
 
-The input list is interpreted as a collection of feature vectors.
-
-Each row represents one feature,
-
-and each column represents one observation.
+which internally performs mean centering and covariance computation efficiently.
 
 ---
 
-## Step 2: Compute Feature Means
+## Time & Space Complexity
 
-Internally, NumPy computes the mean of every feature.
+Let
 
-For a feature
+- $n$ = number of features.
+- $m$ = number of observations per feature.
 
-$$
-X
-$$
+Each covariance calculation processes all observations, and there are approximately $n^2$ feature pairs.
 
-the mean is
+| Complexity | Value         |
+| ---------- | ------------- |
+| Time       | **O(n² × m)** |
+| Space      | **O(n²)**     |
 
-$$
-\bar{x}
-=
-\frac1n
-\sum_{i=1}^{n}x_i
-$$
-
----
-
-## Step 3: Compute Covariance
-
-For every pair of features,
-
-NumPy computes
-
-$$
-\operatorname{Cov}(X,Y)
-=
-\frac{1}{n-1}
-\sum_{i=1}^{n}
-(x_i-\bar{x})(y_i-\bar{y})
-$$
-
-This is repeated for every pair of features.
-
----
-
-## Step 4: Build the Covariance Matrix
-
-The computed covariance values are arranged into a symmetric matrix.
-
-The diagonal entries become
-
-$$
-\operatorname{Var}(X)
-=
-\operatorname{Cov}(X,X)
-$$
-
-while the off-diagonal entries represent the covariance between different features.
-
----
-
-## Step 5: Convert Back to a Python List
-
-```python
-.tolist()
-```
-
-NumPy returns a NumPy array.
-
-Calling `.tolist()` converts it into a nested Python list.
-
----
-
-# Time & Space Complexity
-
-Assume there are
-
-- $m$ features.
-- $n$ observations per feature.
-
-| Complexity | Value |
-|------------|-------|
-| Time | **O(m² × n)** |
-| Space | **O(m²)** |
-
-The covariance between every pair of features is computed, producing an $m \times m$ covariance matrix.
+The covariance matrix itself requires $n \times n$ storage.

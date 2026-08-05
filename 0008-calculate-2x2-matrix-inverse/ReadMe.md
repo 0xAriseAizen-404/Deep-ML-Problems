@@ -1,247 +1,305 @@
-# Inverse of a 2×2 Matrix (Easy, Linear Algebra)
+# Calculate 2×2 Matrix Inverse (Easy, Linear Algebra)
 
 ## Table of Contents
 
 - [Problem Statement](#problem-statement)
 - [Example](#example)
-- [Learn: Inverse of a 2×2 Matrix](#learn-inverse-of-a-2x2-matrix)
-- [Things to Note](#things-to-note)
+- [Learn: Calculating the Inverse of a 2×2 Matrix](#learn-calculating-the-inverse-of-a-22-matrix)
 - [Solutions](#solutions)
   - [Custom Implementation](#custom-implementation)
 - [Code Explanation](#code-explanation)
 - [Time & Space Complexity](#time--space-complexity)
 
+## Problem Statement
+
+### [Calculate 2×2 Matrix Inverse](https://www.deep-ml.com/problems/8)
+
+Write a Python function that computes the **inverse of a 2×2 matrix**.
+
+For a matrix
+
+$$
+A = \begin{bmatrix}
+a & b\\
+c & d
+\end{bmatrix}
+$$
+
+the inverse exists only when its determinant is non-zero.
+
+If the determinant is zero, the matrix is **singular** (non-invertible), and the function should return `None`.
+
 ---
 
-# Problem Statement
+## Example
 
-[Calculate 2×2 Matrix Inverse](https://www.deep-ml.com/problems/8)
-
-Write a Python function `inverse_2x2(matrix)` that computes the inverse of a **2×2 matrix**.
-
-If the matrix is **singular** (its determinant is zero), return `None`.
-
----
-
-# Example
+### Input
 
 ```python
 matrix = [
     [4, 7],
     [2, 6]
 ]
-
-print(inverse_2x2(matrix))
 ```
 
 ### Output
 
-```text
+```python
 [
     [0.6, -0.7],
     [-0.2, 0.4]
 ]
 ```
 
-### Explanation
+### Reasoning
 
-Given
-
-$$
-A=
-\begin{bmatrix}
-4&7\\
-2&6
-\end{bmatrix}
-$$
-
-its determinant is
+The determinant is
 
 $$
-\det(A)=4\times6-7\times2=10
+\det(A) = (4)(6) - (7)(2) = 24 - 14 = 10
 $$
 
 Since
 
 $$
-\det(A)\neq0
+\det(A) \neq 0
 $$
 
-the inverse exists.
+the matrix is invertible.
+
+Using the inverse formula,
+
+$$
+A^{-1} = \frac{1}{10}
+\begin{bmatrix}
+6 & -7\\
+-2 & 4
+\end{bmatrix} =
+\begin{bmatrix}
+0.6 & -0.7\\
+-0.2 & 0.4
+\end{bmatrix}
+$$
 
 ---
 
-# Learn: Inverse of a 2×2 Matrix
+## Learn: Calculating the Inverse of a 2×2 Matrix
 
-## What is the Inverse of a Matrix?
+### What is a Matrix Inverse?
 
-The inverse of a matrix is analogous to the reciprocal of a number.
+The inverse of a square matrix is another matrix that "undoes" the effect of the original matrix.
 
-For numbers,
-
-$$
-5\times\frac15=1
-$$
-
-Similarly, for matrices,
+For a matrix
 
 $$
-AA^{-1}=I
+A
+$$
+
+its inverse
+
+$$
+A^{-1}
+$$
+
+satisfies
+
+$$
+AA^{-1} = A^{-1}A = I
 $$
 
 where
 
 $$
-I=
-\begin{bmatrix}
-1&0\\
-0&1
+I = \begin{bmatrix}
+1 & 0\\
+0 & 1
 \end{bmatrix}
 $$
 
-is called the **Identity Matrix**.
+is the **identity matrix**.
 
-Multiplying a matrix by its inverse always produces the identity matrix.
+Multiplying a matrix by its inverse produces the identity matrix, just as multiplying a number by its reciprocal produces 1.
 
 ---
 
-## Formula
+### Formula for a 2×2 Matrix
 
-Suppose
+Consider
 
 $$
-A=
-\begin{bmatrix}
-a&b\\
-c&d
+A = \begin{bmatrix}
+a & b\\
+c & d
 \end{bmatrix}
 $$
 
-First compute its determinant
+Its determinant is
 
 $$
-\det(A)=ad-bc
+\det(A) = ad - bc
 $$
 
 If
 
 $$
-\det(A)\neq0
+\det(A) \neq 0
 $$
 
-then
+then the inverse is
 
 $$
-A^{-1}
-=
-\frac1{\det(A)}
+A^{-1} = \frac{1}{\det(A)}
 \begin{bmatrix}
-d&-b\\
--c&a
+d & -b\\
+-c & a
+\end{bmatrix}
+$$
+
+Notice the pattern:
+
+- Swap the diagonal elements.
+- Negate the off-diagonal elements.
+- Divide every element by the determinant.
+
+---
+
+### When Does the Inverse Exist?
+
+A matrix is invertible **if and only if** its determinant is non-zero.
+
+If
+
+$$
+\det(A) \neq 0
+$$
+
+the inverse exists.
+
+If
+
+$$
+\det(A) = 0
+$$
+
+the matrix is called **singular**, and no inverse exists.
+
+A singular matrix loses information during transformation, making it impossible to recover the original values.
+
+---
+
+### Step-by-Step Algorithm
+
+Given
+
+$$
+A = \begin{bmatrix}
+a & b\\
+c & d
+\end{bmatrix}
+$$
+
+#### Step 1
+
+Compute the determinant.
+
+$$
+\det(A) = ad - bc
+$$
+
+#### Step 2
+
+If
+
+$$
+\det(A) = 0
+$$
+
+return `None`.
+
+#### Step 3
+
+Otherwise compute
+
+$$
+A^{-1} = \frac{1}{\det(A)}
+\begin{bmatrix}
+d & -b\\
+-c & a
 \end{bmatrix}
 $$
 
 ---
 
-## Why Does the Determinant Matter?
+### Geometric Interpretation
 
-The determinant measures whether a matrix preserves dimensionality.
+A matrix represents a linear transformation.
 
-- If $\det(A)\neq0$, the rows (and columns) are linearly independent, so the matrix is invertible.
-- If $\det(A)=0$, the matrix is singular and no inverse exists.
+Its inverse performs the **reverse transformation**, mapping transformed vectors back to their original positions.
 
-For example,
-
-$$
-\begin{bmatrix}
-1&2\\
-2&4
-\end{bmatrix}
-$$
-
-has
-
-$$
-\det(A)=1\times4-2\times2=0
-$$
-
-Therefore, the inverse does not exist.
+If the determinant is zero, the transformation collapses the space into a lower dimension (for example, a plane into a line), making recovery impossible.
 
 ---
 
-## How the Formula is Derived
+### Characteristics / Key Points
 
-For
-
-$$
-A=
-\begin{bmatrix}
-a&b\\
-c&d
-\end{bmatrix}
-$$
-
-the inverse is obtained by:
-
-1. Swapping the diagonal elements $a$ and $d$.
-2. Negating the off-diagonal elements $b$ and $c$.
-3. Dividing every element by the determinant.
-
-This produces
-
-$$
-A^{-1}
-=
-\frac1{ad-bc}
-\begin{bmatrix}
-d&-b\\
--c&a
-\end{bmatrix}
-$$
+- Defined only for square matrices.
+- A non-zero determinant is required.
+- The inverse is unique.
+- Singular matrices do not have an inverse.
+- Multiplying a matrix by its inverse gives the identity matrix.
+- Every invertible matrix represents a reversible transformation.
 
 ---
 
-## Applications
+### Why is it Used?
 
-The inverse of a matrix is used in:
+Matrix inverses are fundamental in Linear Algebra and Machine Learning.
+
+Some applications include:
 
 - Solving systems of linear equations
-- Linear Regression
+- Linear Regression (Normal Equation)
 - Computer Graphics
 - Robotics
-- Control Systems
-- Signal Processing
-- Machine Learning
-- Numerical Analysis
+- Coordinate transformations
+- Cryptography
+- Control systems
+- Scientific simulations
+
+For example, a linear system
+
+$$
+Ax = b
+$$
+
+can be solved as
+
+$$
+x = A^{-1}b
+$$
+
+provided that
+
+$$
+A
+$$
+
+is invertible.
 
 ---
 
-# Things to Note
-
-- Only **square matrices** can have inverses.
-- A $2\times2$ matrix is invertible only when $\det(A)\neq0$.
-- If $\det(A)=0$, the matrix is singular.
-- Swapping the diagonal elements and negating the off-diagonal elements is specific to the **2×2 inverse formula**.
-- Larger matrices require methods such as Gaussian Elimination or LU Decomposition.
+> 💡 **Important Note**
+>
+> Although the inverse provides a direct solution for linear systems, explicitly computing a matrix inverse is often **not recommended** for large matrices due to numerical instability and computational cost. In practice, libraries such as NumPy use methods like **LU decomposition** (`numpy.linalg.solve`) instead of calculating the inverse directly.
 
 ---
 
-# Solutions
+## Solutions
 
-## Custom Implementation
+### Custom Implementation
 
 ```python
 def inverse_2x2(matrix: list[list[float]]) -> list[list[float]] | None:
-    """
-    Calculate the inverse of a 2x2 matrix.
-
-    Args:
-        matrix: A 2x2 matrix represented as [[a, b], [c, d]]
-
-    Returns:
-        The inverse matrix as a 2x2 list, or None if the matrix is singular
-        (i.e., determinant equals zero)
-    """
     [[a, b], [c, d]] = matrix
 
     det = a * d - b * c
@@ -257,61 +315,46 @@ def inverse_2x2(matrix: list[list[float]]) -> list[list[float]] | None:
 
 ---
 
-# Code Explanation
+## Code Explanation
 
-## Step 1: Extract Matrix Elements
+### 1. Extract the Matrix Elements
 
 ```python
 [[a, b], [c, d]] = matrix
 ```
 
-The matrix
-
-$$
-\begin{bmatrix}
-a&b\\
-c&d
-\end{bmatrix}
-$$
-
-is unpacked into four variables.
+The four matrix elements are unpacked for easier access.
 
 ---
 
-## Step 2: Compute the Determinant
+### 2. Compute the Determinant
 
 ```python
 det = a * d - b * c
 ```
 
-This computes
+This evaluates
 
 $$
-\det(A)=ad-bc
+\det(A) = ad - bc
 $$
 
 The determinant determines whether the inverse exists.
 
 ---
 
-## Step 3: Check if the Matrix is Invertible
+### 3. Check for Singularity
 
 ```python
 if det == 0:
     return None
 ```
 
-If
-
-$$
-\det(A)=0
-$$
-
-the matrix is singular, so no inverse exists.
+If the determinant is zero, the matrix is singular and cannot be inverted.
 
 ---
 
-## Step 4: Apply the Inverse Formula
+### 4. Apply the Inverse Formula
 
 ```python
 return [
@@ -320,15 +363,13 @@ return [
 ]
 ```
 
-This directly implements
+The implementation directly follows
 
 $$
-A^{-1}
-=
-\frac1{\det(A)}
+A^{-1} = \frac{1}{\det(A)}
 \begin{bmatrix}
-d&-b\\
--c&a
+d & -b\\
+-c & a
 \end{bmatrix}
 $$
 
@@ -336,13 +377,13 @@ Each element is divided by the determinant to produce the inverse matrix.
 
 ---
 
-# Time & Space Complexity
+## Time & Space Complexity
 
-Since the matrix size is fixed at $2\times2$:
+Since the matrix size is fixed (**2 × 2**), the algorithm performs a constant number of arithmetic operations.
 
 | Complexity | Value |
-|------------|-------|
+| ---------- | ----- |
 | Time | **O(1)** |
 | Space | **O(1)** |
 
-The algorithm performs a constant number of arithmetic operations regardless of the input values.
+The computation requires only a few scalar variables and returns a fixed-size 2×2 matrix.

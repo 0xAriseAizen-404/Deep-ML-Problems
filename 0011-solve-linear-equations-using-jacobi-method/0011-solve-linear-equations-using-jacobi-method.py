@@ -9,3 +9,6 @@ def solve_jacobi(A: np.ndarray, b: np.ndarray, n: int) -> list:
         # x = x_new
     return x
     # return np.round(x, 4).tolist()
+
+# TC: O(k * n^2)
+# SC: O(n)

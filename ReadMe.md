@@ -15,13 +15,13 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 
 | Category         | 🟢 Easy | 🟡 Medium | 🔴 Hard | **Total** |
 | ---------------- | ------: | --------: | ------: | --------: |
-| Linear Algebra   |      11 |         4 |       1 |    **16** |
+| Linear Algebra   |      11 |         5 |       1 |    **17** |
 | Statistics       |       1 |         0 |       0 |     **1** |
 | Machine Learning |      15 |         4 |       0 |    **18** |
 | Deep Learning    |       6 |         2 |       0 |     **8** |
 | Pytorch          |       1 |         0 |       0 |     **1** |
 | Computer Vision  |       1 |         0 |       0 |     **1** |
-| **Total**        |  **34** |    **10** |   **1** |    **45** |
+| **Total**        |  **34** |    **11** |   **1** |    **46** |
 
 ---
 
@@ -71,6 +71,7 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 
 | Problem                                                                                                                                                             | Category         |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------- |
+| [0006 - Calculate Eigenvalues of a Matrix](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0006-calculate-eigenvalues-of-a-matrix)                   | Linear Algebra   |
 | [0007 - Matrix Transformation](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0007-matrix-transformation)                                           | Linear Algebra   |
 | [0009 - Matrix Times Matrix](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0009-matrix-times-matrix)                                               | Linear Algebra   |
 | [0011 - Solve Linear Equations Using Jacobi Method](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0011-solve-linear-equations-using-jacobi-method) | Linear Algebra   |

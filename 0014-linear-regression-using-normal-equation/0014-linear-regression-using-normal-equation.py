@@ -6,3 +6,6 @@ def linear_regression_normal_equation(X: list[list[float]], y: list[float]) -> l
     npy = np.asarray(y).reshape(-1, 1)
     theta = np.linalg.inv(npX.T.dot(X)).dot(npX.T).dot(y)
     return np.round(theta, 4).flatten().tolist()
+
+# TC: O(m*n^2 + n^3)
+# SC: O(n^2)

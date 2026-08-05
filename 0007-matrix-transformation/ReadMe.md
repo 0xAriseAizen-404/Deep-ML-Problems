@@ -4,32 +4,35 @@
 
 - [Problem Statement](#problem-statement)
 - [Example](#example)
-- [Learn: Matrix Transformation](#learn-matrix-transformation)
-- [Things to Note](#things-to-note)
+- [Learn: Matrix Transformation using $T^{-1}AS$](#learn-matrix-transformation-using-t-1as)
 - [Solutions](#solutions)
   - [NumPy Implementation](#numpy-implementation)
 - [Code Explanation](#code-explanation)
 - [Time & Space Complexity](#time--space-complexity)
 
----
+## Problem Statement
 
-# Problem Statement
+### [Matrix Transformation](https://www.deep-ml.com/problems/7)
 
-[Matrix Transformation](https://www.deep-ml.com/problems/7)
-
-Write a Python function `transform_matrix(A, T, S)` that transforms a matrix using
+Write a Python function that transforms a matrix using the matrix transformation
 
 $$
-T^{-1}AS
+A' = T^{-1}AS
 $$
 
-where $T$ and $S$ are invertible matrices.
+where:
 
-If either transformation matrix is **not invertible**, return `-1`.
+- $A$ is the original matrix.
+- $T$ and $S$ are invertible matrices.
+- $T^{-1}$ denotes the inverse of matrix $T$.
+
+Before performing the transformation, verify that both $T$ and $S$ are invertible. If either matrix is singular (non-invertible), return `-1`.
 
 ---
 
-# Example
+## Example
+
+### Input
 
 ```python
 A = [
@@ -46,105 +49,120 @@ S = [
     [1, 1],
     [0, 1]
 ]
-
-print(transform_matrix(A, T, S))
 ```
 
 ### Output
 
-```text
+```python
 [
     [0.5, 1.5],
     [1.5, 3.5]
 ]
 ```
 
-### Explanation
+### Reasoning
 
-The determinants are
-
-$$
-\det(T)=4
-$$
+First compute
 
 $$
-\det(S)=1
+T^{-1} = \begin{bmatrix}
+0.5 & 0\\
+0 & 0.5
+\end{bmatrix}
 $$
 
-Since both are non-zero, both matrices are invertible.
-
-The transformed matrix is
+Then,
 
 $$
-T^{-1}AS
-=
+A' = T^{-1}AS =
 \begin{bmatrix}
-0.5&1.5\\
-1.5&3.5
+0.5 & 0\\
+0 & 0.5
+\end{bmatrix}
+\begin{bmatrix}
+1 & 2\\
+3 & 4
+\end{bmatrix}
+\begin{bmatrix}
+1 & 1\\
+0 & 1
+\end{bmatrix} =
+\begin{bmatrix}
+0.5 & 1.5\\
+1.5 & 3.5
 \end{bmatrix}
 $$
 
 ---
 
-# Learn: Matrix Transformation
+## Learn: Matrix Transformation using $T^{-1}AS$
 
-## What is a Matrix Transformation?
+### What is Matrix Transformation?
 
-A matrix transformation changes the representation of a matrix by multiplying it with other matrices.
+Matrix transformation modifies a matrix by applying linear transformations on its rows and columns.
 
-In this problem, the transformation is
+The transformation
 
 $$
-A'=T^{-1}AS
+A' = T^{-1}AS
 $$
 
-where
+uses two invertible matrices:
 
-- $A$ is the original matrix.
-- $T^{-1}$ changes the basis on the left.
-- $S$ changes the basis on the right.
+- $T^{-1}$ transforms the row space.
+- $S$ transforms the column space.
 
-The transformed matrix represents the same linear transformation under different coordinate systems.
+Unlike simple scalar multiplication or transpose, this operation changes the representation of the matrix while preserving its essential linear properties when the transformation matrices are invertible.
 
 ---
 
-## Mathematical Formula
+### Mathematical Definition
 
-The transformation is defined as
-
-$$
-A'
-=
-T^{-1}AS
-$$
-
-where
-
-- $T^{-1}$ is the inverse of $T$.
-- $A$ is the original matrix.
-- $S$ is another invertible matrix.
-
-Matrix multiplication is performed from left to right.
-
----
-
-## Why Must $T$ and $S$ Be Invertible?
-
-A matrix is invertible only if its determinant is non-zero.
-
-Mathematically,
+Given
 
 $$
-\det(T)\ne0
+A \in \mathbb{R}^{m \times n}
+$$
+
+and invertible matrices
+
+$$
+T \in \mathbb{R}^{m \times m}
 $$
 
 and
 
 $$
-\det(S)\ne0
+S \in \mathbb{R}^{n \times n}
 $$
 
-If
+the transformed matrix is
+
+$$
+A' = T^{-1}AS
+$$
+
+The dimensions remain unchanged.
+
+---
+
+### Why Must $T$ and $S$ be Invertible?
+
+A matrix is invertible only if its determinant is non-zero.
+
+For matrix $T$,
+
+$$
+\det(T) \ne 0
+$$
+
+Similarly,
+
+$$
+\det(S) \ne 0
+$$
+
+If either determinant equals zero,
 
 $$
 \det(T)=0
@@ -153,114 +171,162 @@ $$
 or
 
 $$
-\det(S)=0,
+\det(S)=0
 $$
 
-then the inverse does not exist, making the transformation impossible.
+the inverse does not exist, making the transformation impossible.
 
 ---
 
-## Example
+### Matrix Inverse
 
-Suppose
-
-$$
-A=
-\begin{bmatrix}
-1&2\\
-3&4
-\end{bmatrix}
-$$
+For a matrix
 
 $$
-T=
-\begin{bmatrix}
-2&0\\
-0&2
-\end{bmatrix}
+T
 $$
 
+its inverse satisfies
+
 $$
-S=
-\begin{bmatrix}
-1&1\\
-0&1
-\end{bmatrix}
+TT^{-1}=T^{-1}T=I
 $$
 
-First compute
+where
+
+$$
+I
+$$
+
+is the identity matrix.
+
+Multiplying a matrix by its inverse recovers the original matrix.
+
+---
+
+### Transformation Process
+
+The transformation consists of three sequential operations.
+
+#### Step 1
+
+Verify that
+
+$$
+\det(T) \ne 0
+$$
+
+and
+
+$$
+\det(S) \ne 0
+$$
+
+---
+
+#### Step 2
+
+Compute
 
 $$
 T^{-1}
-=
-\begin{bmatrix}
-\frac12&0\\
-0&\frac12
-\end{bmatrix}
-$$
-
-Then
-
-$$
-A'
-=
-T^{-1}AS
-=
-\begin{bmatrix}
-0.5&1.5\\
-1.5&3.5
-\end{bmatrix}
 $$
 
 ---
 
-## Applications
+#### Step 3
 
-Matrix transformations are fundamental in
+Perform matrix multiplication
 
-- Linear Algebra
-- Computer Graphics
+$$
+A' = T^{-1}AS
+$$
+
+Since matrix multiplication is associative,
+
+$$
+(T^{-1}A)S = T^{-1}(AS)
+$$
+
+Both expressions produce the same result.
+
+---
+
+### Characteristics / Key Points
+
+- Requires both transformation matrices to be invertible.
+- Preserves matrix dimensions.
+- Changes the coordinate representation of the matrix.
+- Uses standard matrix multiplication.
+- Matrix multiplication is associative but **not** commutative.
+- Widely used in change-of-basis problems.
+
+---
+
+### Similarity Transformation
+
+A special case occurs when
+
+$$
+S=T
+$$
+
+The transformation becomes
+
+$$
+A' = T^{-1}AT
+$$
+
+This is called a **similarity transformation**.
+
+Two similar matrices have:
+
+- The same eigenvalues.
+- The same determinant.
+- The same trace.
+- The same characteristic polynomial.
+
+Only their representation changes.
+
+---
+
+### Why is it Used?
+
+Matrix transformations are fundamental in many scientific and engineering applications.
+
+Some common applications include:
+
+- Change of basis
+- Coordinate transformations
+- Principal Component Analysis (PCA)
+- Diagonalization
+- Eigenvalue decomposition
 - Robotics
-- Computer Vision
-- Coordinate Transformations
-- Change of Basis
-- Quantum Computing
-- Machine Learning
+- Computer graphics
+- Control systems
+- Quantum mechanics
+- Numerical linear algebra
+
+Many machine learning algorithms transform data into a new coordinate system where computations become simpler or more interpretable.
 
 ---
 
-# Things to Note
-
-- Both $T$ and $S$ must be invertible.
-- A matrix is invertible only if its determinant is non-zero.
-- Matrix multiplication is **not commutative**, meaning
-
-$$
-AB\ne BA
-$$
-
-- The order
-
-$$
-T^{-1}AS
-$$
-
-must not be changed.
+> 💡 **Important Note**
+>
+> Do not confuse matrix transformation with element-wise operations. The expression $T^{-1}AS$ performs **matrix multiplication**, which depends on matrix dimensions and multiplication order. Since matrix multiplication is **not commutative**, changing the order (for example, computing $SAT^{-1}$) generally produces a completely different result.
 
 ---
 
-# Solutions
+## Solutions
 
-## NumPy Implementation
+### NumPy Implementation
 
 ```python
 import numpy as np
 
-def transform_matrix(
-    A: list[list[int | float]],
-    T: list[list[int | float]],
-    S: list[list[int | float]]
-) -> list[list[int | float]]:
+def transform_matrix(A: list[list[int | float]],
+                     T: list[list[int | float]],
+                     S: list[list[int | float]]) -> list[list[int | float]]:
 
     detT = np.linalg.det(np.asarray(T))
     detS = np.linalg.det(np.asarray(S))
@@ -275,53 +341,18 @@ def transform_matrix(
 
 ---
 
-# Code Explanation
+## Code Explanation
 
-## Step 1: Convert Inputs to NumPy Arrays
-
-```python
-np.asarray(T)
-np.asarray(A)
-np.asarray(S)
-```
-
-These convert Python lists into NumPy arrays so that optimized linear algebra operations can be used.
-
----
-
-## Step 2: Compute the Determinants
+### 1. Compute the Determinants
 
 ```python
 detT = np.linalg.det(np.asarray(T))
 detS = np.linalg.det(np.asarray(S))
 ```
 
-The determinant of each transformation matrix is computed.
+The determinant determines whether a matrix is invertible.
 
-Mathematically,
-
-$$
-\det(T)
-$$
-
-and
-
-$$
-\det(S)
-$$
-
-are calculated.
-
----
-
-## Step 3: Check Whether the Matrices are Invertible
-
-```python
-if detT == 0 or detS == 0:
-    return -1
-```
-
-If either determinant equals zero,
+If
 
 $$
 \det(T)=0
@@ -330,78 +361,101 @@ $$
 or
 
 $$
-\det(S)=0,
+\det(S)=0
 $$
 
-then the corresponding inverse does not exist.
-
-The function immediately returns `-1`.
+the transformation cannot be performed.
 
 ---
 
-## Step 4: Compute the Inverse of $T$
+### 2. Validate Invertibility
+
+```python
+if detT == 0 or detS == 0:
+    return -1
+```
+
+Only invertible matrices possess an inverse.
+
+If either matrix is singular, the function immediately returns `-1`.
+
+---
+
+### 3. Compute the Inverse of $T$
 
 ```python
 np.linalg.inv(np.asarray(T))
 ```
 
-This computes
+NumPy computes
 
 $$
 T^{-1}
 $$
 
-using NumPy's optimized inverse algorithm.
+which satisfies
+
+$$
+TT^{-1}=I
+$$
 
 ---
 
-## Step 5: Perform the Matrix Transformation
+### 4. Perform Matrix Multiplication
 
 ```python
-np.linalg.inv(np.asarray(T)) @ np.asarray(A) @ np.asarray(S)
+result = np.linalg.inv(T) @ A @ S
 ```
 
 The `@` operator performs matrix multiplication.
 
-This directly computes
+The computation follows the formula
 
 $$
-T^{-1}AS
+A' = T^{-1}AS
 $$
 
-in the required order.
+producing the transformed matrix.
 
 ---
 
-## Step 6: Round the Result
+### 5. Round Numerical Errors
 
 ```python
 np.round(result, 10)
 ```
 
-Floating-point arithmetic can introduce tiny numerical errors.
+Floating-point arithmetic can introduce tiny numerical inaccuracies such as
 
-Rounding to 10 decimal places removes insignificant precision errors.
+```text
+0.49999999997
+```
+
+Rounding improves readability while preserving numerical accuracy.
 
 ---
 
-## Step 7: Convert Back to a Python List
+### 6. Convert Back to a Python List
 
 ```python
 .tolist()
 ```
 
-Converts the NumPy array back into a nested Python list.
+The final NumPy array is converted into a standard Python list before returning.
 
 ---
 
-# Time & Space Complexity
+## Time & Space Complexity
 
-Assume the matrices are of size $n\times n$.
+Let
 
-| Complexity | Value |
-|------------|-------|
-| Time | **O(n³)** |
-| Space | **O(n²)** |
+- $n$ = number of rows (and columns for square matrices)
 
-The dominant operations are computing the matrix inverse and performing matrix multiplication, both of which require cubic time for dense matrices.
+Computing a matrix inverse dominates the overall complexity.
+
+| Complexity | Value     |
+| ---------- | --------- |
+| Time       | **O(n³)** |
+| Space      | **O(n²)** |
+
+The inverse computation and matrix multiplications both require storing intermediate matrices of size $n \times n$.

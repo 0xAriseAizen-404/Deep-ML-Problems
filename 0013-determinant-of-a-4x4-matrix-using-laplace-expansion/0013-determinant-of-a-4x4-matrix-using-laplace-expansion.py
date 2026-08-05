@@ -11,3 +11,6 @@ def determinant_4x4(matrix: list[list[int | float]]) -> float:
             det += (-1) ** j * mat[0][j] * det_help(minor)
         return det
     return det_help(matrix)
+
+# TC: O(n!)
+# SC: O(n^2)
