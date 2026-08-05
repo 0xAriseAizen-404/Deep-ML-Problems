@@ -311,8 +311,7 @@ Computes
 
 $$
 \boxed{
-\text{MSE}
-=
+\text{MSE} =
 \frac{1}{n}
 \sum_{i=1}^{n}
 (y_i-\hat{y}_i)^2

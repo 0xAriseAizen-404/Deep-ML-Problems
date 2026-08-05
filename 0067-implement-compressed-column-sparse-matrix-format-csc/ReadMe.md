@@ -149,14 +149,14 @@ Values:
 
 $$
 \text{values} =
-[a_1,a_2,\ldots,a_k]
+[a_{1},a_{2},\ldots,a_{k}]
 $$
 
 Row Indices:
 
 $$
 \text{row\_indices} =
-[r_1,r_2,\ldots,r_k]
+[r_{1},r_{2},\ldots,r_{k}]
 $$
 
 where
