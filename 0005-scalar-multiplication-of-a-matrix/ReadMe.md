@@ -49,19 +49,14 @@ Each element is multiplied by the scalar value.
 
 $$
 2 \times
-\left[
-\begin{array}{cc}
-1 & 2 \\
+\begin{bmatrix}
+1 & 2\\
 3 & 4
-\end{array}
-\right]
-=
-\left[
-\begin{array}{cc}
-2 & 4 \\
+\end{bmatrix} =
+\begin{bmatrix}
+2 & 4\\
 6 & 8
-\end{array}
-\right]
+\end{bmatrix}
 $$
 
 ---
