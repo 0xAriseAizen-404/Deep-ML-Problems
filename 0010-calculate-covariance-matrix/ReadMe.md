@@ -56,7 +56,7 @@ $$
 The covariance between the two features is
 
 $$
-\operatorname{cov}(X_1,X_2)=\frac{(-1)(-1)+0+1}{2}=1
+cov(X_1,X_2)=\frac{(-1)(-1)+0+1}{2}=1
 $$
 
 Since both features vary together perfectly, the covariance matrix becomes
@@ -101,7 +101,7 @@ $$
 their sample covariance is
 
 $$
-\operatorname{cov}(X,Y)=\frac{\sum_{k=1}^{m}(X_k-\bar{X})(Y_k-\bar{Y})}{m-1}
+cov(X,Y)=\frac{\sum_{k=1}^{m}(X_k-\bar{X})(Y_k-\bar{Y})}{m-1}
 $$
 
 where
@@ -121,10 +121,10 @@ For a dataset containing $n$ features, the covariance matrix is
 $$
 \Sigma=
 \begin{bmatrix}
-\operatorname{cov}(X_1,X_1) & \operatorname{cov}(X_1,X_2) & \cdots & \operatorname{cov}(X_1,X_n)\\
-\operatorname{cov}(X_2,X_1) & \operatorname{cov}(X_2,X_2) & \cdots & \operatorname{cov}(X_2,X_n)\\
+cov(X_1,X_1) & cov(X_1,X_2) & \cdots & cov(X_1,X_n)\\
+cov(X_2,X_1) & cov(X_2,X_2) & \cdots & cov(X_2,X_n)\\
 \vdots & \vdots & \ddots & \vdots\\
-\operatorname{cov}(X_n,X_1) & \operatorname{cov}(X_n,X_2) & \cdots & \operatorname{cov}(X_n,X_n)
+cov(X_n,X_1) & cov(X_n,X_2) & \cdots & cov(X_n,X_n)
 \end{bmatrix}
 $$
 
@@ -133,7 +133,7 @@ Each element describes the relationship between two features.
 The diagonal entries are simply the **variances** of each feature because
 
 $$
-\operatorname{cov}(X,X)=\operatorname{Var}(X)
+cov(X,X)=var(X)
 $$
 
 ---
@@ -149,7 +149,7 @@ To compute the covariance matrix:
 5. Since covariance is symmetric,
 
 $$
-\operatorname{cov}(X,Y)=\operatorname{cov}(Y,X)
+cov(X,Y)=cov(Y,X)
 $$
 
 only half the matrix needs to be computed explicitly.
@@ -181,19 +181,19 @@ $$
 The covariance is
 
 $$
-\operatorname{cov}(X,Y)=\frac{(1-2)(4-5)+(2-2)(5-5)+(3-2)(6-5)}{3-1}=1
+cov(X,Y)=\frac{(1-2)(4-5)+(2-2)(5-5)+(3-2)(6-5)}{3-1}=1
 $$
 
 Similarly,
 
 $$
-\operatorname{Var}(X)=1
+var(X)=1
 $$
 
 and
 
 $$
-\operatorname{Var}(Y)=1
+var(Y)=1
 $$
 
 Therefore,
@@ -236,7 +236,7 @@ $$
 Correlation is simply the normalized version of covariance.
 
 $$
-\rho_{XY}=\frac{\operatorname{cov}(X,Y)}{\sigma_X\sigma_Y}
+\rho_{XY}=\frac{cov(X,Y)}{\sigma_X\sigma_Y}
 $$
 
 ---
@@ -331,7 +331,7 @@ cov(x, y)
 computes
 
 $$
-\operatorname{cov}(X,Y)=\frac{\sum (X-\bar{X})(Y-\bar{Y})}{m-1}
+cov(X,Y)=\frac{\sum (X-\bar{X})(Y-\bar{Y})}{m-1}
 $$
 
 This measures how the two variables vary together.
@@ -348,7 +348,7 @@ for i in range(n):
 Only the upper triangular part is computed because
 
 $$
-\operatorname{cov}(X,Y)=\operatorname{cov}(Y,X)
+cov(X,Y)=cov(Y,X)
 $$
 
 The symmetric value is copied to the lower triangular part.

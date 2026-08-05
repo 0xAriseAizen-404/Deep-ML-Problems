@@ -13,3 +13,6 @@ def single_neuron_model(features: list[list[float]], labels: list[int], weights:
     
         # mse += (label - logit) ** 2
     # return probabilities, round(mse/len(probabilities), 4)
+
+# TC: O(m*n)
+# SC: O(m)

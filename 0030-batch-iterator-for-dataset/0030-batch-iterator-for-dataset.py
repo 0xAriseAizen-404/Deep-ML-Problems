@@ -12,3 +12,6 @@ def batch_iterator(X, y=None, batch_size=64):
         else:
             batches.append(list(X[ind: ind+batch_size]))
     return batches
+
+# TC: O(m)
+# SC: O(m)

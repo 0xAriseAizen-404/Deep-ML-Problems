@@ -25,3 +25,6 @@ def k_means_clustering(points: list[tuple[float, ...]], k: int, initial_centroid
             new_centroids.append(new_centroid)
         centroids = new_centroids
     return centroids
+
+# TC: O(t*n*k*d)
+# SC: O(n+k)

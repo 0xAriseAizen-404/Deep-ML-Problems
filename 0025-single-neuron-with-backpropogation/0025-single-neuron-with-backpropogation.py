@@ -25,4 +25,7 @@ def train_neuron(features: np.ndarray, labels: np.ndarray, initial_weights: np.n
     np.round(weights.ravel(), 4),
     round(float(bias), 4),
     [round(float(x), 4) for x in mse_values]
-)
+    )
+
+# TC: O(epochs * m * n)
+# SC: O(m + n)

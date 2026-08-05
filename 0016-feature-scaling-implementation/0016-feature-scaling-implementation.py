@@ -14,3 +14,6 @@ def feature_scaling(data: np.ndarray) -> (np.ndarray, np.ndarray):
     ).round(4)
 
     return standardized_data, normalized_data
+
+# TC: O(m*n)
+# SC: O(m*n)
