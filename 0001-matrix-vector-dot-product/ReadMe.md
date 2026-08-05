@@ -1,98 +1,121 @@
-# Matrix Times Vector (Easy, Linear Algebra)
+# Matrix-Vector Dot Product (Easy, Linear Algebra)
 
 ## Table of Contents
 
-- Problem Statement
-- Example
-- Learn: Matrix Times Vector
-- Solution
-- Code Explanation
-- Time & Space Complexity
-
----
+- [Problem Statement](#problem-statement)
+- [Example](#example)
+- [Learn: Matrix-Vector Dot Product](#learn-matrix-vector-dot-product)
+- [Solutions](#solutions)
+  - [Custom Implementation](#custom-implementation)
+- [Code Explanation](#code-explanation)
+- [Time & Space Complexity](#time--space-complexity)
 
 ## Problem Statement
 
-[Matrix Times Vector](https://www.deep-ml.com/problems/1)
+### [Matrix-Vector Dot Product](https://www.deep-ml.com/problems/1)
 
-Write a Python function `matrix_dot_vector(a, b)` that computes the **matrix-vector product** between a matrix and a vector.
+Given a matrix and a vector, compute their matrix-vector dot product.
 
-Return **-1** if the matrix and vector cannot be multiplied.
+A matrix with dimensions **n × m** can only be multiplied by a vector of length **m**. The result is a new vector of length **n**, where each element is obtained by taking the dot product of one row of the matrix with the input vector.
+
+If the number of columns in the matrix does not equal the length of the vector, the multiplication is undefined, and the function should return **-1**.
 
 ---
 
 ## Example
 
+### Input
+
 ```python
-a = [
-    [1, 2],
-    [2, 4]
-]
+a = [[1, 2],
+     [2, 4]]
 
 b = [1, 2]
-
-print(matrix_dot_vector(a, b))
 ```
 
 ### Output
 
-```text
+```python
 [5, 10]
 ```
 
-### Explanation
+### Reasoning
 
-The first output element is
-
-$$
-1\times1+2\times2=5
-$$
-
-The second output element is
+For the first row:
 
 $$
-2\times1+4\times2=10
+(1 \times 1) + (2 \times 2) = 5
+$$
+
+For the second row:
+
+$$
+(2 \times 1) + (4 \times 2) = 10
 $$
 
 Therefore,
 
-$$
-Av=
-\begin{bmatrix}
-5\\
-10
-\end{bmatrix}
-$$
+```python
+[5, 10]
+```
 
 ---
 
-# Learn: Matrix Times Vector
+## Learn: Matrix-Vector Dot Product
 
-## What is it?
+### What is it?
 
-Matrix-vector multiplication is one of the most fundamental operations in Linear Algebra.
+A **matrix-vector dot product** is one of the most fundamental operations in Linear Algebra. It transforms an input vector into another vector by combining the values in each matrix row with the corresponding elements of the vector.
 
-It applies the linear transformation represented by a matrix to an input vector. Each row of the matrix is multiplied with the vector using the **dot product**, producing one value in the output vector.
+If the matrix has **n rows** and **m columns**, and the vector has **m elements**, the multiplication produces a vector containing **n elements**.
 
-If a matrix has $m$ rows, the resulting vector will also contain $m$ elements.
+Each output element is simply the **dot product** between one row of the matrix and the input vector.
+
+This operation is widely used in Machine Learning, Deep Learning, Computer Vision, Scientific Computing, and numerical optimization.
 
 ---
 
-## Mathematical Definition
+### Mathematical Definition
 
-Suppose we have the matrix
+Let
+
+$$
+A \in \mathbb{R}^{n \times m}
+$$
+
+be a matrix and
+
+$$
+v \in \mathbb{R}^{m}
+$$
+
+be a vector.
+
+Their product is
+
+$$
+A v \in \mathbb{R}^{n}
+$$
+
+where
+
+$$
+(A v)_i = \sum_{j=1}^{m} a_{ij}v_j
+$$
+
+Expanding this,
 
 $$
 A=
 \begin{bmatrix}
-a_{11}&a_{12}&\cdots&a_{1n}\\
-a_{21}&a_{22}&\cdots&a_{2n}\\
-\vdots&\vdots&\ddots&\vdots\\
-a_{m1}&a_{m2}&\cdots&a_{mn}
+a_{11} & a_{12} & \cdots & a_{1m}\\
+a_{21} & a_{22} & \cdots & a_{2m}\\
+\vdots & \vdots & \ddots & \vdots\\
+a_{n1} & a_{n2} & \cdots & a_{nm}
 \end{bmatrix}
 $$
 
-and the vector
+and
 
 $$
 v=
@@ -100,203 +123,284 @@ v=
 v_1\\
 v_2\\
 \vdots\\
-v_n
+v_m
 \end{bmatrix}
 $$
 
-The matrix-vector product is
+Then,
 
 $$
 Av=
 \begin{bmatrix}
-\sum_{j=1}^{n}a_{1j}v_j\\
-\sum_{j=1}^{n}a_{2j}v_j\\
+a_{11}v_1+a_{12}v_2+\cdots+a_{1m}v_m\\
+a_{21}v_1+a_{22}v_2+\cdots+a_{2m}v_m\\
 \vdots\\
-\sum_{j=1}^{n}a_{mj}v_j
+a_{n1}v_1+a_{n2}v_2+\cdots+a_{nm}v_m
 \end{bmatrix}
 $$
 
-Each output element is simply the **dot product** of one row of the matrix with the input vector.
+---
+
+### Dimension Requirement
+
+For matrix-vector multiplication to be valid,
+
+$$
+A_{n \times m}\times v_{m}=y_n
+$$
+
+The **number of columns** in the matrix must equal the **length of the vector**.
+
+In other words,
+
+$$
+m = |v|
+$$
+
+If
+
+$$
+m \ne |v|
+$$
+
+the multiplication is undefined.
 
 ---
 
-## Dimension Requirement
+### Geometric Interpretation
+
+A matrix can be viewed as a transformation.
+
+Instead of simply scaling a vector, the matrix can:
+
+- Rotate it
+- Stretch it
+- Compress it
+- Reflect it
+- Project it into another space
+
+The resulting vector represents the transformed version of the original vector.
+
+---
+
+### Characteristics / Key Points
+
+- Matrix dimensions are **n × m**.
+- Vector length must be **m**.
+- Output vector length is **n**.
+- Each output element is computed independently.
+- Every row contributes exactly one value to the output.
+- Matrix-vector multiplication is **not** element-wise multiplication.
+- The operation is deterministic and linear.
+
+---
+
+### Step-by-Step Algorithm
 
 Suppose
 
-- Matrix $A$ has dimensions $m\times n$
-- Vector $v$ has length $n$
+```text
+Matrix:
+[
+ [1,2],
+ [2,4]
+]
 
-Then the multiplication is valid.
+Vector:
+[1,2]
+```
+
+For each row:
+
+Row 1
 
 $$
-(m\times n)
-\times
-(n\times1)
-=
-(m\times1)
+1\times1+2\times2=5
 $$
 
-If the number of matrix columns does not equal the vector length, the multiplication is undefined.
+Row 2
+
+$$
+2\times1+4\times2=10
+$$
+
+Output
+
+```text
+[5,10]
+```
 
 ---
 
-## Characteristics / Key Points
+### Relationship to the Dot Product
 
-- Each row produces exactly one output value.
-- Every output value is computed using a dot product.
-- The output vector has the same number of elements as the number of matrix rows.
-- Matrix-vector multiplication represents a linear transformation.
-- The number of columns must equal the size of the vector.
+The dot product between two vectors
+
+$$
+x=[x_1,x_2,\dots,x_m]
+$$
+
+and
+
+$$
+y=[y_1,y_2,\dots,y_m]
+$$
+
+is
+
+$$
+x\cdot y=\sum_{i=1}^{m}x_i y_i
+$$
+
+Matrix-vector multiplication simply performs this dot product for **every row** of the matrix.
 
 ---
 
-## Why is it used? / Applications
+### Why is it Used?
 
-Matrix-vector multiplication is used throughout Machine Learning and Linear Algebra.
+Matrix-vector multiplication appears almost everywhere in Machine Learning.
 
-Applications include:
+Some common applications include:
 
-- Linear Regression
+- Linear Regression predictions
 - Logistic Regression
-- Neural Networks
-- Principal Component Analysis (PCA)
+- Fully Connected (Dense) Neural Network layers
+- Feature transformations
+- Coordinate transformations
+- Physics simulations
 - Computer Graphics
-- Physics Simulations
-- Recommendation Systems
+- Robotics
 - Scientific Computing
+- Optimization algorithms
 
-Nearly every neural network layer performs matrix-vector multiplication during forward propagation.
-
-> 💡 **Important Note**
->
-> The provided implementation checks `len(a) == len(b)`, which is only correct for square matrices. The mathematically correct condition is:
->
-> ```python
-> len(a[0]) == len(b)
-> ```
->
-> since the **number of columns** of the matrix must equal the **length of the vector**.
-
----
-
-# Solution
-
-## Custom Implementation
-
-```python
-def matrix_dot_vector(a, b):
-    if len(a) == len(b):
-        l = []
-        for i in a:
-            l.append(sum([j * k for j, k in zip(i, b)]))
-        return l
-    return -1
-```
-
----
-
-# Code Explanation
-
-### Step 1: Check the Dimensions
-
-```python
-if len(a) == len(b):
-```
-
-The implementation checks whether
+In Deep Learning, a dense layer computes
 
 $$
-\text{Rows}(A) = \text{Length}(v)
-$$
-
-Although this works for square matrices, the correct mathematical condition is
-
-$$
-\text{Columns}(A) = \text{Length}(v)
-$$
-
----
-
-### Step 2: Iterate Through Each Matrix Row
-
-```python
-for i in a:
-```
-
-Each iteration selects one row
-
-$$
-A_i=
-\begin{bmatrix}
-a_{i1}&a_{i2}&\cdots&a_{in}
-\end{bmatrix}
-$$
-
-Each row contributes one value to the output vector.
-
----
-
-### Step 3: Compute the Dot Product
-
-```python
-sum([j * k for j, k in zip(i, b)])
-```
-
-For the current row,
-
-$$
-y_i = \sum_{j=1}^{n} a_{ij}v_j
-$$
-
-This computes the dot product between the current row and the input vector.
-
----
-
-### Step 4: Store the Result
-
-```python
-l.append(...)
-```
-
-The computed value is appended to the output vector.
-
-After processing every row,
-
-$$
-y=
-Av
+y=Wx+b
 $$
 
 where
 
+- $W$ is the weight matrix
+- $x$ is the input vector
+- $b$ is the bias vector
+
+The first operation performed is exactly a matrix-vector multiplication.
+
+---
+
+> 💡 **Important Note**
+>
+> A common mistake is confusing **matrix multiplication** with **element-wise multiplication**. In matrix-vector multiplication, each output value is obtained from the dot product of an entire matrix row with the input vector—not by multiplying corresponding positions of the matrix and vector directly. Always verify that the matrix columns equal the vector length before performing the operation.
+
+---
+
+## Solutions
+
+### Custom Implementation
+
+```python
+def matrix_dot_vector(a: list[list[int | float]], b: list[int | float]):
+
+    if not a:
+        return []
+
+    if len(a[0]) != len(b):
+        return -1
+
+    res = []
+
+    for row in a:
+        total = 0
+
+        for x, y in zip(row, b):
+            total += x * y
+
+        res.append(total)
+
+    return res
+```
+
+---
+
+## Code Explanation
+
+### 1. Handle an Empty Matrix
+
+```python
+if not a:
+    return []
+```
+
+If the matrix has no rows, there is nothing to multiply, so the resulting vector is also empty.
+
+---
+
+### 2. Validate Dimensions
+
+```python
+if len(a[0]) != len(b):
+    return -1
+```
+
+Before performing multiplication, verify that the number of columns equals the vector length.
+
+If the dimensions are incompatible, matrix-vector multiplication is undefined.
+
+---
+
+### 3. Iterate Through Every Row
+
+```python
+for row in a:
+```
+
+Each row produces one value in the output vector.
+
+---
+
+### 4. Compute the Dot Product
+
+```python
+total = 0
+
+for x, y in zip(row, b):
+    total += x * y
+```
+
+`zip()` pairs each matrix element with its corresponding vector element.
+
+For every pair,
+
 $$
-y=
-\begin{bmatrix}
-y_1\\
-y_2\\
-\vdots\\
-y_m
-\end{bmatrix}
+\text{total}=\text{total}+xy
+$$
+
+After the loop finishes,
+
+$$
+\text{total}=row\cdot b
 $$
 
 ---
 
-### Step 5: Return the Result
+### 5. Store the Result
 
 ```python
-return l
+res.append(total)
 ```
 
-The function returns the complete matrix-vector product.
+Each computed dot product becomes one element of the resulting vector.
 
-If the dimension check fails,
+---
+
+### 6. Return the Final Vector
 
 ```python
-return -1
+return res
 ```
 
-indicates that the multiplication is not valid.
+After processing every row, return the transformed vector.
 
 ---
 
@@ -304,10 +408,16 @@ indicates that the multiplication is not valid.
 
 Let
 
-- $m$ = Number of rows
-- $n$ = Number of columns
+- $n$ = number of rows in the matrix
+- $m$ = number of columns in the matrix (also the vector length)
 
-| Complexity | Value        |
-| ---------- | ------------ |
-| Time       | **O(m × n)** |
-| Space      | **O(m)**     |
+Every row requires iterating through all **m** columns.
+
+Therefore,
+
+| Complexity | Value |
+|------------|-------|
+| Time | **O(n × m)** |
+| Space | **O(n)** |
+
+The additional space is used only for storing the resulting vector containing **n** elements.

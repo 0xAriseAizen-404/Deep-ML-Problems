@@ -16,7 +16,38 @@ I will give Problem Number, place it at the Heading of the problem name on that 
 and then as for the Level and Category, you will get those in the Description tags, based on those, add them in the ReadMe file Heading and I will give you my solution also
 
 Give me in a Complete Markdown code, not the text, i need in Markdown code
-and remember this is not obsidian, this is VsCode, so careful with the formula how to represent
+and remember I am gonna save these files in Github, so give me in github style markdown
+like if there are formulas are there which will be in a new line not inline, then we will use $$ formula $$
+and these should be like 
+$$ Ax = B $$ 
+like this in one line, not like
+$$
+Ax
+=
+B
+$$
+it may work in vscode or obsidian, but in github its not working, equal to sign should never take a new line alone okay, its breaking the formula interpretation in github, the equal to sign should always follow by something
+
+and if it is inline, then use like
+where
+- $x_{i}$ is the sample
+like this
+
+And another thing
+Do not use unnecessary extra lines in the markdown file okay
+be compress but the content should be more
+content should be like how I described below
+
+instruction,
+max lines in markdown file - 400 lines
+min lines - 300 lines
+okay
+
+!important
+and do not give me any unncessary content, like
+Hey! here you go the markdown file for the concept xxx
+don't give any other things
+just jsut jsut give me Markdown Code thats all, only that, no other thing else
 
 Template
 
@@ -32,7 +63,7 @@ Template
 
 ## Problem Statement
 
-Problem Name {Deep-ML link}
+### Problem Name {Deep-ML link}
 
 Problem description.
 
@@ -93,9 +124,6 @@ and the example template is -> 0041-simple-convolutional-2d-layer/ReadMe.md
 
 ---
 
-Response from ChatGPT
-
-Understood. I will follow this exact structure for every Deep-ML problem you provide.
 
 Workflow:
 
@@ -191,8 +219,6 @@ Style:
   - Enough to revise later.
 
 - Markdown optimized for:
-  - VSCode
-  - Obsidian
   - GitHub README
 
 - Maintain ML/DL terminology accuracy.

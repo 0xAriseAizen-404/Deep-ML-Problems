@@ -2,40 +2,38 @@
 
 ## Table of Contents
 
-- Problem Statement
-- Example
-- Learn: Transpose of a Matrix
-- Solutions
-  - Custom Implementation
-- Code Explanation
-- Time & Space Complexity
-
----
+- [Problem Statement](#problem-statement)
+- [Example](#example)
+- [Learn: Transpose of a Matrix](#learn-transpose-of-a-matrix)
+- [Solutions](#solutions)
+  - [Custom Implementation](#custom-implementation)
+- [Code Explanation](#code-explanation)
+- [Time & Space Complexity](#time--space-complexity)
 
 ## Problem Statement
 
-[Transpose of a Matrix](https://www.deep-ml.com/problems/2)
+### [Transpose of a Matrix](https://www.deep-ml.com/problems/2)
 
-Write a Python function `transpose_matrix(a)` that computes the **transpose** of a given matrix.
+Write a Python function that computes the **transpose** of a given 2D matrix. The transpose is obtained by converting every row of the original matrix into a column and every column into a row.
 
-The transpose of a matrix is obtained by **interchanging its rows and columns**.
+For an **m × n** matrix, the transpose has dimensions **n × m**.
 
 ---
 
 ## Example
+
+### Input
 
 ```python
 a = [
     [1, 2, 3],
     [4, 5, 6]
 ]
-
-print(transpose_matrix(a))
 ```
 
 ### Output
 
-```text
+```python
 [
     [1, 4],
     [2, 5],
@@ -43,120 +41,230 @@ print(transpose_matrix(a))
 ]
 ```
 
-### Explanation
+### Reasoning
 
-Given
+The input matrix has **2 rows** and **3 columns**.
 
-$$
-A=
-\begin{bmatrix}
-1&2&3\\
-4&5&6
-\end{bmatrix}
-$$
-
-its transpose is
-
-$$
-A^T=
-\begin{bmatrix}
-1&4\\
-2&5\\
-3&6
-\end{bmatrix}
-$$
-
-Rows become columns and columns become rows.
-
----
-
-# Learn: Transpose of a Matrix
-
-## What is it?
-
-The **transpose** of a matrix is formed by swapping its rows and columns.
-
-If an element is located at row $i$ and column $j$ in the original matrix, it moves to row $j$ and column $i$ in the transposed matrix.
-
-The transpose is one of the most fundamental operations in Linear Algebra and appears frequently in Machine Learning, Deep Learning, Computer Vision, and Statistics.
-
----
-
-## Mathematical Definition
-
-Suppose
+Original matrix:
 
 $$
 A=
 \begin{bmatrix}
-a_{11}&a_{12}&\cdots&a_{1n}\\
-a_{21}&a_{22}&\cdots&a_{2n}\\
-\vdots&\vdots&\ddots&\vdots\\
-a_{m1}&a_{m2}&\cdots&a_{mn}
+1 & 2 & 3\\
+4 & 5 & 6
 \end{bmatrix}
 $$
 
-Its transpose is
+After swapping rows and columns,
 
 $$
 A^T=
 \begin{bmatrix}
-a_{11}&a_{21}&\cdots&a_{m1}\\
-a_{12}&a_{22}&\cdots&a_{m2}\\
-\vdots&\vdots&\ddots&\vdots\\
-a_{1n}&a_{2n}&\cdots&a_{mn}
+1 & 4\\
+2 & 5\\
+3 & 6
 \end{bmatrix}
 $$
 
-In general,
+The resulting matrix has **3 rows** and **2 columns**.
+
+---
+
+## Learn: Transpose of a Matrix
+
+### What is it?
+
+The **transpose** of a matrix is formed by interchanging its rows and columns. Every element moves from position **(i, j)** to **(j, i)** without changing its value.
+
+If the original matrix has **m rows** and **n columns**, the transposed matrix will have **n rows** and **m columns**.
+
+Unlike matrix multiplication, the transpose does not perform any arithmetic operations. It simply rearranges the existing elements.
+
+---
+
+### Mathematical Definition
+
+Let
 
 $$
-(A^T)_{ij}
-=
-A_{ji}
+A \in \mathbb{R}^{m \times n}
+$$
+
+Then its transpose is
+
+$$
+A^T \in \mathbb{R}^{n \times m}
+$$
+
+where
+
+$$
+(A^T)_{ij}=A_{ji}
+$$
+
+If
+
+$$
+A=
+\begin{bmatrix}
+a_{11} & a_{12} & \cdots & a_{1n}\\
+a_{21} & a_{22} & \cdots & a_{2n}\\
+\vdots & \vdots & \ddots & \vdots\\
+a_{m1} & a_{m2} & \cdots & a_{mn}
+\end{bmatrix}
+$$
+
+then
+
+$$
+A^T=
+\begin{bmatrix}
+a_{11} & a_{21} & \cdots & a_{m1}\\
+a_{12} & a_{22} & \cdots & a_{m2}\\
+\vdots & \vdots & \ddots & \vdots\\
+a_{1n} & a_{2n} & \cdots & a_{mn}
+\end{bmatrix}
 $$
 
 ---
 
-## Characteristics / Key Points
+### Index Transformation
 
-- Rows become columns.
-- Columns become rows.
-- If $A$ is an $m\times n$ matrix, then $A^T$ is an $n\times m$ matrix.
-- Applying transpose twice returns the original matrix.
+Every element follows a simple rule:
+
+$$
+(i,j)\rightarrow(j,i)
+$$
+
+For example,
+
+| Original Position | Transposed Position |
+|------------------|---------------------|
+| $(0,1)$ | $(1,0)$ |
+| $(2,3)$ | $(3,2)$ |
+| $(4,0)$ | $(0,4)$ |
+
+Only the indices change; the values remain the same.
+
+---
+
+### Properties of Transpose
+
+The transpose operation satisfies several important mathematical properties.
+
+#### Double Transpose
+
+Applying transpose twice returns the original matrix.
 
 $$
 (A^T)^T=A
 $$
 
-- The transpose of a square matrix has the same dimensions.
+---
+
+#### Addition
+
+The transpose distributes over matrix addition.
+
+$$
+(A+B)^T=A^T+B^T
+$$
 
 ---
 
-## Why is it used? / Applications
+#### Scalar Multiplication
 
-Matrix transpose is widely used in:
+A scalar can be factored outside the transpose.
 
-- Matrix Multiplication
-- Linear Regression
+$$
+(cA)^T=cA^T
+$$
+
+---
+
+#### Matrix Multiplication
+
+When transposing a product, the multiplication order reverses.
+
+$$
+(AB)^T=B^TA^T
+$$
+
+This is one of the most frequently tested transpose properties.
+
+---
+
+#### Symmetric Matrix
+
+A matrix is symmetric if
+
+$$
+A=A^T
+$$
+
+Only square matrices can be symmetric.
+
+---
+
+### Characteristics / Key Points
+
+- Swaps rows and columns.
+- Matrix dimensions change from **m × n** to **n × m**.
+- No arithmetic computation is performed.
+- Every element keeps its value.
+- Only the element positions change.
+- Works for square and rectangular matrices.
+- Applying transpose twice returns the original matrix.
+
+---
+
+### Pythonic Implementation
+
+Python provides a concise way to transpose a matrix using `zip()`.
+
+```python
+list(map(list, zip(*matrix)))
+```
+
+Here,
+
+- `*matrix` unpacks every row as a separate argument.
+- `zip()` groups elements with the same column index.
+- `map(list, ...)` converts tuples into lists.
+
+This approach is clean and efficient for rectangular matrices.
+
+---
+
+### Why is it Used?
+
+Transpose is a fundamental operation across mathematics and machine learning.
+
+Some common applications include:
+
+- Linear Algebra computations
+- Matrix multiplication
+- Covariance matrix computation
+- Feature matrix transformations
+- Data preprocessing
 - Principal Component Analysis (PCA)
-- Covariance Matrix Computation
-- Singular Value Decomposition (SVD)
-- Neural Networks
-- Computer Graphics
-- Scientific Computing
+- Computer Graphics transformation matrices
+- Scientific computing
+- Neural network weight manipulation
 
-Many machine learning algorithms rely on transposed matrices during optimization and gradient computation.
+Many machine learning algorithms rely on transposed matrices when deriving gradients and performing matrix multiplications.
+
+---
 
 > 💡 **Important Note**
 >
-> The provided implementation supports **ragged matrices** (rows with different lengths). Missing elements are skipped instead of causing an error, making it more flexible than the standard transpose operation, which assumes every row has the same number of columns.
+> The transpose only changes the **position** of each element—it never changes the element itself. A common mistake is assuming values are recalculated. Every entry simply moves from index $(i,j)$ to $(j,i)$, causing the matrix dimensions to flip from **m × n** to **n × m**.
 
 ---
 
-# Solution
+## Solutions
 
-## Custom Implementation
+### Custom Implementation
 
 ```python
 def transpose_matrix(a: list[list[int | float]]) -> list[list[int | float]]:
@@ -166,95 +274,61 @@ def transpose_matrix(a: list[list[int | float]]) -> list[list[int | float]]:
 
 ---
 
-# Code Explanation
+## Code Explanation
 
-### Step 1: Find the Maximum Number of Columns
+### 1. Find the Maximum Row Length
 
 ```python
 m = max(len(row) for row in a)
 ```
 
-This computes
+The implementation supports matrices whose rows may have different lengths.
 
-$$
-m
-=
-\max_{1\le i\le r}
-\left(
-\text{length}(A_i)
-\right)
-$$
-
-where
-
-- $r$ is the number of rows.
-- $A_i$ is the $i^{th}$ row of the matrix.
-
-The value $m$ determines how many rows the transposed matrix will contain.
+The maximum row length determines how many columns the transposed matrix can have.
 
 ---
 
-### Step 2: Iterate Over Every Column Index
+### 2. Iterate Over Every Column Index
 
 ```python
 for i in range(m)
 ```
 
-For each column index,
-
-$$
-i=0,1,2,\ldots,m-1
-$$
-
-a new row of the transposed matrix is constructed.
+Each column of the original matrix becomes one row in the transposed matrix.
 
 ---
 
-### Step 3: Collect Elements from Each Row
+### 3. Collect Elements from Every Row
 
 ```python
 [row[i] for row in a if i < len(row)]
 ```
 
-For every row,
+For the current column index:
 
-the element
+- Visit every row.
+- Check whether the row contains that column.
+- Append the element if it exists.
 
-$$
-A_{ji}
-$$
-
-is selected only if the column exists.
-
-Mathematically,
-
-$$
-A^T_i
-=
-\{A_{ji}\mid i<\text{length}(A_j)\}
-$$
-
-Rows that do not contain the current column index are ignored.
+This naturally handles irregular (jagged) matrices without raising an index error.
 
 ---
 
-### Step 4: Construct the Transposed Matrix
+### 4. Construct the Result
 
-```python
-return [[row[i] for row in a if i < len(row)] for i in range(m)]
-```
+The outer list comprehension combines all generated rows into the final transposed matrix.
 
-Each generated row becomes one row of the transpose.
-
-The resulting matrix satisfies
+The overall logic is equivalent to swapping every element from
 
 $$
-(A^T)_{ij}
-=
-A_{ji}
+(i,j)
 $$
 
-for every valid element in the original matrix.
+to
+
+$$
+(j,i)
+$$
 
 ---
 
@@ -262,10 +336,14 @@ for every valid element in the original matrix.
 
 Let
 
-- $r$ = Number of rows.
-- $c$ = Maximum row length.
+- $m$ = number of rows
+- $n$ = maximum number of columns
+
+Every element is visited exactly once.
 
 | Complexity | Value |
 | ---------- | ----- |
-| Time | **O(r × c)** |
-| Space | **O(r × c)** |
+| Time | **O(m × n)** |
+| Space | **O(m × n)** |
+
+The additional space is required to store the transposed matrix.
