@@ -6,23 +6,23 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 
 | Difficulty | Solved |
 | ---------- | -----: |
-| 🟢 Easy    |     34 |
-| 🟡 Medium  |     10 |
+| 🟢 Easy    |     46 |
+| 🟡 Medium  |     12 |
 | 🔴 Hard    |      1 |
-| **Total**  | **45** |
+| **Total**  | **59** |
 
 ## Category Summary
 
 | Category         | 🟢 Easy | 🟡 Medium | 🔴 Hard | **Total** |
 | ---------------- | ------: | --------: | ------: | --------: |
-| Linear Algebra   |      11 |         5 |       1 |    **17** |
-| Statistics       |       1 |         0 |       0 |     **1** |
-| Machine Learning |      15 |         4 |       0 |    **18** |
-| Deep Learning    |       6 |         2 |       0 |     **8** |
+| Linear Algebra   |      13 |         5 |       1 |    **19** |
+| Statistics       |       2 |         0 |       0 |     **2** |
+| Machine Learning |      23 |         4 |       0 |    **25** |
+| Deep Learning    |       8 |         2 |       0 |    **10** |
 | Pytorch          |       1 |         0 |       0 |     **1** |
 | Computer Vision  |       1 |         0 |       0 |     **1** |
 | NLP              |       0 |         1 |       0 |     **1** |
-| **Total**        |  **34** |    **12** |   **1** |    **47** |
+| **Total**        |  **46** |    **12** |   **1** |    **59** |
 
 ---
 
@@ -63,6 +63,17 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 | [0069 - Calculate R-squared for Regression Analysis](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0069-calculate-r-squared-for-regression-analysis)                                     | Machine Learning |
 | [0070 - Calculate Image Brightness](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0070-calcualte-image-brightness)                                                                       | Computer Vision  |
 | [0071 - Calculate Root Mean Square Error (RMSE)](<https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0071-calculate-root-mean-square-error-(rmse)>)                                           | Machine Learning |
+| [0072 - Calculate Jaccard Index for Binary Classification](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0072-calculate-jaccard-index-for-binary-classification)                         | Machine Learning |
+| [0073 - Calculate Dice Score for Classification](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0073-calculate-dice-score-for-classification)                                             | Machine Learning |
+| [0075 - Generate a Confusion Matrix for Binary Classification](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0075-generate-a-confusion-matrix-for-binary-classification)                 | Machine Learning |
+| [0076 - Calculate Cosine Similarity Between Vectors](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0076-calculate-cosine-similarity-betweeen-vectors)                                    | Linear Algebra   |
+| [0078 - Descriptive Statistics Calculator](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0078-descriptive-statistics-calculator)                                                         | Statistics       |
+| [0083 - Dot Product Calculator](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0083-dot-product-calculator)                                                                               | Linear Algebra   |
+| [0086 - Detect Overfitting or Underfitting](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0086-detect-overfitting-or-underfitting)                                                       | Machine Learning |
+| [0091 - Calculate F1 Score from Predicted and True Labels](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0091-calculate-f1-score-from-predicted-and-true-labels)                         | Machine Learning |
+| [0093 - Calculate Mean Absolute Error (MAE)](<https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0093-calculate-mean-absolute-error-(mae)>)                                                   | Machine Learning |
+| [0096 - Implement the Hard Sigmoid Activation Function](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0096-implement-the-hard-sigmoid-actiation-function)                                | Deep Learning    |
+| [0097 - Implement the ELU Activation Function](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0097-implement-the-elu-activation-function)                                                 | Deep Learning    |
 | [1217 - Compute TPR and FPR from Classifications](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/1217-compute-tpr-and-fpr-from-classifications)                                           | Machine Learning |
 | [1218 - Count Parameters of a Sequential Model](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/1218-count-parameters-of-a-sequential-model)                                               | Pytorch          |
 

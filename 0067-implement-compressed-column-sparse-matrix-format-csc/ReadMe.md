@@ -149,14 +149,14 @@ Values:
 
 $$
 \text{values} =
-[a_{1},a_{2},\ldots,a_{k}]
+[a_1,a_2,\ldots,a_k]
 $$
 
 Row Indices:
 
 $$
-\text{row_indices} =
-[r_{1},r_{2},\ldots,r_{k}]
+\text{row\_indices} =
+[a_1,a_2,\ldots,a_k]
 $$
 
 where
@@ -168,7 +168,7 @@ $$
 Column Pointer:
 
 $$
-\text{col_ptr} =
+\text{col\_ptr} =
 [p_0,p_1,\ldots,p_n]
 $$
 
