@@ -51,7 +51,7 @@ matrix = [
 The trace of the matrix is
 
 $$
-\operatorname{tr}(A) = 2 + 2 = 4
+tr(A) = 2 + 2 = 4
 $$
 
 The determinant is
@@ -181,13 +181,13 @@ $$
 This simplifies to
 
 $$
-\lambda^2-\operatorname{tr}(A)\lambda+\det(A)=0
+\lambda^2-tr(A)\lambda+\det(A)=0
 $$
 
 where
 
 $$
-\operatorname{tr}(A)=a+d
+tr(A)=a+d
 $$
 
 is the **trace**, and
@@ -207,13 +207,13 @@ The characteristic equation is a quadratic equation.
 Using the quadratic formula,
 
 $$
-\lambda = \frac{\operatorname{tr}(A)\pm\sqrt{\operatorname{tr}(A)^2-4\det(A)}}{2}
+\lambda = \frac{tr(A)\pm\sqrt{tr(A)^2-4\det(A)}}{2}
 $$
 
 The quantity
 
 $$
-\Delta = \operatorname{tr}(A)^2-4\det(A)
+\Delta = tr(A)^2-4\det(A)
 $$
 
 is called the **discriminant**.
@@ -233,7 +233,7 @@ Depending on its value:
 - The trace equals the sum of the eigenvalues.
 
 $$
-\lambda_1+\lambda_2=\operatorname{tr}(A)
+\lambda_1+\lambda_2=tr(A)
 $$
 
 - The determinant equals the product of the eigenvalues.
@@ -349,7 +349,7 @@ trace = matrix[0][0] + matrix[1][1]
 The trace is
 
 $$
-\operatorname{tr}(A)=a+d
+tr(A)=a+d
 $$
 
 The code stores its negative because the quadratic equation is written as
@@ -361,7 +361,7 @@ $$
 where
 
 $$
-b=-\operatorname{tr}(A)
+b=-tr(A)
 $$
 
 ---
@@ -423,7 +423,7 @@ $$
 Since
 
 - $a=1$
-- $b=-\operatorname{tr}(A)$
+- $b=-tr(A)$
 - $c=\det(A)$
 
 the roots are the required eigenvalues.
@@ -444,9 +444,9 @@ The problem requires the eigenvalues to be returned from **largest to smallest**
 
 Since the matrix size is fixed (**2 × 2**), every operation takes constant time.
 
-| Complexity | Value |
-| ---------- | ----- |
-| Time | **O(1)** |
-| Space | **O(1)** |
+| Complexity | Value    |
+| ---------- | -------- |
+| Time       | **O(1)** |
+| Space      | **O(1)** |
 
 The algorithm performs a fixed number of arithmetic operations regardless of the input values.
