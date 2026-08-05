@@ -49,15 +49,19 @@ Each element is multiplied by the scalar value.
 
 $$
 2 \times
-\begin{bmatrix}
-1 & 2\\
+\left[
+\begin{array}{cc}
+1 & 2 \\
 3 & 4
-\end{bmatrix}
+\end{array}
+\right]
 =
-\begin{bmatrix}
-2 & 4\\
+\left[
+\begin{array}{cc}
+2 & 4 \\
 6 & 8
-\end{bmatrix}
+\end{array}
+\right]
 $$
 
 ---
@@ -329,9 +333,9 @@ Let
 
 Every element is multiplied exactly once.
 
-| Complexity | Value |
-| ---------- | ----- |
-| Time | **O(m × n)** |
-| Space | **O(m × n)** |
+| Complexity | Value        |
+| ---------- | ------------ |
+| Time       | **O(m × n)** |
+| Space      | **O(m × n)** |
 
 The returned matrix contains the same number of elements as the original matrix.
