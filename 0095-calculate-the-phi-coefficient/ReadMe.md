@@ -213,7 +213,7 @@ For two binary variables encoded as `0` and `1`, the Phi coefficient is equivale
 Pearson correlation is generally defined as
 
 $$
-r=\frac{\operatorname{Cov}(X,Y)}{\sigma_X\sigma_Y}
+r=\frac{Cov(X,Y)}{\sigma_X\sigma_Y}
 $$
 
 When $X$ and $Y$ are binary, simplifying this expression produces the same result as the Phi coefficient formula.

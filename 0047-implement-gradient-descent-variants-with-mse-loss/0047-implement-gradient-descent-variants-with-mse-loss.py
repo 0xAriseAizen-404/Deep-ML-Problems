@@ -69,8 +69,8 @@ def gradient_descent(X, y, weights, learning_rate, n_epochs, batch_size=1, metho
 
 # SGD
 # TC: O(E*m*n)
-# SC: O(m*n)
+# SC: O(n)
 
 # Mini-Batch GD
 # TC: O(E*m*n)
-# SC: O(m*n)
+# SC: O(b*n)
