@@ -153,7 +153,7 @@ Workflow:
 - Time & Space Complexity
 ```
 
-### Rules I will follow:
+### Rules you need to follow:
 
 - Problem heading:
   - Extract problem name from Deep-ML.
@@ -232,21 +232,8 @@ Style:
 
 - Correct misconceptions if needed.
 
-You can send the first problem in this format:
 
-```
-Problem Number:
-Difficulty:
-Category:
-
-Problem Description:
-
-Learn About Topic:
-
-My Solution:
-```
-
-I will return only the finished `README.md` content.
+Instruction ->
 
 $$
 \begin{bmatrix}
@@ -264,7 +251,8 @@ $$
 \end{bmatrix}
 $$
 
-i fuckinggggggg told oyuuuuuuuuuu do not fuckingggg give me equal to sign in a fukcing newwwwwww ;iieeeeeeee lineeeeeeeeee
+I need the formula like this
+never ever put the equal to sign in a new line okay, its breaking the formula interpretation in github
 
 $$
 \begin{bmatrix}
