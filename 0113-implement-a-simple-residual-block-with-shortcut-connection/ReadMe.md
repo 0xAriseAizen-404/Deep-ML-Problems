@@ -164,9 +164,7 @@ $$
 \begin{pmatrix}
 -2\
 3
-\end{pmatrix}
-=============
-
+\end{pmatrix} ============
 \begin{pmatrix}
 0\
 3
