@@ -6,10 +6,10 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 
 | Difficulty | Solved |
 | ---------- | -----: |
-| 🟢 Easy    |     49 |
+| 🟢 Easy    |     56 |
 | 🟡 Medium  |     13 |
 | 🔴 Hard    |      1 |
-| **Total**  | **63** |
+| **Total**  | **70** |
 
 ## Category Summary
 
@@ -17,13 +17,14 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 | ------------------ | ------: | --------: | ------: | --------: |
 | Linear Algebra     |      13 |         5 |       1 |    **19** |
 | Statistics         |       3 |         0 |       0 |     **3** |
-| Machine Learning   |      23 |         5 |       0 |    **25** |
-| Deep Learning      |       9 |         2 |       0 |    **11** |
+| Calculus           |       1 |         0 |       0 |     **1** |
+| Data Preprocessing |       1 |         0 |       0 |     **1** |
+| Machine Learning   |      24 |         5 |       0 |    **25** |
+| Deep Learning      |      14 |         2 |       0 |    **16** |
 | Pytorch            |       1 |         0 |       0 |     **1** |
 | Computer Vision    |       1 |         0 |       0 |     **1** |
 | NLP                |       0 |         1 |       0 |     **1** |
-| Data Preprocessing |       1 |         0 |       0 |     **1** |
-| **Total**          |  **49** |    **13** |   **1** |    **63** |
+| **Total**          |  **56** |    **13** |   **1** |    **70** |
 
 ---
 
@@ -76,8 +77,15 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 | [0095 - Calculate the Phi Coefficient](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0095-calculate-the-phi-coefficient)                                                                 | Statistics         |
 | [0096 - Implement the Hard Sigmoid Activation Function](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0096-implement-the-hard-sigmoid-actiation-function)                                | Deep Learning      |
 | [0097 - Implement the ELU Activation Function](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0097-implement-the-elu-activation-function)                                                 | Deep Learning      |
+| [0099 - Implement the Softplus Activation Function](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0099-implement-the-softplus-activation-function)                                       | Deep Learning      |
+| [0100 - Implement the Softsign Activation Function](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0100-implement-the-softsign-activation-function)                                       | Deep Learning      |
+| [0102 - Implement the Swish Activation Function](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0102-implement-the-swish-activation-function)                                             | Deep Learning      |
+| [0103 - Implement the SELU Activation Function](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0103-implement-the-selu-activation-function)                                               | Deep Learning      |
+| [0104 - Binary Classification with Logistic Regression](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0104-binary-classification-with-logistic-regression)                               | Machine Learning   |
 | [0112 - Min-Max Scaling of Feature Values](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0112-min-max-scaling-of-feature-values)                                                         | Data Preprocessing |
+| [0113 - Implement a Simple Residual Block with Shortcut Connection](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0113-implement-a-simple-residual-block-with-shortcut-connection)       | Deep Learning      |
 | [0114 - Implement Global Average Pooling](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0114-implement-global-average-pooling)                                                           | Deep Learning      |
+| [0116 - Derivative of a Polynomial](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0116-derivative-of-a-polynomial)                                                                       | Calculus           |
 | [1217 - Compute TPR and FPR from Classifications](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/1217-compute-tpr-and-fpr-from-classifications)                                           | Machine Learning   |
 | [1218 - Count Parameters of a Sequential Model](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/1218-count-parameters-of-a-sequential-model)                                               | Pytorch            |
 
