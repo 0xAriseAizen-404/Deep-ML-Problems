@@ -8,7 +8,6 @@
 - [Solution](#solution)
   - [Custom Implementation](#custom-implementation)
   - [NumPy Implementation](#numpy-implementation)
-
 - [Code Explanation](#code-explanation)
 - [Time & Space Complexity](#time--space-complexity)
 

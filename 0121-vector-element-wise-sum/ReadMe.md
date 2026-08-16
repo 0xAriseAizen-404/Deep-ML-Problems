@@ -7,7 +7,6 @@
 - [Learn: Understanding Vector Element-wise Sum](#learn-understanding-vector-element-wise-sum)
 - [Solution](#solution)
   - [Custom Implementation](#custom-implementation)
-
 - [Code Explanation](#code-explanation)
 - [Time & Space Complexity](#time--space-complexity)
 

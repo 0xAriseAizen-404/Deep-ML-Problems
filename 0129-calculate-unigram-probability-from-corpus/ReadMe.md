@@ -7,7 +7,6 @@
 - [Learn: Understanding Unigram Probability](#learn-understanding-unigram-probability)
 - [Solution](#solution)
   - [Custom Implementation](#custom-implementation)
-
 - [Code Explanation](#code-explanation)
 - [Time & Space Complexity](#time--space-complexity)
 
