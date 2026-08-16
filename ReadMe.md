@@ -6,25 +6,25 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 
 | Difficulty | Solved |
 | ---------- | -----: |
-| 🟢 Easy    |     56 |
-| 🟡 Medium  |     13 |
+| 🟢 Easy    |     60 |
+| 🟡 Medium  |     14 |
 | 🔴 Hard    |      1 |
-| **Total**  | **70** |
+| **Total**  | **75** |
 
 ## Category Summary
 
 | Category           | 🟢 Easy | 🟡 Medium | 🔴 Hard | **Total** |
 | ------------------ | ------: | --------: | ------: | --------: |
-| Linear Algebra     |      13 |         5 |       1 |    **19** |
+| Linear Algebra     |      15 |         5 |       1 |    **21** |
 | Statistics         |       3 |         0 |       0 |     **3** |
 | Calculus           |       1 |         0 |       0 |     **1** |
 | Data Preprocessing |       1 |         0 |       0 |     **1** |
-| Machine Learning   |      24 |         5 |       0 |    **25** |
+| Machine Learning   |      24 |         6 |       0 |    **26** |
 | Deep Learning      |      14 |         2 |       0 |    **16** |
 | Pytorch            |       1 |         0 |       0 |     **1** |
-| Computer Vision    |       1 |         0 |       0 |     **1** |
-| NLP                |       0 |         1 |       0 |     **1** |
-| **Total**          |  **56** |    **13** |   **1** |    **70** |
+| Computer Vision    |       2 |         0 |       0 |     **2** |
+| NLP                |       1 |         1 |       0 |     **2** |
+| **Total**          |  **60** |    **14** |   **1** |    **75** |
 
 ---
 
@@ -86,6 +86,10 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 | [0113 - Implement a Simple Residual Block with Shortcut Connection](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0113-implement-a-simple-residual-block-with-shortcut-connection)       | Deep Learning      |
 | [0114 - Implement Global Average Pooling](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0114-implement-global-average-pooling)                                                           | Deep Learning      |
 | [0116 - Derivative of a Polynomial](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0116-derivative-of-a-polynomial)                                                                       | Calculus           |
+| [0118 - Compute the Cross Product of Two 3D Vectors](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0118-compute-the-cross-product-of-two-3d-vectors)                                     | Linear Algebra     |
+| [0121 - Vector Element-wise Sum](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0121-vector-element-wise-sum)                                                                             | Linear Algebra     |
+| [0129 - Calculate Unigram Probability from Corpus](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0129-calculate-unigram-probability-from-corpus)                                         | NLP                |
+| [0237 - Convert RGB Image to Grayscale](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0237-convert-rgb-image-to-grayscale)                                                               | Computer Vision    |
 | [1217 - Compute TPR and FPR from Classifications](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/1217-compute-tpr-and-fpr-from-classifications)                                           | Machine Learning   |
 | [1218 - Count Parameters of a Sequential Model](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/1218-count-parameters-of-a-sequential-model)                                               | Pytorch            |
 
@@ -100,6 +104,7 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 | [0009 - Matrix Times Matrix](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0009-matrix-times-matrix)                                                                                 | Linear Algebra   |
 | [0011 - Solve Linear Equations Using Jacobi Method](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0011-solve-linear-equations-using-jacobi-method)                                   | Linear Algebra   |
 | [0017 - KMeans Clustering](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0017-kmeans-clustering)                                                                                     | Machine Learning |
+| [0018 - Implement K-Fold Cross-Validation](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0018-implement-k-fold-cross-validation)                                                     | Machine Learning |
 | [0025 - Single Neuron with Backpropogation](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0025-single-neuron-with-backpropogation)                                                   | Deep Learning    |
 | [0031 - Divide Dataset Based on Feature Threshold](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0031-divide-dataset-based-on-feature-threshold)                                     | Machine Learning |
 | [0032 - Generate Sorted Polynomial Features](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0032-generate-sorted-polynomial-features)                                                 | Machine Learning |
