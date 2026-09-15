@@ -1,1575 +1,1361 @@
-# Implement Long Short-Term Memory (LSTM) Network (Medium, Deep Learning)
+# [2D Translation Matrix Implementation](https://www.deep-ml.com/problems/55) (Medium, Linear Algebra)
 
 ## Table of Contents
 
 - [Problem Statement](#problem-statement)
 - [Example](#example)
-- [Learn: Understanding Long Short-Term Memory Networks](#learn-understanding-long-short-term-memory-networks)
-  - [What is an LSTM?](#what-is-an-lstm)
-  - [Why RNNs Need LSTMs](#why-rnns-need-lstms)
-  - [LSTM Architecture](#lstm-architecture)
-  - [Forget Gate](#forget-gate)
-  - [Input Gate](#input-gate)
-  - [Candidate Cell State](#candidate-cell-state)
-  - [Cell State Update](#cell-state-update)
-  - [Output Gate](#output-gate)
-  - [Hidden State](#hidden-state)
-  - [Complete LSTM Equations](#complete-lstm-equations)
-  - [Role of the Cell State](#role-of-the-cell-state)
-  - [Sigmoid and Tanh](#sigmoid-and-tanh)
-  - [Implementation Flow](#implementation-flow)
-  - [Step-by-Step Example](#step-by-step-example)
-  - [Characteristics / Key Points](#characteristics--key-points)
-  - [Why is it used? / Applications](#why-is-it-used--applications)
+- [Learn: 2D Translation Matrix](#learn-2d-translation-matrix)
+  - [Concept Overview](#concept-overview)
+  - [Homogeneous Coordinates](#homogeneous-coordinates)
+  - [Translation Matrix](#translation-matrix)
+  - [Applying the Translation](#applying-the-translation)
+  - [Why a 3x3 Matrix](#why-a-3x3-matrix)
+  - [Geometric Interpretation](#geometric-interpretation)
+  - [Matrix Multiplication](#matrix-multiplication)
+  - [Multiple Points](#multiple-points)
+  - [Important Properties](#important-properties)
+  - [Practical Applications](#practical-applications)
 - [Solutions](#solutions)
   - [Custom Implementation](#custom-implementation)
-  - [NumPy / Deep Learning Equivalent](#numpy--deep-learning-equivalent)
+  - [NumPy Implementation](#numpy-implementation)
 - [Code Explanation](#code-explanation)
-- [Time & Space Complexity](#time--space-complexity)
-
----
+  - [Building the Translation Matrix](#building-the-translation-matrix)
+  - [Converting to Homogeneous Coordinates](#converting-to-homogeneous-coordinates)
+  - [Applying the Transformation](#applying-the-transformation)
+  - [Removing the Homogeneous Coordinate](#removing-the-homogeneous-coordinate)
+  - [Returning the Result](#returning-the-result)
+- [Step-by-Step Example](#step-by-step-example)
+- [Common Mistakes](#common-mistakes)
+- [Interview and Practical Notes](#interview-and-practical-notes)
+- [Time and Space Complexity](#time-and-space-complexity)
 
 ## Problem Statement
 
-### [Implement Long Short-Term Memory (LSTM) Network](https://www.deep-ml.com/problems/59)
+The task is to implement a function that applies a 2D translation
+to a collection of points.
 
-Implement an **LSTM network** that processes a sequence of input vectors and produces the hidden states for every time step along with the final hidden state and cell state.
+The function is:
 
-The implementation should define an `LSTM` class with:
+```python
+translate_object(points, tx, ty)
+```
 
-- `__init__(input_size, hidden_size)` to initialize the gate weights and biases.
-- `forward(x, initial_hidden_state, initial_cell_state)` to process the complete input sequence.
+where:
 
-At every time step, the LSTM should calculate:
+- `points` is a list of `[x, y]` coordinates.
+- `tx` is the translation distance along the x-axis.
+- `ty` is the translation distance along the y-axis.
+- The function returns a new list containing the translated points.
 
-- Forget gate
-- Input gate
-- Candidate cell state
-- Updated cell state
-- Output gate
-- Updated hidden state
+A translation moves an object without changing its:
 
-The final result should contain the hidden state at every time step, the final hidden state, and the final cell state.
+- Shape
+- Size
+- Orientation
+- Angles
+- Relative distances between points
 
----
+For a point $(x, y)$, translation by $(t_x, t_y)$ gives:
+
+\((x', y') = (x + t_x, y + t_y)\)
+
+The problem asks us to implement this transformation using a
+translation matrix.
 
 ## Example
 
 ### Input
 
 ```python
-import numpy as np
+points = [[0, 0], [1, 0], [0.5, 1]]
+tx, ty = 2, 3
 
-input_sequence = np.array([
-    [1.0],
-    [2.0],
-    [3.0]
-])
-
-initial_hidden_state = np.zeros((1, 1))
-initial_cell_state = np.zeros((1, 1))
-
-lstm = LSTM(
-    input_size=1,
-    hidden_size=1
-)
-
-outputs, final_h, final_c = lstm.forward(
-    input_sequence,
-    initial_hidden_state,
-    initial_cell_state
-)
-
-print(final_h)
+print(translate_object(points, tx, ty))
 ```
 
 ### Output
 
 ```text
-[[0.73698596]]
+[[2.0, 3.0], [3.0, 3.0], [2.5, 4.0]]
 ```
-
-The exact output can vary because the LSTM weights are randomly initialized.
 
 ### Reasoning
 
-The LSTM receives one input vector at each time step.
+The translation is:
 
-At the beginning,
+\(t_x = 2,\quad t_y = 3\)
 
-```text
-h0 = 0
-c0 = 0
-```
+Therefore, every point receives `2` in its x-coordinate and
+`3` in its y-coordinate.
 
-For every input, the previous hidden state and the current input are concatenated and passed through four different transformations.
+For `[0, 0]`:
 
-The gates control how information flows through the network:
+\((0 + 2,\ 0 + 3) = (2,\ 3)\)
 
-1. The **forget gate** determines which previous cell-state information should be retained.
-2. The **input gate** determines which new information should be written.
-3. The **candidate state** generates possible new information.
-4. The **cell state** combines retained information with new information.
-5. The **output gate** determines which information from the cell state becomes the new hidden state.
+For `[1, 0]`:
 
-After processing `[1.0]`, `[2.0]`, and `[3.0]`, the final hidden state represents information accumulated from the complete sequence.
+\((1 + 2,\ 0 + 3) = (3,\ 3)\)
 
----
+For `[0.5, 1]`:
 
-## Learn: Understanding Long Short-Term Memory Networks
+\((0.5 + 2,\ 1 + 3) = (2.5,\ 4)\)
 
-### What is an LSTM?
-
-A **Long Short-Term Memory (LSTM)** network is a specialized type of **Recurrent Neural Network (RNN)** designed to model sequential data while handling long-term dependencies more effectively.
-
-A standard RNN maintains a hidden state that is repeatedly updated as new inputs arrive.
-
-The basic RNN update is
-
-$$
-h_t=\tanh(W_xx_t+W_hh_{t-1}+b)
-$$
-
-The problem is that repeatedly applying the same transformation can make gradients become extremely small or extremely large during backpropagation through many time steps.
-
-LSTMs address this problem by introducing a separate **cell state** and several gates that control how information is retained, removed, and exposed.
-
-Instead of directly replacing the previous state, an LSTM uses learned gates to control information flow.
-
-The two main states are:
-
-- **Hidden state $h_t$**: the output representation exposed to the next layer and next time step.
-- **Cell state $c_t$**: the internal memory that carries information through the sequence.
-
-The LSTM therefore has two recurrent states rather than only one.
-
----
-
-## Why RNNs Need LSTMs
-
-A standard RNN repeatedly applies transformations to its hidden state.
-
-For a long sequence, information from early time steps must pass through many recurrent operations before influencing a later output.
-
-During backpropagation, gradients are repeatedly multiplied by weight matrices and derivatives of activation functions.
-
-This can result in:
-
-- Vanishing gradients.
-- Exploding gradients.
-- Difficulty learning long-term dependencies.
-- Difficulty remembering information over many time steps.
-
-LSTM introduces an explicit cell state with controlled additive updates.
-
-The cell state is updated using
-
-$$
-c_t=f_t\circ c_{t-1}+i_t\circ\tilde{c}_t
-$$
-
-This structure allows information to be carried forward while the gates decide what should be forgotten or added.
-
-The cell state is therefore often viewed as the LSTM's **long-term memory**.
-
----
-
-## LSTM Architecture
-
-At time step $t$, the LSTM receives:
-
-- Current input $x_t$.
-- Previous hidden state $h_{t-1}$.
-- Previous cell state $c_{t-1}$.
-
-The hidden state and input are concatenated:
-
-$$
-z_t=[h_{t-1},x_t]
-$$
-
-This combined vector is passed through four transformations.
-
-The four main components are:
+Thus:
 
 ```text
-                 x_t
-                  |
-                  v
-          +---------------+
-h_(t-1) ->|  Concatenate  |
-          +---------------+
-                  |
-        +---------+---------+---------+
-        |         |         |         |
-        v         v         v         v
-      Forget     Input   Candidate  Output
-       Gate       Gate     State      Gate
-        |          |         |         |
-        +----------+----+----+---------+
-                       |
-                       v
-                 Cell State c_t
-                       |
-                       v
-                 Hidden State h_t
+[[2.0, 3.0], [3.0, 3.0], [2.5, 4.0]]
 ```
 
-The four transformations are:
+## Learn: 2D Translation Matrix
 
-$$
-f_t=\sigma(W_fz_t+b_f)
-$$
+## Concept Overview
 
-$$
-i_t=\sigma(W_iz_t+b_i)
-$$
+A translation is a geometric transformation that moves every point
+of an object by the same amount.
 
-$$
-\tilde{c}_t=\tanh(W_cz_t+b_c)
-$$
+Suppose we have a point:
 
-$$
-o_t=\sigma(W_oz_t+b_o)
-$$
+\(P = (x, y)\)
 
-The cell state is then updated:
+and want to move it by:
 
-$$
-c_t=f_t\circ c_{t-1}+i_t\circ\tilde{c}_t
-$$
+\((t_x, t_y)\)
 
-Finally, the hidden state is calculated:
+The translated point is:
 
-$$
-h_t=o_t\circ\tanh(c_t)
-$$
+\(P' = (x + t_x,\ y + t_y)\)
 
----
+Translation is different from transformations such as scaling and
+rotation because the transformation does not change the shape of
+the object.
 
-## Forget Gate
+Every point is displaced by exactly the same vector:
 
-The **forget gate** determines how much information from the previous cell state should be retained.
+\(\Delta P = (t_x, t_y)\)
 
-It is calculated as
+This means that the distance between any two points remains unchanged.
 
-$$
-f_t=\sigma(W_f[h_{t-1},x_t]+b_f)
-$$
+For example, consider:
 
-The sigmoid function produces values between `0` and `1`.
+```text
+A = (1, 2)
+B = (4, 5)
+```
 
-Therefore, each element of the forget gate can be interpreted as a soft decision:
+The vector from A to B is:
 
-- Value close to `0` → forget most of the corresponding information.
-- Value close to `1` → retain most of the corresponding information.
-- Value around `0.5` → partially retain the information.
+\(B-A = (3,3)\)
 
-The forget gate is applied element-wise to the previous cell state.
+After translating both points by $(5,2)$:
 
-$$
-f_t\circ c_{t-1}
-$$
+```text
+A' = (6, 4)
+B' = (9, 7)
+```
 
-For example, if
+The new difference is:
 
-$$
-c_{t-1}=[0.8,-0.5]
-$$
+\(B'-A' = (3,3)\)
 
-and
+Therefore, translation preserves relative geometry.
 
-$$
-f_t=[1.0,0.1]
-$$
+## Homogeneous Coordinates
 
-then
+A normal 2D point contains two coordinates:
 
-$$
-f_t\circ c_{t-1}=[0.8,-0.05]
-$$
+\(P = (x,y)\)
 
-The first component is retained while most of the second component is forgotten.
+A 2D translation cannot be represented directly by multiplying
+a standard 2x2 matrix with this point.
 
----
+A 2x2 matrix can represent transformations such as:
 
-## Input Gate
+- Rotation
+- Scaling
+- Reflection
+- Shearing
 
-The **input gate** determines how strongly new candidate information should be written into the cell state.
+But translation requires addition:
 
-It is calculated as
+\(x' = x+t_x\)
 
-$$
-i_t=\sigma(W_i[h_{t-1},x_t]+b_i)
-$$
+\(y' = y+t_y\)
 
-Like the forget gate, the sigmoid restricts its values to the interval `[0,1]`.
+Matrix multiplication naturally represents linear operations.
+Translation is affine rather than purely linear.
 
-The input gate does not generate the new information itself.
+To represent translation using matrix multiplication, we introduce
+a third coordinate.
 
-Instead, it controls how much of the candidate cell state should be added.
+The Cartesian point:
 
-$$
-i_t\circ\tilde{c}_t
-$$
+\(P\_{Cartesian} = (x,y)\)
 
-Therefore, the input gate acts as a learned filter for new information.
+is represented in homogeneous coordinates as:
 
----
+\(P\_{Homogeneous} = (x,y,1)\)
 
-## Candidate Cell State
+The additional coordinate allows translation to be encoded inside
+a matrix.
 
-The **candidate cell state** contains new information that could potentially be stored in the cell state.
+More generally, any non-zero scalar multiple represents the same
+Cartesian point:
 
-It is calculated using the hyperbolic tangent activation:
+\((kx,ky,k) \sim (x,y,1)\)
 
-$$
-\tilde{c}_t=\tanh(W_c[h_{t-1},x_t]+b_c)
-$$
+for:
 
-Unlike the sigmoid gates, tanh produces values approximately between `-1` and `1`.
+\(k \neq 0\)
 
-Therefore, candidate values can represent both positive and negative changes to the memory.
+For this problem, we use the standard representation with the
+third coordinate equal to `1`.
 
-The candidate state is not automatically stored.
+## Translation Matrix
 
-It must first be filtered by the input gate.
+The 2D translation matrix is:
 
-$$
-i_t\circ\tilde{c}_t
-$$
+\(T = \begin{bmatrix}1&0&t_x\\0&1&t_y\\0&0&1\end{bmatrix}\)
 
-This distinction is important:
+The original point is represented as:
 
-- Input gate → controls **how much** new information enters.
-- Candidate state → determines **what** new information could enter.
+\(P = \begin{bmatrix}x\\y\\1\end{bmatrix}\)
 
----
+The transformed point is:
 
-## Cell State Update
+\(P' = TP\)
 
-The cell state is the central memory mechanism of an LSTM.
+Therefore:
 
-The update equation is
+\(\begin{bmatrix}1&0&t_x\\0&1&t_y\\0&0&1\end{bmatrix}\begin{bmatrix}x\\y\\1\end{bmatrix} = \begin{bmatrix}x+t_x\\y+t_y\\1\end{bmatrix}\)
 
-$$
-c_t=f_t\circ c_{t-1}+i_t\circ\tilde{c}_t
-$$
+The final homogeneous coordinate remains `1`.
 
-It contains two separate contributions.
+We can therefore convert the result back to Cartesian coordinates
+by removing the third coordinate.
 
-### Previous Memory
+## Applying the Translation
 
-The previous cell state is filtered by the forget gate:
+Matrix multiplication gives three equations.
 
-$$
-f_t\circ c_{t-1}
-$$
+For the first coordinate:
 
-This determines what old information survives.
+\(x' = 1x + 0y + t_x(1) = x+t_x\)
 
-### New Information
+For the second coordinate:
 
-The candidate cell state is filtered by the input gate:
+\(y' = 0x + 1y + t_y(1) = y+t_y\)
 
-$$
-i_t\circ\tilde{c}_t
-$$
+For the third coordinate:
 
-This determines what new information is added.
+\(w' = 0x + 0y + 1(1) = 1\)
 
-The two parts are then added together.
+Therefore:
 
-$$
-c_t=(f_t\circ c_{t-1})+(i_t\circ\tilde{c}_t)
-$$
+\(P' = (x+t_x,\ y+t_y)\)
 
-This additive update is one of the most important differences between an LSTM and a basic RNN.
+The matrix representation and the direct coordinate representation
+produce exactly the same result.
 
----
+## Why a 3x3 Matrix
 
-## Output Gate
+The third row and third column are not arbitrary.
 
-The **output gate** determines how much of the internal cell state should be exposed as the hidden state.
+The matrix:
 
-It is calculated as
+\(\begin{bmatrix}1&0&t_x\\0&1&t_y\\0&0&1\end{bmatrix}\)
 
-$$
-o_t=\sigma(W_o[h_{t-1},x_t]+b_o)
-$$
+contains:
 
-The output gate produces values between `0` and `1`.
+- `1` on the x-axis scale position.
+- `1` on the y-axis scale position.
+- `tx` as the x translation.
+- `ty` as the y translation.
+- The final `1` preserves the homogeneous coordinate.
 
-However, the cell state itself is first transformed by tanh:
+Without the third coordinate, a standard linear transformation
+cannot directly express:
 
-$$
-\tanh(c_t)
-$$
+\(x' = x+t_x\)
 
-The result is then filtered by the output gate:
+because matrix multiplication of a 2D vector only produces
+linear combinations of `x` and `y`.
 
-$$
-h_t=o_t\circ\tanh(c_t)
-$$
+Homogeneous coordinates solve this by adding a constant `1`:
 
-The hidden state therefore represents the information that the LSTM chooses to expose from its internal memory.
+\(t_x(1) = t_x\)
 
----
+and:
 
-## Hidden State
+\(t_y(1) = t_y\)
 
-The hidden state $h_t$ serves two purposes.
+This effectively turns translation into matrix multiplication.
 
-First, it is the output of the LSTM for the current time step.
+## Geometric Interpretation
 
-Second, it is passed into the next time step:
-
-$$
-h_t\rightarrow h_{t+1}
-$$
-
-The next time step therefore receives the previous hidden state along with the next input.
-
-The hidden state is calculated from the updated cell state:
-
-$$
-h_t=o_t\circ\tanh(c_t)
-$$
-
-The cell state and hidden state are therefore related but serve different purposes.
-
-The **cell state** acts as internal memory, while the **hidden state** acts as the exposed representation.
-
----
-
-## Complete LSTM Equations
-
-At each time step, concatenate the previous hidden state and current input:
-
-$$
-z_t=[h_{t-1},x_t]
-$$
-
-Compute the forget gate:
-
-$$
-f_t=\sigma(W_fz_t+b_f)
-$$
-
-Compute the input gate:
-
-$$
-i_t=\sigma(W_iz_t+b_i)
-$$
-
-Compute the candidate cell state:
-
-$$
-\tilde{c}_t=\tanh(W_cz_t+b_c)
-$$
-
-Update the cell state:
-
-$$
-c_t=f_t\circ c_{t-1}+i_t\circ\tilde{c}_t
-$$
-
-Compute the output gate:
-
-$$
-o_t=\sigma(W_oz_t+b_o)
-$$
-
-Compute the hidden state:
-
-$$
-h_t=o_t\circ\tanh(c_t)
-$$
-
-These equations are repeated for every input in the sequence.
-
----
-
-## Weight Matrix Dimensions
-
-Suppose:
-
-- Input size = $D$
-- Hidden size = $H$
-
-The concatenated vector contains both the previous hidden state and current input.
-
-Therefore,
-
-$$
-z_t\in\mathbb{R}^{H+D}
-$$
-
-Each gate maps this vector to the hidden dimension.
-
-Therefore, each weight matrix has shape
-
-$$
-W_f,W_i,W_c,W_o\in\mathbb{R}^{H\times(H+D)}
-$$
-
-Each bias has shape
-
-$$
-b_f,b_i,b_c,b_o\in\mathbb{R}^{H}
-$$
-
-In the implementation, the biases are stored as column vectors with shape
-
-$$
-(H,1)
-$$
-
-For four gates, the total number of weight parameters is
-
-$$
-4H(H+D)
-$$
-
-The total number of bias parameters is
-
-$$
-4H
-$$
-
-Therefore, the total number of trainable parameters in this implementation is
-
-$$
-4H(H+D)+4H
-$$
-
----
-
-## Sigmoid and Tanh
-
-LSTMs use two important activation functions.
-
-### Sigmoid
-
-The sigmoid function is
-
-$$
-\sigma(x)=\frac{1}{1+e^{-x}}
-$$
-
-Its output lies between `0` and `1`.
-
-This makes it suitable for gates because the output can be interpreted as a soft retention factor.
-
-Sigmoid is used for:
-
-- Forget gate.
-- Input gate.
-- Output gate.
-
----
-
-### Hyperbolic Tangent
-
-The tanh function is
-
-$$
-\tanh(x)=\frac{e^x-e^{-x}}{e^x+e^{-x}}
-$$
-
-Its output lies between `-1` and `1`.
-
-Tanh is used for:
-
-- Candidate cell state.
-- Transforming the cell state before producing the hidden state.
-
-The candidate state needs negative and positive values because it represents potential changes to memory.
-
----
-
-## Element-Wise Multiplication
-
-The symbol $\circ$ represents element-wise multiplication.
-
-For example,
-
-$$
-a\circ b=[a_1b_1,a_2b_2,\ldots,a_nb_n]
-$$
-
-In NumPy, this is performed using the `*` operator for arrays of compatible shapes.
+Think of translation as moving an entire object without modifying
+its internal geometry.
 
 For example:
 
-```python
-cell_state = forget_gate * previous_cell_state
+```text
+Before:
+
+(0,1)
+  /\
+ /  \
+(0,0)--(1,0)
 ```
 
-This is different from matrix multiplication.
-
-Matrix multiplication is performed using operations such as:
-
-```python
-np.dot(W, x)
-```
-
-or
-
-```python
-W @ x
-```
-
-Understanding this distinction is essential when implementing an LSTM from scratch.
-
----
-
-## Implementation Flow
-
-For every input vector in the sequence:
+Applying:
 
 ```text
-1. Read current input x_t
-2. Combine h_(t-1) and x_t
-3. Calculate forget gate
-4. Calculate input gate
-5. Calculate candidate cell state
-6. Update cell state
-7. Calculate output gate
-8. Update hidden state
-9. Store hidden state
-10. Continue to next input
+tx = 2
+ty = 3
 ```
 
-The previous hidden state and cell state are carried forward between time steps.
+moves every point by the same vector.
 
-The sequence therefore creates a chain:
+The triangle becomes:
 
 ```text
-x1 ──> h1, c1
-       |
-x2 ──> h2, c2
-       |
-x3 ──> h3, c3
-       |
-...
-       |
-xT ──> hT, cT
+(2,4)
+  /\
+ /  \
+(2,3)--(3,3)
 ```
 
-The final states are
+The triangle is not rotated or scaled.
 
-$$
-h_T
-$$
+Its:
 
-and
+- Width remains the same.
+- Height remains the same.
+- Angles remain the same.
+- Side lengths remain the same.
 
-$$
-c_T
-$$
+Only its position changes.
 
-where $T$ is the number of time steps.
+## Matrix Multiplication
 
----
+For a matrix:
 
-## Step-by-Step Example
+\(A = \begin{bmatrix}a&b&c\\d&e&f\\g&h&i\end{bmatrix}\)
 
-Consider a simplified one-dimensional LSTM.
+and vector:
 
-Given:
+\(v = \begin{bmatrix}x\\y\\z\end{bmatrix}\)
+
+the matrix-vector product is:
+
+\(Av = \begin{bmatrix}ax+by+cz\\dx+ey+fz\\gx+hy+iz\end{bmatrix}\)
+
+For the translation matrix:
+
+\(T = \begin{bmatrix}1&0&t_x\\0&1&t_y\\0&0&1\end{bmatrix}\)
+
+we obtain:
+
+\(TP = \begin{bmatrix}x+t_x\\y+t_y\\1\end{bmatrix}\)
+
+This is the mathematical core of the implementation.
+
+## Multiple Points
+
+The transformation matrix does not change when we process different
+points.
+
+For every point:
 
 ```text
-x1 = 1.0
-x2 = 2.0
-x3 = 3.0
+[x, y]
 ```
 
-Initial states:
+we construct:
 
 ```text
-h0 = 0
-c0 = 0
+[x, y, 1]
 ```
 
-Assume for demonstration:
+and apply the same matrix:
+
+\(P_i' = TP_i\)
+
+For points:
 
 ```text
-Wf = Wi = Wc = Wo = 0.5
-bf = bi = bc = bo = 0.1
+P1 = [0, 0]
+P2 = [1, 0]
+P3 = [0.5, 1]
 ```
 
-### Time Step 1
+we have:
 
-The first input is
+```text
+P1 = [0, 0, 1]
+P2 = [1, 0, 1]
+P3 = [0.5, 1, 1]
+```
 
-$$
-x_1=1.0
-$$
+The same translation matrix is applied to all three points.
 
-The previous hidden state is
+This is important in computer graphics because an entire object
+can contain hundreds, thousands, or millions of points.
 
-$$
-h_0=0
-$$
+Instead of designing a separate transformation for every point,
+we construct one transformation matrix and apply it repeatedly.
 
-The previous cell state is
+## Important Properties
 
-$$
-c_0=0
-$$
+Translation preserves distances.
 
-The forget gate is
+For two points $P_1$ and $P_2$:
 
-$$
-f_1=\sigma(0.5\times1.0+0.1)\approx0.6457
-$$
+\(||P_1-P_2|| = ||(P_1+t)-(P_2+t)||\)
 
-The input gate is
+because:
 
-$$
-i_1=\sigma(0.5\times1.0+0.1)\approx0.6457
-$$
+\((P_1+t)-(P_2+t)=P_1-P_2\)
 
-The candidate state is
+Translation also preserves angles.
 
-$$
-\tilde{c}_1=\tanh(0.5\times1.0+0.1)\approx0.5370
-$$
+If two vectors are translated by the same amount, their difference
+does not change.
 
-The cell state becomes
+Translation is therefore an example of a rigid transformation.
 
-$$
-c_1=f_1c_0+i_1\tilde{c}_1
-$$
+A rigid transformation preserves:
 
-Since $c_0=0$,
+- Distances
+- Angles
+- Shape
+- Area
+- Orientation
 
-$$
-c_1\approx0.6457\times0+0.6457\times0.5370\approx0.3467
-$$
+A translation does not preserve absolute coordinates because every
+coordinate changes by the translation vector.
 
-The output gate is
+## Translation Composition
 
-$$
-o_1=\sigma(0.5\times1.0+0.1)\approx0.6457
-$$
+Translations can be combined.
 
-The hidden state becomes
+Suppose we first translate by:
 
-$$
-h_1=o_1\times\tanh(c_1)\approx0.2152
-$$
+\((t*{x1},t*{y1})\)
 
-The first time step therefore produces new memory and a new hidden representation.
+and then translate by:
 
----
+\((t*{x2},t*{y2})\)
 
-### Time Step 2
+The total translation is:
 
-The second input is
+\((t*{x1}+t*{x2},\ t*{y1}+t*{y2})\)
 
-$$
-x_2=2.0
-$$
+Using matrices:
 
-The previous states are now $h_1$ and $c_1$.
+\(T_2T_1P\)
 
-The concatenated input contains
+produces the same result as one translation matrix:
 
-$$
-[h_1,x_2]
-$$
+\(T*{total} = \begin{bmatrix}1&0&t*{x1}+t*{x2}\\0&1&t*{y1}+t\_{y2}\\0&0&1\end{bmatrix}\)
 
-The four gates are recalculated using these updated states.
+This also demonstrates that translations are composable.
 
-The forget gate decides how much of $c_1$ survives.
+## Inverse Translation
 
-The input gate decides how much new candidate information enters.
+Every translation has an inverse.
 
-The candidate state generates the potential new memory.
+If a point is translated by:
 
-The cell state is updated using
+\((t_x,t_y)\)
 
-$$
-c_2=f_2c_1+i_2\tilde{c}_2
-$$
+the inverse translation is:
 
-The output gate then determines the exposed hidden state:
+\((-t_x,-t_y)\)
 
-$$
-h_2=o_2\tanh(c_2)
-$$
+The inverse matrix is:
 
----
+\(T^{-1} = \begin{bmatrix}1&0&-t_x\\0&1&-t_y\\0&0&1\end{bmatrix}\)
 
-### Time Step 3
+Applying both transformations returns the original point.
 
-The third input is
+Therefore:
 
-$$
-x_3=3.0
-$$
+\(T^{-1}TP=P\)
 
-The LSTM now uses
+This is useful when transformations need to be undone.
 
-$$
-h_2
-$$
+## Practical Applications
 
-and
+Translation matrices are heavily used in computer graphics.
 
-$$
-c_2
-$$
+Typical applications include:
 
-from the previous time step.
+- Moving objects in a scene.
+- Positioning sprites in 2D games.
+- Moving GUI elements.
+- Transforming image coordinates.
+- Robotics and geometric transformations.
+- Computer vision.
+- Animation.
+- CAD systems.
+- Coordinate-system transformations.
 
-The gates are calculated again.
+In a graphics pipeline, translation is usually combined with
+other transformations such as rotation and scaling.
 
-The cell state becomes
+A common transformation pipeline is:
 
-$$
-c_3=f_3c_2+i_3\tilde{c}_3
-$$
+\(P' = TRSP\)
 
-The hidden state becomes
+where the matrices represent different transformations.
 
-$$
-h_3=o_3\tanh(c_3)
-$$
-
-The final hidden state is therefore
-
-$$
-h_T=h_3
-$$
-
-and the final cell state is
-
-$$
-c_T=c_3
-$$
-
-This demonstrates how information flows through the complete sequence rather than treating every input independently.
-
----
-
-## LSTM vs Simple RNN
-
-A simple RNN maintains one recurrent state.
-
-$$
-h_t=\tanh(W_xx_t+W_hh_{t-1}+b)
-$$
-
-An LSTM maintains two states:
-
-$$
-(h_t,c_t)
-$$
-
-The cell state provides a dedicated memory pathway, while gates control the flow of information.
-
-| Feature                       | Simple RNN | LSTM         |
-| ----------------------------- | ---------- | ------------ |
-| Hidden state                  | Yes        | Yes          |
-| Cell state                    | No         | Yes          |
-| Forget gate                   | No         | Yes          |
-| Input gate                    | No         | Yes          |
-| Output gate                   | No         | Yes          |
-| Long-term dependency handling | Difficult  | Better       |
-| Parameters                    | Fewer      | More         |
-| Computation                   | Simpler    | More complex |
-
-The additional gates make an LSTM more computationally expensive than a simple RNN, but they provide substantially better control over long-term information.
-
----
-
-## LSTM vs GRU
-
-Another gated recurrent architecture is the **Gated Recurrent Unit (GRU)**.
-
-LSTM and GRU both use gates to control information flow, but their structures differ.
-
-LSTM has:
-
-- Cell state.
-- Hidden state.
-- Forget gate.
-- Input gate.
-- Candidate state.
-- Output gate.
-
-GRU generally has:
-
-- Hidden state.
-- Update gate.
-- Reset gate.
-
-GRUs have fewer components and therefore fewer parameters.
-
-LSTMs provide a more explicit separation between internal memory and exposed hidden state.
-
-The choice between LSTM and GRU depends on the problem, architecture, computational budget, and empirical performance.
-
----
-
-## Characteristics / Key Points
-
-- LSTM is a gated recurrent neural network.
-- It is designed for sequential and temporal data.
-- It maintains both a hidden state and a cell state.
-- The cell state acts as a long-term memory pathway.
-- The forget gate controls retained information.
-- The input gate controls newly written information.
-- The candidate state generates potential new memory.
-- The output gate controls exposed information.
-- Sigmoid is used for the three gates.
-- Tanh is used for candidate memory and hidden-state generation.
-- Gate values are between `0` and `1`.
-- Candidate values are between `-1` and `1`.
-- Cell-state updates contain an additive pathway.
-- LSTMs can model dependencies across many time steps.
-- The same parameters are reused at every time step.
-- Sequence length affects computation but not the number of recurrent parameters.
-- Larger hidden sizes increase both parameter count and computation.
-- LSTMs contain more parameters than simple RNNs.
-- LSTMs are still susceptible to optimization difficulties, although they substantially reduce the classic vanishing-gradient problem.
-- Random initialization means repeated executions can produce different outputs.
-
----
-
-## Why is it used? / Applications
-
-LSTMs are useful when the order and history of observations matter.
-
-Common applications include:
-
-- Natural Language Processing.
-- Language Modeling.
-- Machine Translation.
-- Sentiment Analysis.
-- Speech Recognition.
-- Time-Series Forecasting.
-- Stock and financial sequence modeling.
-- Sensor-data analysis.
-- Activity Recognition.
-- Text Generation.
-- Sequence Classification.
-- Anomaly Detection.
-- Predictive Maintenance.
-- Handwriting Recognition.
-
-For example, in language modeling, the meaning of a word can depend on words that appeared much earlier in the sentence.
-
-An LSTM can preserve useful information through its cell state and use gates to decide which information should remain relevant.
-
----
-
-> 💡 **Important Note**
->
-> The cell state and hidden state are not the same thing. The cell state $c_t$ is the LSTM's internal memory, while the hidden state $h_t$ is the information exposed by the output gate. Both states must be carried between time steps.
-
----
-
-> 💡 **Interview Tip**
->
-> Remember the LSTM update as **Forget → Input → Candidate → Cell Update → Output**. The forget gate controls old memory, the input gate controls new memory, the cell state stores the combined memory, and the output gate controls what becomes the hidden state.
-
----
-
-> 💡 **Common Mistake**
->
-> Do not calculate the output gate from the updated hidden state. All four gates are calculated from the same concatenation of the previous hidden state and current input. The cell state is updated afterward, and only then is the new hidden state calculated.
-
----
+The order of matrix multiplication matters because matrix
+multiplication is generally not commutative.
 
 ## Solutions
 
-### Custom Implementation
+## Custom Implementation
+
+The submitted solution constructs the homogeneous translation matrix
+using NumPy and then applies it to every point.
 
 ```python
 import numpy as np
 
-class LSTM:
-	def __init__(self, input_size, hidden_size):
-		self.input_size = input_size
-		self.hidden_size = hidden_size
+def translate_object(points, tx, ty):
+    translation_values = [tx, ty]
+    transformation_matrix = np.eye(len(translation_values) + 1)
+    for axis_index in range(len(translation_values)):
+        transformation_matrix[axis_index][-1] = translation_values[axis_index]
 
-		# Initialize weights and biases
-		self.Wf = np.random.randn(hidden_size, input_size + hidden_size)
-		self.Wi = np.random.randn(hidden_size, input_size + hidden_size)
-		self.Wc = np.random.randn(hidden_size, input_size + hidden_size)
-		self.Wo = np.random.randn(hidden_size, input_size + hidden_size)
-
-		self.bf = np.zeros((hidden_size, 1))
-		self.bi = np.zeros((hidden_size, 1))
-		self.bc = np.zeros((hidden_size, 1))
-		self.bo = np.zeros((hidden_size, 1))
-
-	def forward(self, X, initial_hidden_state, initial_cell_state):
-		"""
-		Processes a sequence of inputs and returns the hidden states, final hidden state, and final cell state.
-		"""
-		def sigmoid(x):
-			return 1 / (1 + np.exp(-x))
-		def tanh(x):
-			return (np.exp(x) - np.exp(-x)) / (np.exp(x) + np.exp(-x))
-
-		H = initial_hidden_state
-		C = initial_cell_state
-		hidden_states = []
-		for word in X:
-			word = word.reshape(-1, 1)
-			combined = np.vstack((H, word))
-			# Forget Gate
-			FG = sigmoid(np.dot(self.Wf, combined) + self.bf)
-			# Input Gate
-			IG = sigmoid(np.dot(self.Wi, combined) + self.bi)
-			C_dash = tanh(np.dot(self.Wc, combined) + self.bc)
-			# Cell State Updation
-			C = C * FG + IG * C_dash
-			# Output Gate
-			OG = sigmoid(np.dot(self.Wo, combined) + self.bo)
-			H = OG * tanh(C)
-			hidden_states.append(H)
-		return hidden_states, H, C
+    translated_points = []
+    for point in points:
+        homogeneous_point = np.append(point, 1)
+        transformed_point = transformation_matrix @ homogeneous_point
+        transformed_point = transformed_point.tolist()
+        transformed_point.pop()
+        translated_points.append(transformed_point)
+    return translated_points
 ```
 
-### NumPy / Deep Learning Equivalent
+The implementation follows the mathematical definition directly.
 
-NumPy does not provide a built-in high-level LSTM layer.
-
-A framework such as PyTorch provides an optimized implementation:
-
-```python
-import torch
-import torch.nn as nn
-
-lstm = nn.LSTM(
-    input_size=1,
-    hidden_size=1,
-    batch_first=True
-)
-
-x = torch.tensor([
-    [[1.0]],
-    [[2.0]],
-    [[3.0]]
-])
-
-output, (final_h, final_c) = lstm(x)
-```
-
-The framework implementation internally performs the same conceptual operations:
+The important sequence is:
 
 ```text
-Forget Gate
-Input Gate
-Candidate State
-Cell State Update
-Output Gate
-Hidden State Update
+translation values
+        ↓
+3x3 transformation matrix
+        ↓
+convert point to homogeneous coordinates
+        ↓
+matrix-vector multiplication
+        ↓
+remove homogeneous coordinate
+        ↓
+translated point
 ```
 
-The main difference is that production deep learning frameworks combine and optimize these operations rather than implementing each gate separately in Python.
+## NumPy Implementation
 
----
+The same transformation can be expressed more compactly using
+a fixed 3x3 translation matrix.
+
+```python
+import numpy as np
+
+def translate_object(points, tx, ty):
+    transformation_matrix = np.array([[1, 0, tx], [0, 1, ty], [0, 0, 1]])
+    translated_points = []
+    for point in points:
+        homogeneous_point = np.append(point, 1)
+        transformed_point = transformation_matrix @ homogeneous_point
+        translated_points.append(transformed_point[:2].tolist())
+    return translated_points
+```
+
+This version is specifically written for 2D translation.
+
+The submitted solution instead constructs the matrix from the number
+of translation values, which makes its construction more generic.
 
 ## Code Explanation
 
-### Step 1: Initialize the LSTM
+## Building the Translation Matrix
+
+The first step is:
 
 ```python
-self.input_size = input_size
-self.hidden_size = hidden_size
+translation_values = [tx, ty]
 ```
 
-The input size determines the number of features in each input vector.
+This stores the translation amount for each spatial axis.
 
-The hidden size determines the number of values maintained by the hidden and cell states.
-
-If
+For a 2D problem:
 
 ```text
-input_size = D
-hidden_size = H
+translation_values = [tx, ty]
 ```
 
-then the concatenated vector has size
+Therefore, the required homogeneous matrix has dimension:
 
 ```text
-D + H
+3 x 3
 ```
 
----
-
-### Step 2: Initialize the Four Weight Matrices
-
-The implementation creates four independent weight matrices:
+The code creates it using:
 
 ```python
-self.Wf
-self.Wi
-self.Wc
-self.Wo
+transformation_matrix = np.eye(len(translation_values) + 1)
 ```
 
-Each has shape
+Since:
 
 ```text
-(hidden_size, input_size + hidden_size)
+len([tx, ty]) = 2
 ```
 
-The matrices correspond to:
-
-| Matrix | Purpose              |
-| ------ | -------------------- |
-| `Wf`   | Forget gate          |
-| `Wi`   | Input gate           |
-| `Wc`   | Candidate cell state |
-| `Wo`   | Output gate          |
-
-Random initialization gives each gate its own learnable transformation.
-
----
-
-### Step 3: Initialize Biases
+the expression becomes:
 
 ```python
-self.bf = np.zeros((hidden_size, 1))
-self.bi = np.zeros((hidden_size, 1))
-self.bc = np.zeros((hidden_size, 1))
-self.bo = np.zeros((hidden_size, 1))
+np.eye(3)
 ```
 
-There is one bias vector for each transformation.
-
-All biases initially contain zeros.
-
----
-
-### Step 4: Initialize the States
-
-Inside `forward`, the initial states are assigned:
-
-```python
-H = initial_hidden_state
-C = initial_cell_state
-```
-
-`H` represents the hidden state from the previous time step.
-
-`C` represents the cell state from the previous time step.
-
-At the first time step, these correspond to $h_0$ and $c_0$.
-
----
-
-### Step 5: Create Storage for Hidden States
-
-```python
-hidden_states = []
-```
-
-The problem requires the hidden state from every time step.
-
-Therefore, each newly calculated hidden state is stored in this list.
-
-The list eventually contains:
+which initially produces:
 
 ```text
-[h1, h2, h3, ..., hT]
+[[1, 0, 0],
+ [0, 1, 0],
+ [0, 0, 1]]
 ```
 
----
+The final column is then populated with the translation values.
 
-### Step 6: Iterate Through the Sequence
+## Inserting Translation Values
+
+The loop is:
 
 ```python
-for word in X:
+for axis_index in range(len(translation_values)):
+    transformation_matrix[axis_index][-1] = translation_values[axis_index]
 ```
 
-Each `word` represents the current input vector.
-
-If the sequence has $T$ inputs, this loop executes $T$ times.
-
-Each iteration represents one time step of the LSTM.
-
----
-
-### Step 7: Reshape the Input
-
-```python
-word = word.reshape(-1, 1)
-```
-
-The input is converted into a column vector.
-
-For example,
+For `tx = 2` and `ty = 3`, the first iteration places `2` in:
 
 ```text
-[1.0]
+matrix[0][-1]
 ```
 
-becomes a vector with shape
+and the second iteration places `3` in:
 
 ```text
-(1, 1)
+matrix[1][-1]
 ```
 
-This makes its dimensions compatible with the matrix operations.
-
----
-
-### Step 8: Combine Hidden State and Input
-
-```python
-combined = np.vstack((H, word))
-```
-
-The previous hidden state and current input are vertically stacked.
-
-Mathematically:
-
-$$
-z_t=[h_{t-1},x_t]
-$$
-
-If the hidden size is `H` and input size is `D`, the resulting vector has shape
+The resulting matrix is:
 
 ```text
-(H + D, 1)
+[[1, 0, 2],
+ [0, 1, 3],
+ [0, 0, 1]]
 ```
 
-This same combined vector is used by all four gate transformations.
+This is exactly the standard 2D translation matrix.
 
----
+## Converting to Homogeneous Coordinates
 
-### Step 9: Calculate the Forget Gate
+A normal point is represented as:
 
 ```python
-FG = sigmoid(
-    np.dot(self.Wf, combined)
-    + self.bf
-)
+point = [x, y]
 ```
 
-This implements
+The transformation matrix requires a three-dimensional vector.
 
-$$
-f_t=\sigma(W_fz_t+b_f)
-$$
-
-The forget gate determines how much of the previous cell state should survive.
-
----
-
-### Step 10: Calculate the Input Gate
+The code therefore uses:
 
 ```python
-IG = sigmoid(
-    np.dot(self.Wi, combined)
-    + self.bi
-)
+homogeneous_point = np.append(point, 1)
 ```
 
-This implements
-
-$$
-i_t=\sigma(W_iz_t+b_i)
-$$
-
-The input gate determines how much candidate information should be added to the cell state.
-
----
-
-### Step 11: Calculate the Candidate State
+For:
 
 ```python
-C_dash = tanh(
-    np.dot(self.Wc, combined)
-    + self.bc
-)
+point = [0.5, 1]
 ```
 
-This implements
-
-$$
-\tilde{c}_t=\tanh(W_cz_t+b_c)
-$$
-
-The candidate state represents possible new information that could be stored.
-
-It is controlled by the input gate before being added to the cell state.
-
----
-
-### Step 12: Update the Cell State
-
-```python
-C = (
-    C * FG
-    + IG * C_dash
-)
-```
-
-This implements the core LSTM memory equation:
-
-$$
-c_t=f_t\circ c_{t-1}+i_t\circ\tilde{c}_t
-$$
-
-The first term preserves useful old information.
-
-The second term adds selected new information.
-
-This is the main mechanism through which the LSTM maintains memory.
-
----
-
-### Step 13: Calculate the Output Gate
-
-```python
-OG = sigmoid(
-    np.dot(self.Wo, combined)
-    + self.bo
-)
-```
-
-This implements
-
-$$
-o_t=\sigma(W_oz_t+b_o)
-$$
-
-The output gate determines which parts of the updated cell state should be exposed.
-
----
-
-### Step 14: Update the Hidden State
-
-```python
-H = OG * tanh(C)
-```
-
-This implements
-
-$$
-h_t=o_t\circ\tanh(c_t)
-$$
-
-The cell state is first passed through tanh and then filtered using the output gate.
-
-The resulting `H` becomes the hidden state for the current time step.
-
----
-
-### Step 15: Store the Hidden State
-
-```python
-hidden_states.append(H)
-```
-
-The current hidden state is saved.
-
-After processing the complete sequence, the list contains every hidden state.
-
----
-
-### Step 16: Carry States Forward
-
-At the end of an iteration:
-
-```python
-H
-```
-
-and
-
-```python
-C
-```
-
-contain the current hidden and cell states.
-
-During the next iteration, they become:
+we obtain:
 
 ```text
-h_(t-1)
-c_(t-1)
+[0.5, 1, 1]
 ```
 
-This creates the recurrent connection between time steps.
+The final `1` is the homogeneous coordinate.
 
----
+This allows the translation matrix to perform addition through
+matrix multiplication.
 
-### Step 17: Return the Results
+## Applying the Transformation
+
+The actual transformation is:
 
 ```python
-return hidden_states, H, C
+transformed_point = transformation_matrix @ homogeneous_point
 ```
 
-The function returns three values:
+The `@` operator performs matrix multiplication.
 
-1. Hidden states at every time step.
-2. Final hidden state.
-3. Final cell state.
-
-If the sequence contains $T$ inputs:
-
-$$
-hidden\_states=[h_1,h_2,\ldots,h_T]
-$$
-
-and the final states are
-
-$$
-final\_h=h_T
-$$
-
-and
-
-$$
-final\_c=c_T
-$$
-
----
-
-## Complete Forward-Pass Logic
-
-The implementation can be summarized as:
+For:
 
 ```text
-Initialize H = h0
-Initialize C = c0
-
-For each input x_t:
-
-    Combine H and x_t
-
-    Forget Gate:
-        f_t = sigmoid(Wf * combined + bf)
-
-    Input Gate:
-        i_t = sigmoid(Wi * combined + bi)
-
-    Candidate:
-        c~_t = tanh(Wc * combined + bc)
-
-    Cell State:
-        C = f_t * C + i_t * c~_t
-
-    Output Gate:
-        o_t = sigmoid(Wo * combined + bo)
-
-    Hidden State:
-        H = o_t * tanh(C)
-
-    Store H
-
-Return:
-    hidden_states
-    H
-    C
+T = [[1, 0, 2],
+     [0, 1, 3],
+     [0, 0, 1]]
 ```
 
-The critical ordering is that the cell state must be updated before calculating the new hidden state.
+and:
 
----
-
-## Time & Space Complexity
-
-Let
-
-- $T$ be the sequence length.
-- $D$ be the input size.
-- $H$ be the hidden size.
-
-At every time step, four gate transformations are performed.
-
-Each matrix-vector multiplication has complexity
-
-$$
-O(H(D+H))
-$$
-
-Since there are four transformations,
-
-$$
-O(4H(D+H))
-$$
-
-Since `4` is a constant, this simplifies to
-
-$$
-O(H(D+H))
-$$
-
-per time step.
-
-For a sequence of length $T$, the total forward-pass complexity is
-
-$$
-O(TH(D+H))
-$$
-
-The implementation stores all hidden states.
-
-Therefore, storing the hidden-state sequence requires
-
-$$
-O(TH)
-$$
-
-The model parameters require
-
-$$
-O(H(D+H))
-$$
-
-space.
-
-The recurrent states themselves require
-
-$$
-O(H)
-$$
-
-additional space.
-
-Therefore, including the model parameters and stored hidden states, the overall space requirement is
-
-$$
-O(H(D+H)+TH)
-$$
-
-| Complexity | Value                |
-| ---------- | -------------------- |
-| Time       | **O(TH(D + H))**     |
-| Space      | **O(H(D + H) + TH)** |
-
-where
-
-- $T$ is the number of time steps.
-- $D$ is the input feature size.
-- $H$ is the hidden-state size.
-
-For a single time step, the computation is
-
-$$
-O(H(D+H))
-$$
-
-and for a sequence of $T$ time steps, it becomes
-
-$$
-O(TH(D+H))
-$$
-
-The four gates increase the constant factor of the computation, but they do not change the asymptotic complexity.
-
+```text
+P = [0.5, 1, 1]
 ```
 
+we obtain:
+
+```text
+T @ P = [2.5, 4, 1]
 ```
+
+The first coordinate becomes:
+
+\(1(0.5)+0(1)+2(1)=2.5\)
+
+The second coordinate becomes:
+
+\(0(0.5)+1(1)+3(1)=4\)
+
+The third coordinate remains:
+
+\(1\)
+
+Therefore:
+
+```text
+[2.5, 4, 1]
+```
+
+is the transformed homogeneous point.
+
+## Removing the Homogeneous Coordinate
+
+The result still contains the third coordinate:
+
+```text
+[2.5, 4, 1]
+```
+
+But the required output format is:
+
+```text
+[2.5, 4]
+```
+
+The code converts the NumPy array to a Python list:
+
+```python
+transformed_point = transformed_point.tolist()
+```
+
+Then removes the final coordinate:
+
+```python
+transformed_point.pop()
+```
+
+The resulting point is:
+
+```text
+[2.5, 4.0]
+```
+
+This is then added to the output list.
+
+## Returning the Result
+
+The output container is initialized with:
+
+```python
+translated_points = []
+```
+
+Every transformed point is appended:
+
+```python
+translated_points.append(transformed_point)
+```
+
+After all points have been processed:
+
+```python
+return translated_points
+```
+
+The function therefore returns a new list instead of modifying the
+original `points` list.
+
+This is useful because the original geometry remains available.
+
+## Step-by-Step Example
+
+Consider:
+
+```python
+points = [[0, 0], [1, 0], [0.5, 1]]
+tx = 2
+ty = 3
+```
+
+The transformation matrix is:
+
+```text
+[[1, 0, 2],
+ [0, 1, 3],
+ [0, 0, 1]]
+```
+
+### Point 1
+
+Original:
+
+```text
+[0, 0]
+```
+
+Homogeneous:
+
+```text
+[0, 0, 1]
+```
+
+Matrix multiplication:
+
+\(\begin{bmatrix}1&0&2\\0&1&3\\0&0&1\end{bmatrix}\begin{bmatrix}0\\0\\1\end{bmatrix} = \begin{bmatrix}2\\3\\1\end{bmatrix}\)
+
+After removing the final coordinate:
+
+```text
+[2, 3]
+```
+
+### Point 2
+
+Original:
+
+```text
+[1, 0]
+```
+
+Homogeneous:
+
+```text
+[1, 0, 1]
+```
+
+Transformation:
+
+\(\begin{bmatrix}1&0&2\\0&1&3\\0&0&1\end{bmatrix}\begin{bmatrix}1\\0\\1\end{bmatrix} = \begin{bmatrix}3\\3\\1\end{bmatrix}\)
+
+Final point:
+
+```text
+[3, 3]
+```
+
+### Point 3
+
+Original:
+
+```text
+[0.5, 1]
+```
+
+Homogeneous:
+
+```text
+[0.5, 1, 1]
+```
+
+Transformation:
+
+\(\begin{bmatrix}1&0&2\\0&1&3\\0&0&1\end{bmatrix}\begin{bmatrix}0.5\\1\\1\end{bmatrix} = \begin{bmatrix}2.5\\4\\1\end{bmatrix}\)
+
+Final point:
+
+```text
+[2.5, 4]
+```
+
+Therefore:
+
+```text
+[[2.0, 3.0], [3.0, 3.0], [2.5, 4.0]]
+```
+
+## Direct Interpretation
+
+Although the problem asks for a matrix implementation, it is
+important to recognize the underlying operation.
+
+The matrix multiplication is mathematically equivalent to:
+
+```python
+x_new = x + tx
+y_new = y + ty
+```
+
+For every point.
+
+The matrix formulation becomes valuable when translation is combined
+with other geometric transformations.
+
+For example, a graphics engine may represent several transformations
+as matrices and combine them into one transformation matrix.
+
+The direct formula is simpler for translation alone, while the matrix
+form is more powerful as part of a larger transformation pipeline.
+
+## Common Mistakes
+
+### Forgetting Homogeneous Coordinates
+
+A common mistake is trying to multiply:
+
+```text
+2x2 matrix × [x, y]
+```
+
+to perform translation.
+
+A normal 2x2 linear transformation cannot directly represent:
+
+\(x' = x+t_x\)
+
+Homogeneous coordinates solve this problem.
+
+### Using the Wrong Matrix
+
+The standard 2D translation matrix is:
+
+\(\begin{bmatrix}1&0&t_x\\0&1&t_y\\0&0&1\end{bmatrix}\)
+
+The translation values belong in the final column when points
+are represented as column vectors.
+
+### Forgetting the Third Coordinate
+
+The input:
+
+```text
+[x, y]
+```
+
+must become:
+
+```text
+[x, y, 1]
+```
+
+before multiplication.
+
+### Returning the Homogeneous Coordinate
+
+The transformed result contains:
+
+```text
+[x + tx, y + ty, 1]
+```
+
+The final `1` is not part of the requested 2D coordinate.
+
+It should be removed before returning the result.
+
+### Modifying the Original Points
+
+The function should return a new collection.
+
+Changing the original list directly can create unexpected side effects
+for code that still needs the original geometry.
+
+### Confusing Translation with Scaling
+
+Scaling uses a matrix such as:
+
+\(\begin{bmatrix}s_x&0&0\\0&s_y&0\\0&0&1\end{bmatrix}\)
+
+Translation instead changes the final column:
+
+\(\begin{bmatrix}1&0&t_x\\0&1&t_y\\0&0&1\end{bmatrix}\)
+
+### Confusing Translation with Rotation
+
+Rotation changes the orientation of the object:
+
+\(R = \begin{bmatrix}\cos\theta&-\sin\theta&0\\\sin\theta&\cos\theta&0\\0&0&1\end{bmatrix}\)
+
+Translation does not change orientation.
+
+## Interview and Practical Notes
+
+### Is Translation a Linear Transformation?
+
+Strictly speaking, translation is not a linear transformation in
+ordinary Cartesian coordinates because a linear transformation must
+map the zero vector to the zero vector.
+
+For a non-zero translation:
+
+\(T(0,0)=(t_x,t_y)\)
+
+which is not the zero vector.
+
+Therefore, translation is an affine transformation.
+
+Homogeneous coordinates allow affine transformations to be represented
+using matrix multiplication.
+
+### Why Are Homogeneous Coordinates Useful?
+
+Homogeneous coordinates allow multiple transformations to use the
+same matrix-based representation.
+
+For example:
+
+- Translation
+- Rotation
+- Scaling
+- Shearing
+- Reflection
+
+can all be represented using 3x3 matrices in 2D.
+
+This makes it possible to compose transformations through matrix
+multiplication.
+
+### Does Translation Change Distances?
+
+No.
+
+For points $P_1$ and $P_2$:
+
+\(||(P_1+t)-(P_2+t)|| = ||P_1-P_2||\)
+
+Therefore, all pairwise distances remain unchanged.
+
+### Does Translation Change Angles?
+
+No.
+
+Because translation moves every point by the same vector, the
+direction of vectors between points remains unchanged.
+
+Therefore, angles are preserved.
+
+### Does Translation Change Area?
+
+No.
+
+A translated object has exactly the same area as the original.
+
+For a triangle, rectangle, polygon, or any other planar shape,
+translation only changes its position.
+
+### Can Translation Be Reversed?
+
+Yes.
+
+If:
+
+```text
+tx = 2
+ty = 3
+```
+
+the inverse translation is:
+
+```text
+tx = -2
+ty = -3
+```
+
+Applying both returns every point to its original position.
+
+### Why Use NumPy?
+
+NumPy provides efficient matrix and vector operations.
+
+The expression:
+
+```python
+transformation_matrix @ homogeneous_point
+```
+
+directly corresponds to the mathematical matrix-vector product.
+
+This makes the implementation close to the mathematical definition
+and avoids manually computing every matrix multiplication term.
+
+## Numerical Considerations
+
+The translation itself is numerically simple because it mainly
+involves addition.
+
+For example:
+
+```python
+0.5 + 2
+```
+
+produces:
+
+```text
+2.5
+```
+
+Floating-point representation can still introduce tiny numerical
+errors for some decimal values.
+
+For this problem, these errors are normally negligible.
+
+The implementation also starts with:
+
+```python
+np.eye(...)
+```
+
+which creates floating-point values when translation values are
+assigned.
+
+Therefore, outputs such as:
+
+```text
+2.0
+```
+
+are expected even when the mathematical answer is simply `2`.
+
+## Generalization
+
+The submitted implementation determines the matrix size from the
+number of translation values:
+
+```python
+translation_values = [tx, ty]
+```
+
+Then:
+
+```python
+len(translation_values) + 1
+```
+
+produces the homogeneous dimension.
+
+For a 2D point:
+
+```text
+2 coordinates + 1 homogeneous coordinate = 3
+```
+
+For a 3D point:
+
+```text
+3 coordinates + 1 homogeneous coordinate = 4
+```
+
+A 3D translation would therefore use a 4x4 matrix.
+
+The 2D case is:
+
+\(T\_{2D} = \begin{bmatrix}1&0&t_x\\0&1&t_y\\0&0&1\end{bmatrix}\)
+
+The 3D case is:
+
+\(T\_{3D} = \begin{bmatrix}1&0&0&t_x\\0&1&0&t_y\\0&0&1&t_z\\0&0&0&1\end{bmatrix}\)
+
+The underlying idea remains identical.
+
+## Why the Matrix Is Reused
+
+The transformation matrix depends only on:
+
+```text
+tx
+ty
+```
+
+It does not depend on the individual point.
+
+Therefore, it is constructed once before the loop.
+
+This is algorithmically important.
+
+We should avoid rebuilding the same matrix for every point.
+
+The structure is:
+
+```python
+transformation_matrix = ...
+for point in points:
+    ...
+```
+
+rather than:
+
+```python
+for point in points:
+    transformation_matrix = ...
+```
+
+The first approach avoids unnecessary repeated work.
+
+## Vectorized NumPy Approach
+
+If the points are already stored as a NumPy array, the transformation
+can be vectorized.
+
+For example:
+
+```python
+import numpy as np
+
+def translate_object(points, tx, ty):
+    points = np.asarray(points, dtype=float)
+    homogeneous_points = np.hstack((points, np.ones((len(points), 1))))
+    transformation_matrix = np.array([[1, 0, tx], [0, 1, ty], [0, 0, 1]])
+    transformed_points = homogeneous_points @ transformation_matrix.T
+    return transformed_points[:, :2].tolist()
+```
+
+This approach processes all points through array operations rather
+than explicitly looping through them in Python.
+
+The mathematical operation remains the same.
+
+## Direct Coordinate Implementation
+
+If the matrix representation is not required, translation can be
+implemented much more simply:
+
+```python
+def translate_object(points, tx, ty):
+    return [[x + tx, y + ty] for x, y in points]
+```
+
+This is computationally simpler for this specific task.
+
+However, the matrix implementation is more educational because it
+demonstrates homogeneous coordinates and the standard representation
+used in computer graphics.
+
+## Time and Space Complexity
+
+Let:
+
+- $N$ = number of points.
+
+Each point requires:
+
+- Creating a homogeneous vector.
+- Multiplying a 3x3 matrix by a 3x1 vector.
+- Converting the result to a list.
+- Removing the homogeneous coordinate.
+- Appending the result.
+
+Because the matrix dimension is fixed at 3x3, the work per point
+is constant.
+
+Therefore:
+
+\(T(N) = O(N)\)
+
+The transformation matrix itself requires constant space:
+
+\(O(1)\)
+
+Each transformed point requires constant space.
+
+The output contains $N$ points, so the output space is:
+
+\(O(N)\)
+
+Therefore, the total auxiliary/output space used by the implementation
+is:
+
+\(O(N)\)
+
+If the returned output is included in space complexity, the total
+space complexity is:
+
+\(O(N)\)
+
+The important distinction is that the algorithm does not require
+space proportional to the number of points for intermediate matrix
+storage; the $O(N)$ space comes primarily from storing the output.
+
+## Complexity Summary
+
+| Operation                    | Complexity |
+| ---------------------------- | ---------: |
+| Construct translation matrix |     $O(1)$ |
+| Transform one point          |     $O(1)$ |
+| Transform N points           |     $O(N)$ |
+| Output storage               |     $O(N)$ |
+| Auxiliary matrix storage     |     $O(1)$ |
+| Total space including output |     $O(N)$ |
+
+## Key Takeaways
+
+1. Translation moves every point by the same vector.
+
+2. The direct mathematical transformation is:
+
+\((x,y) \rightarrow (x+t_x,\ y+t_y)\)
+
+3. Translation is an affine transformation rather than a linear
+   transformation in ordinary Cartesian coordinates.
+
+4. Homogeneous coordinates add a third coordinate:
+
+\((x,y) \rightarrow (x,y,1)\)
+
+5. The standard 2D translation matrix is:
+
+\(T = \begin{bmatrix}1&0&t_x\\0&1&t_y\\0&0&1\end{bmatrix}\)
+
+6. Matrix multiplication produces:
+
+\(TP = \begin{bmatrix}x+t_x\\y+t_y\\1\end{bmatrix}\)
+
+7. The final homogeneous coordinate is removed to recover the
+   ordinary 2D point.
+
+8. Translation preserves distances, angles, shape, area, and
+   orientation.
+
+9. The inverse of a translation by $(t_x,t_y)$ is a translation by
+   $(-t_x,-t_y)$.
+
+10. Multiple translations can be combined by adding their translation
+    vectors.
+
+11. Translation matrices are especially useful when combined with
+    rotation, scaling, and other geometric transformations.
+
+12. For $N$ points, the implementation runs in:
+
+\(O(N)\)
+
+and requires:
+
+\(O(N)\)
+
+space when the output is included.
