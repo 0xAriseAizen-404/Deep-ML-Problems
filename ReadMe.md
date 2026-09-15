@@ -7,24 +7,24 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 | Difficulty | Solved |
 | ---------- | -----: |
 | 🟢 Easy    |     60 |
-| 🟡 Medium  |     14 |
+| 🟡 Medium  |     18 |
 | 🔴 Hard    |      1 |
-| **Total**  | **75** |
+| **Total**  | **79** |
 
 ## Category Summary
 
 | Category           | 🟢 Easy | 🟡 Medium | 🔴 Hard | **Total** |
 | ------------------ | ------: | --------: | ------: | --------: |
-| Linear Algebra     |      15 |         5 |       1 |    **21** |
+| Linear Algebra     |      15 |         6 |       1 |    **21** |
 | Statistics         |       3 |         0 |       0 |     **3** |
 | Calculus           |       1 |         0 |       0 |     **1** |
 | Data Preprocessing |       1 |         0 |       0 |     **1** |
-| Machine Learning   |      24 |         6 |       0 |    **26** |
-| Deep Learning      |      14 |         2 |       0 |    **16** |
+| Machine Learning   |      24 |         7 |       0 |    **26** |
+| Deep Learning      |      14 |         4 |       0 |    **16** |
 | Pytorch            |       1 |         0 |       0 |     **1** |
 | Computer Vision    |       2 |         0 |       0 |     **2** |
 | NLP                |       1 |         1 |       0 |     **2** |
-| **Total**          |  **60** |    **14** |   **1** |    **75** |
+| **Total**          |  **60** |    **18** |   **1** |    **79** |
 
 ---
 
@@ -112,7 +112,13 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 | [0037 - Calculate Correlation Matrix](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0037-calculate-correlation-matrix)                                                               | Linear Algebra   |
 | [0041 - Simple Convolutional 2D Layer](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0041-simple-convolutional-2d-layer)                                                             | Deep Learning    |
 | [0047 - Implement Gradient Descent Variants with MSE Loss](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0047-implement-gradient-descent-variants-with-mse-loss)                     | Machine Learning |
+| [0048 - Implement Reduced Row Echelon Form (RREF) Function](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0048-implement-reduced-row-echelon-form-rref)                              | Linear Algebra   |
+| [0049 - Implement Adam Optimization Algorithm](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0049-implement-adam-optimization-algorithm)                                             | Deep Learning    |
+| [0054 - Implementing a Simple RNN](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0054-implementing-a-simple-rnn)                                                                     | Deep Learning    |
+| [0055 - 2D Translation Matrix Implementation](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0055-2d-translation-matrix-implementation) | Linear Algebra |
+| [0059 - Implement Long Short-Term Memory (LSTM) Network](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0059-implement-long-short-term-memory-network) | Deep Learning |
 | [0060 - Implement TF-IDF (Term Frequency-Inverse Document Frequency)](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0060-implement-tf-idf-term-frequency-inverse-document-frequency) | NLP              |
+| [0077 - Calculate Performance Metrics for a Classification Model](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0077-calculate-performance-metrics-for-a-classification-model)       | Machine Learning |
 
 ---
 
