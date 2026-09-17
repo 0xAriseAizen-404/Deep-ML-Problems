@@ -7,9 +7,9 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 | Difficulty | Solved |
 | ---------- | -----: |
 | 🟢 Easy    |     64 |
-| 🟡 Medium  |     21 |
+| 🟡 Medium  |     23 |
 | 🔴 Hard    |      1 |
-| **Total**  | **86** |
+| **Total**  | **88** |
 
 ## Category Summary
 
@@ -20,12 +20,12 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 | Calculus           |       1 |         0 |       0 |     **1** |
 | Data Preprocessing |       1 |         0 |       0 |     **1** |
 | Machine Learning   |      25 |         8 |       0 |    **33** |
-| Deep Learning      |      14 |         5 |       0 |    **19** |
-| Pytorch            |       1 |         0 |       0 |     **1** |
+| Deep Learning      |      14 |         6 |       0 |    **19** |
+| Pytorch            |       1 |         1 |       0 |     **1** |
 | Computer Vision    |       3 |         0 |       0 |     **3** |
 | NLP                |       1 |         1 |       0 |     **2** |
 | Probability        |       1 |         0 |       0 |     **1** |
-| **Total**          |  **64** |    **21** |   **1** |    **86** |
+| **Total**          |  **64** |    **23** |   **1** |    **88** |
 
 ---
 
@@ -95,6 +95,8 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 | [0121 - Vector Element-wise Sum](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0121-vector-element-wise-sum)                                                                             | Linear Algebra     |
 | [0129 - Calculate Unigram Probability from Corpus](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0129-calculate-unigram-probability-from-corpus)                                         | NLP                |
 | [0237 - Convert RGB Image to Grayscale](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0237-convert-rgb-image-to-grayscale)                                                               | Computer Vision    |
+| [0287 - Implement GRU Cell](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0287-implement-gru-cell)                                                                                       | Deep Learnig       |
+| [0907 - Implement an LSTM Cell from Scratch](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0907-implement-an-lstm-cell-from-scratch)                                                     | Pytorch            |
 | [1217 - Compute TPR and FPR from Classifications](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/1217-compute-tpr-and-fpr-from-classifications)                                           | Machine Learning   |
 | [1218 - Count Parameters of a Sequential Model](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/1218-count-parameters-of-a-sequential-model)                                               | Pytorch            |
 
