@@ -6,26 +6,26 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 
 | Difficulty | Solved |
 | ---------- | -----: |
-| 🟢 Easy    |     64 |
-| 🟡 Medium  |     23 |
+| 🟢 Easy    |     68 |
+| 🟡 Medium  |     27 |
 | 🔴 Hard    |      1 |
-| **Total**  | **88** |
+| **Total**  | **96** |
 
 ## Category Summary
 
 | Category           | 🟢 Easy | 🟡 Medium | 🔴 Hard | **Total** |
 | ------------------ | ------: | --------: | ------: | --------: |
-| Linear Algebra     |      15 |         7 |       1 |    **23** |
+| Linear Algebra     |      16 |         9 |       1 |    **26** |
 | Statistics         |       4 |         0 |       0 |     **4** |
 | Calculus           |       1 |         0 |       0 |     **1** |
 | Data Preprocessing |       1 |         0 |       0 |     **1** |
-| Machine Learning   |      25 |         8 |       0 |    **33** |
-| Deep Learning      |      14 |         6 |       0 |    **19** |
-| Pytorch            |       1 |         1 |       0 |     **1** |
+| Machine Learning   |      24 |         8 |       0 |    **32** |
+| Deep Learning      |      16 |         6 |       0 |    **22** |
+| Pytorch            |       1 |         1 |       0 |     **2** |
 | Computer Vision    |       3 |         0 |       0 |     **3** |
-| NLP                |       1 |         1 |       0 |     **2** |
-| Probability        |       1 |         0 |       0 |     **1** |
-| **Total**          |  **64** |    **23** |   **1** |    **88** |
+| NLP                |       1 |         2 |       0 |     **3** |
+| Probability        |       1 |         1 |       0 |     **2** |
+| **Total**          |  **68** |    **27** |   **1** |    **96** |
 
 ---
 
@@ -94,7 +94,11 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 | [0120 - Bhattacharyya Distance Between Two Distributions](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0120-bhattacharyya-distance-between-two-distributions)                           | Statistics         |
 | [0121 - Vector Element-wise Sum](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0121-vector-element-wise-sum)                                                                             | Linear Algebra     |
 | [0129 - Calculate Unigram Probability from Corpus](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0129-calculate-unigram-probability-from-corpus)                                         | NLP                |
+| [0134 - Compute Multi-class Cross-Entropy Loss](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0134-compute-multi-class-cross-entropy-loss)                                               | Deep Learning      |
+| [0141 - Shift and Scale Array to Target Range](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0141-shift-and-scale-array-to-target-range)                                                 | Machine Learning   |
+| [0195 - Matrix Determinant & Trace](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0195-matrix-determinant-and-trace)                                                                     | Linear Algebra     |
 | [0237 - Convert RGB Image to Grayscale](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0237-convert-rgb-image-to-grayscale)                                                               | Computer Vision    |
+| [0263 - Implement Binary Cross-Entropy Loss](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0263-implement-binary-cross-entropy)                                                          | Deep Learning      |
 | [0287 - Implement GRU Cell](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0287-implement-gru-cell)                                                                                       | Deep Learnig       |
 | [0907 - Implement an LSTM Cell from Scratch](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0907-implement-an-lstm-cell-from-scratch)                                                     | Pytorch            |
 | [1217 - Compute TPR and FPR from Classifications](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/1217-compute-tpr-and-fpr-from-classifications)                                           | Machine Learning   |
@@ -124,9 +128,13 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 | [0050 - Implement Lasso Regression using ISTA](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0050-implement-lasso-regression-using-ista)                                             | Machine Learning |
 | [0054 - Implementing a Simple RNN](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0054-implementing-a-simple-rnn)                                                                     | Deep Learning    |
 | [0055 - 2D Translation Matrix Implementation](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0055-2d-translation-matrix-implementation)                                               | Linear Algebra   |
+| [0058 - Gaussian Elimination for Solving Linear Systems](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0058-guassian-elimination-for-solving-linear-systems)                         | Linear Algebra   |
 | [0059 - Implement Long Short-Term Memory (LSTM) Network](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0059-implement-long-short-term-memory-network)                                | Deep Learning    |
 | [0060 - Implement TF-IDF (Term Frequency-Inverse Document Frequency)](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0060-implement-tf-idf-term-frequency-inverse-document-frequency) | NLP              |
+| [0068 - Find the column space of a matrix](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0068-find-the-column-space-of-a-matrix)                                                     | Linear Algebra   |
 | [0077 - Calculate Performance Metrics for a Classification Model](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0077-calculate-performance-metrics-for-a-classification-model)       | Machine Learning |
+| [0079 - Binomial Distribution Probability](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0079-binomial-distribution-probability)                                                     | Probability      |
+| [0090 - BM25 Ranking](https://github.com/0xAriseAizen-404/Deep-ML-Problems/tree/main/0090-bm25-ranking)                                                                                               | NLP              |
 
 ---
 
