@@ -6,10 +6,10 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 
 | Difficulty | Solved |
 | ---------- | -----: |
-| 🟢 Easy    |     68 |
-| 🟡 Medium  |     27 |
+| 🟢 Easy    |     69 |
+| 🟡 Medium  |     29 |
 | 🔴 Hard    |      1 |
-| **Total**  | **96** |
+| **Total**  | **99** |
 
 ## Category Summary
 
@@ -18,14 +18,14 @@ A collection of Linear Algebra, Statistics, Machine Learning coding problems wit
 | Linear Algebra     |      16 |         9 |       1 |    **26** |
 | Statistics         |       4 |         0 |       0 |     **4** |
 | Calculus           |       1 |         0 |       0 |     **1** |
-| Data Preprocessing |       1 |         0 |       0 |     **1** |
+| Data Preprocessing |       2 |         2 |       0 |     **4** |
 | Machine Learning   |      24 |         8 |       0 |    **32** |
 | Deep Learning      |      16 |         6 |       0 |    **22** |
 | Pytorch            |       1 |         1 |       0 |     **2** |
 | Computer Vision    |       3 |         0 |       0 |     **3** |
 | NLP                |       1 |         2 |       0 |     **3** |
 | Probability        |       1 |         1 |       0 |     **2** |
-| **Total**          |  **68** |    **27** |   **1** |    **96** |
+| **Total**          |  **69** |    **29** |   **1** |    **99** |
 
 ---
 
